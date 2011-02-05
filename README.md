@@ -4,7 +4,7 @@ This is the README for Hawkeye 2
 Foreword
 --------
 
-Starting with Version 2, Hawkeye source code is hosted on github: <https://github.com/odalet/Hawkeye2>, though the project offical home remains the Codeplex site: <http://hawkeye.codeplex.com/>
+Starting with Version 2, Hawkeye source code is hosted on github: <https://github.com/odalet/Hawkeye2>, though the project's offical home remains the Codeplex site: <http://hawkeye.codeplex.com/>
 
 Project Description
 -------------------
