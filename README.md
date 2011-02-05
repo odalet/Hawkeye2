@@ -42,10 +42,10 @@ Credits
 
 ---
 
-* License: [Ms-PL][mspl]
+* License: [Ms-RL][msrl]
 * History page: [Here][history]
 * Credits page: [Here][credits]
 
-  [mspl]: License.md "MS-Pl License"
-  [history]: SRC/History.md "History"
-  [credits]: SRC/Credits.md "Credits"
+  [msrl]: License.md "MS-RL License"
+  [history]: src/History.md "History"
+  [credits]: src/Credits.md "Credits"
