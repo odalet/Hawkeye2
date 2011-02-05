@@ -53,7 +53,7 @@ namespace Hawkeye.Api.Reflection
         FieldInfo FieldInfo { get; }
 
         /// <summary>
-        /// Gets the last affected or retrieved value on <see cref="MemberAccessor.Target"/>.
+        /// Gets the last affected or retrieved value on <see cref="IMemberAccessor.Target"/>.
         /// </summary>
         /// <value>The value.</value>
         object Value { get; }
@@ -67,7 +67,7 @@ namespace Hawkeye.Api.Reflection
 
         /// <summary>
         /// Gets the value of the field represented by this instance on the 
-        /// default <see cref="MemberAccessor.Target"/>.
+        /// default <see cref="IMemberAccessor.Target"/>.
         /// </summary>
         /// <returns>The field value.</returns>
         object Get();
@@ -81,7 +81,7 @@ namespace Hawkeye.Api.Reflection
 
         /// <summary>
         /// Sets the value of the field represented by this instance on the 
-        /// default <see cref="MemberAccessor.Target"/>.
+        /// default <see cref="IMemberAccessor.Target"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         void Set(object value);
@@ -106,7 +106,7 @@ namespace Hawkeye.Api.Reflection
         PropertyInfo PropertyInfo { get; }
 
         /// <summary>
-        /// Gets the last affected or retrieved value on <see cref="MemberAccessor.Target"/>.
+        /// Gets the last affected or retrieved value on <see cref="IMemberAccessor.Target"/>.
         /// </summary>
         /// <value>The value.</value>
         object Value { get; }
@@ -120,7 +120,7 @@ namespace Hawkeye.Api.Reflection
 
         /// <summary>
         /// Gets the value of the field represented by this instance on the 
-        /// default <see cref="MemberAccessor.Target"/>.
+        /// default <see cref="IMemberAccessor.Target"/>.
         /// </summary>
         /// <returns>The property value.</returns>
         object Get();
@@ -134,7 +134,7 @@ namespace Hawkeye.Api.Reflection
 
         /// <summary>
         /// Sets the value of the property represented by this instance on the 
-        /// default <see cref="MemberAccessor.Target"/>.
+        /// default <see cref="IMemberAccessor.Target"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         void Set(object value);
@@ -183,7 +183,7 @@ namespace Hawkeye.Api.Reflection
 
         /// <summary>
         /// Invokes the method represented by this instance on the 
-        /// default <see cref="MemberAccessor.Target"/>.
+        /// default <see cref="IMemberAccessor.Target"/>.
         /// </summary>
         /// <param name="parameters">The parameters to pass to the method.</param>
         /// <returns>The method invocation result.</returns>

@@ -48,9 +48,9 @@ namespace ACorns.PropertyGridExtender
         
         #region IPlugin Members
 
-        public void Initialize(IHawkeyeApplication application)
+        public void Initialize(IHawkeyeApi hawkeyeApi)
         {
-            api = application.Api.ReflectionApi;
+            api = hawkeyeApi.ReflectionApi;
         }
 
         #endregion

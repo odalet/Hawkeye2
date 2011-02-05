@@ -40,10 +40,8 @@
     <Compile Include="..\..\..\HKHOME\vs2010\src\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="HawkeyeApi.cs" />
-    <Compile Include="IHawkeyeApiProvider.cs" />
     <Compile Include="IDynamicSubclass.cs" />
-    <Compile Include="IHawkeyeApplication.cs" />
+    <Compile Include="IHawkeyeApi.cs" />
     <Compile Include="IHawkeyeEditor.cs" />
     <Compile Include="IPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

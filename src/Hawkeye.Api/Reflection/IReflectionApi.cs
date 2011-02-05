@@ -36,7 +36,7 @@ namespace Hawkeye.Api.Reflection
 
         /// <summary>
         /// Creates an object allowing to access a field named <paramref name="fieldName"/>
-        /// on objects of type <paramref name="targetType"/>.
+        /// on objects of type <paramref name="targetObject"/>.
         /// </summary>
         /// <param name="targetObject">The target object.</param>
         /// <param name="fieldName">Name of the field.</param>
@@ -45,7 +45,7 @@ namespace Hawkeye.Api.Reflection
 
         /// <summary>
         /// Creates an object allowing to access a property named <paramref name="propertyName"/>
-        /// on objects of type <paramref name="targetType"/>.
+        /// on objects of type <paramref name="targetObject"/>.
         /// </summary>
         /// <param name="targetObject">The target object.</param>
         /// <param name="propertyName">Name of the property.</param>
@@ -54,7 +54,7 @@ namespace Hawkeye.Api.Reflection
 
         /// <summary>
         /// Creates an object allowing to access a method named <paramref name="methodName"/>
-        /// on objects of type <paramref name="targetType"/>.
+        /// on objects of type <paramref name="targetObject"/>.
         /// </summary>
         /// <param name="targetObject">The target object.</param>
         /// <param name="methodName">Name of the method.</param>

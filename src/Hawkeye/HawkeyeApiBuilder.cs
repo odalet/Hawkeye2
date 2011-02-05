@@ -6,8 +6,19 @@ using Hawkeye.Reflection;
 
 namespace Hawkeye
 {
-    internal class HawkeyeApiProvider : IHawkeyeApiProvider
+    internal static class HawkeyeApiBuilder
     {
+        private class HawkeyeApi : IHawkeyeApi
+        {
+            #region IHawkeyeApi Members
+
+            public IHawkeyeEditor Editor { get; set; }
+
+            public IReflectionApi ReflectionApi { get; set; }
+            
+            #endregion
+        }
+
         private class ReflectionApi : IReflectionApi
         {
             #region IReflectionApi Members
@@ -44,14 +55,14 @@ namespace Hawkeye
 
             #endregion
         }
-
-        #region IHawkeyeApiProvider Members
-
-        public IReflectionApi CreateReflectionApi()
+        
+        public static IHawkeyeApi CreateHawkeyeApi()
         {
-            return new ReflectionApi();
+            return new HawkeyeApi()
+            {
+                Editor = null, // TODO
+                ReflectionApi = new ReflectionApi()
+            };
         }
-
-        #endregion
     }
 }

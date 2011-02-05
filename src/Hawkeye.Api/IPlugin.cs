@@ -1,11 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Hawkeye.Api
 {
+    /// <summary>
+    /// Implemented by Hawkeye plugins.
+    /// </summary>
     public interface IPlugin
     {
-        void Initialize(IHawkeyeApplication application);
+        /// <summary>
+        /// Initializes the plugin, providing it an instance of the Hawkeye API.
+        /// </summary>
+        /// <param name="hawkeyeApi">The hawkeye API.</param>
+        void Initialize(IHawkeyeApi hawkeyeApi);
     }
 }
