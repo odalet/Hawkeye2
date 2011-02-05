@@ -22,7 +22,7 @@ Features
 	* Hawkeye can be injected in any .NET process allowing you to easily hook and modify other processes.
 	* You can even hook into Visual Studio and modify some of its (.NET) properties (E.g.: the Properties Editor from VS).
 	* Since version 1.1.9, Hawkeye has support for 64bit so you can now attach Hawkeye to any x86 or x64 process.
-* A properties editor like the VS editor that can be used to change the properties of any object or control at runtime.
+* A properties editor like the one in Visual Studio that can be used to inspect or modify the properties of any object or control at runtime.
 * Shows you **all the properties that are defined on an object** (even if they are not normally visible in the designer).
 * Shows you **all the fields of an object** organized by the class in the hierarchy that owns that property.
 * Shows all **the methods of an object** organized by the class and visibility of the method.
@@ -46,6 +46,6 @@ Credits
 * History page: [Here][history]
 * Credits page: [Here][credits]
 
-  [msrl]: License.md "MS-RL License"
+  [msrl]: src/License.md "MS-RL License"
   [history]: src/History.md "History"
   [credits]: src/Credits.md "Credits"
