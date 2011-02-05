@@ -25,9 +25,6 @@ namespace Hawkeye.Reflection
 {
     internal class PropertyAccessor : BaseMemberAccessor, IPropertyAccessor
     {
-        public PropertyAccessor(Type targetType, string propertyName) :
-            this(targetType, null, propertyName) { }
-
         public PropertyAccessor(object targetObject, string propertyName) :
             this(targetObject.GetType(), targetObject, propertyName) { }
 
@@ -87,26 +84,16 @@ namespace Hawkeye.Reflection
             get;
             private set;
         }
-
-        public object Get(object target)
-        {
-            return PropertyInfo.GetValue(target, null);
-        }
-
+        
         public object Get()
         {
-            Value = Get(Target);
+            Value = PropertyInfo.GetValue(Target, null);
             return Value;
-        }
-
-        public void Set(object target, object value)
-        {
-            PropertyInfo.SetValue(target, value, null);
         }
 
         public void Set(object value)
         {
-            Set(Target, value);
+            PropertyInfo.SetValue(Target, value, null);
             Value = value;
         }
 

@@ -3,6 +3,32 @@ using System.Reflection;
 
 namespace Hawkeye.Api.Reflection
 {
+    // TODO
+    /// <summary>
+    /// Represents a static member.
+    /// </summary>
+    public interface IStaticMemberAccessor
+    {
+        /// <summary>
+        /// Gets a value indicating whether this instance is valid.
+        /// </summary>
+        /// <value><c>true</c> if this instance is valid; otherwise, <c>false</c>.</value>
+        bool IsValid { get; }
+
+        /// <summary>
+        /// Gets the <see cref="MemberInfo"/> object associated with this instance.
+        /// </summary>
+        /// <value>The <see cref="MemberInfo"/> object associated with this instance or 
+        /// <c>null</c> if this instance is not valid.</value>
+        MemberInfo MemberInfo { get; }
+        
+        /// <summary>
+        /// Gets the real target type this instance is associated with.
+        /// </summary>
+        /// <value>The type of objects owning this member.</value>
+        Type TargetType { get; }
+    }
+
     /// <summary>
     /// Represents an object member.
     /// </summary>
@@ -59,25 +85,11 @@ namespace Hawkeye.Api.Reflection
         object Value { get; }
 
         /// <summary>
-        /// Gets the value of the field represented by this instance on the specified target.
-        /// </summary>
-        /// <param name="target">The target object owning the field.</param>
-        /// <returns>The field value.</returns>
-        object Get(object target);
-
-        /// <summary>
         /// Gets the value of the field represented by this instance on the 
         /// default <see cref="IMemberAccessor.Target"/>.
         /// </summary>
         /// <returns>The field value.</returns>
         object Get();
-
-        /// <summary>
-        /// Sets the value of the field represented by this instance on the specified target.
-        /// </summary>
-        /// <param name="target">The target object owning the field.</param>
-        /// <param name="value">The value to affect to the field.</param>
-        void Set(object target, object value);
 
         /// <summary>
         /// Sets the value of the field represented by this instance on the 
@@ -112,25 +124,11 @@ namespace Hawkeye.Api.Reflection
         object Value { get; }
 
         /// <summary>
-        /// Gets the value of the property represented by this instance on the specified target.
-        /// </summary>
-        /// <param name="target">The target object owning the property.</param>
-        /// <returns>The property value.</returns>
-        object Get(object target);
-
-        /// <summary>
         /// Gets the value of the field represented by this instance on the 
         /// default <see cref="IMemberAccessor.Target"/>.
         /// </summary>
         /// <returns>The property value.</returns>
         object Get();
-
-        /// <summary>
-        /// Sets the value of the property represented by this instance on the specified target.
-        /// </summary>
-        /// <param name="target">The target object owning the property.</param>
-        /// <param name="value">The value to affect to the property.</param>
-        void Set(object target, object value);
 
         /// <summary>
         /// Sets the value of the property represented by this instance on the 
@@ -159,35 +157,11 @@ namespace Hawkeye.Api.Reflection
         MethodInfo MethodInfo { get; }
 
         /// <summary>
-        /// Invokes the method represented by this instance on the specified target.
-        /// </summary>
-        /// <param name="target">The target object of the method.</param>
-        /// <returns>The method invocation result.</returns>
-        object Invoke(object target);
-
-        /// <summary>
-        /// Invokes the method represented by this instance on the specified target.
-        /// </summary>
-        /// <param name="target">The target object of the method.</param>
-        /// <param name="parameter">The parameter to pass to the method.</param>
-        /// <returns>The method invocation result.</returns>
-        object Invoke(object target, object parameter);
-
-        /// <summary>
-        /// Invokes the method represented by this instance on the specified target.
-        /// </summary>
-        /// <param name="target">The target object of the method.</param>
-        /// <param name="parameters">The parameters to pass to the method.</param>
-        /// <returns>The method invocation result.</returns>
-        object Invoke(object target, object[] parameters);
-
-        /// <summary>
         /// Invokes the method represented by this instance on the 
         /// default <see cref="IMemberAccessor.Target"/>.
         /// </summary>
         /// <param name="parameters">The parameters to pass to the method.</param>
         /// <returns>The method invocation result.</returns>
-        object Invoke(object[] parameters);
+        object Invoke(params object[] parameters);
     }
 }
-

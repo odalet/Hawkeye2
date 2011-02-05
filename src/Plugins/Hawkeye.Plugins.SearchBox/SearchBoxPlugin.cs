@@ -62,8 +62,8 @@ namespace ACorns.PropertyGridExtender
             Type targetType = target.GetType();
             if (targetType.FullName == "System.Windows.Forms.PropertyGridInternal.PropertyGridView")
             {
-                var ownerGrid = api.CreateFieldAccessor(targetType, "ownerGrid");
-                propertyGrid = ownerGrid.Get(target) as PropertyGrid;
+                var ownerGrid = api.CreateFieldAccessor(target, "ownerGrid");
+                propertyGrid = ownerGrid.Get() as PropertyGrid;
             }
             else propertyGrid = target as PropertyGrid;
 
@@ -104,10 +104,9 @@ namespace ACorns.PropertyGridExtender
             totalProps = api.CreateFieldAccessor(gridView, "totalProps");
             selectedRow = api.CreateFieldAccessor(gridView, "selectedRow");
 
-            var gridViewType = gridView.GetType();
-            setScrollOffset = api.CreateMethodAccessor(gridViewType, "SetScrollOffset");
-            selectedGridEntry = api.CreatePropertyAccessor(gridViewType, "SelectedGridEntry");
-            layoutWindow = api.CreateMethodAccessor(gridViewType, "Refresh");
+            setScrollOffset = api.CreateMethodAccessor(gridView, "SetScrollOffset");
+            selectedGridEntry = api.CreatePropertyAccessor(gridView, "SelectedGridEntry");
+            layoutWindow = api.CreateMethodAccessor(gridView, "Refresh");
 
             propertyGrid.SelectedObjectsChanged += (s, e) => textBox.Text = String.Empty;
             propertyGrid.PropertyTabChanged += (s, e) => textBox.Text = String.Empty;
@@ -216,7 +215,7 @@ namespace ACorns.PropertyGridExtender
                 if (gridViewEntries == null)
                     gridViewEntries = api.CreateFieldAccessor(items, "entries");
 
-                setScrollOffset.Invoke(gridView, 0);
+                setScrollOffset.Invoke(0);
 
                 gridViewEntries.Target = allGridItemsAC.Get();
                 gridViewEntries.Set(value);
@@ -227,7 +226,7 @@ namespace ACorns.PropertyGridExtender
                 totalProps.Set(value.Length);
                 selectedRow.Set(0);
 
-                if (value.Length > 0) selectedGridEntry.Set(gridView, value[0]);
+                if (value.Length > 0) selectedGridEntry.Set(value[0]);
 
                 ((Control)gridView).Invalidate();
 

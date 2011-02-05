@@ -25,9 +25,6 @@ namespace Hawkeye.Reflection
 {
 	internal class MethodAccessor : BaseMemberAccessor, IMethodAccessor
 	{
-        public MethodAccessor(Type targetType, string methodName) :
-            this(targetType, null, methodName) { }
-
         public MethodAccessor(object targetObject, string methodName) :
             this(targetObject.GetType(), targetObject, methodName) { }
 
@@ -71,24 +68,9 @@ namespace Hawkeye.Reflection
             private set;
         }
 
-        public object Invoke(object target)
+        public object Invoke(params object[] parameters)
         {
-            return MethodInfo.Invoke(target, new object[0]);
-        }
-
-        public object Invoke(object target, object parameter)
-        {
-            return MethodInfo.Invoke(target, new[] { parameter });
-        }
-
-        public object Invoke(object target, object[] parameters)
-        {
-            return MethodInfo.Invoke(target, parameters);
-        }
-
-        public object Invoke(object[] parameters)
-        {
-            return Invoke(Target, parameters);
+            return MethodInfo.Invoke(Target, parameters);
         }
 
         #endregion

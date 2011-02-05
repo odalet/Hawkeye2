@@ -25,9 +25,6 @@ namespace Hawkeye.Reflection
 {
     internal class FieldAccessor : BaseMemberAccessor, IFieldAccessor
     {
-        public FieldAccessor(Type targetType, string fieldName) : 
-            this(targetType, null, fieldName) { }
-
         public FieldAccessor(object targetObject, string fieldName) :
             this(targetObject.GetType(), targetObject, fieldName) { }
 
@@ -87,26 +84,16 @@ namespace Hawkeye.Reflection
             get;
             private set;
         }
-
-        public object Get(object target)
-        {
-            return FieldInfo.GetValue(target);
-        }
         
         public object Get()
         {
-            Value = Get(Target);
+            Value = FieldInfo.GetValue(Target);
             return Value;
-        }
-
-        public void Set(object target, object value)
-        {
-            FieldInfo.SetValue(target, value);
         }
 
         public void Set(object value)
         {
-            Set(Target, value);
+            FieldInfo.SetValue(Target, value);
             Value = value;
         }
 

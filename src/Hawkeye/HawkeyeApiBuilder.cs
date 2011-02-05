@@ -22,22 +22,7 @@ namespace Hawkeye
         private class ReflectionApi : IReflectionApi
         {
             #region IReflectionApi Members
-
-            public IFieldAccessor CreateFieldAccessor(Type targetType, string fieldName)
-            {
-                return new FieldAccessor(targetType, fieldName);
-            }
-
-            public IPropertyAccessor CreatePropertyAccessor(Type targetType, string propertyName)
-            {
-                return new PropertyAccessor(targetType, propertyName);
-            }
-
-            public IMethodAccessor CreateMethodAccessor(Type targetType, string methodName)
-            {
-                return new MethodAccessor(targetType, methodName);
-            }
-            
+                                    
             public IFieldAccessor CreateFieldAccessor(object targetObject, string fieldName)
             {
                 return new FieldAccessor(targetObject, fieldName);
