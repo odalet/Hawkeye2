@@ -1,3 +1,5 @@
+// Hawkeye is licensed under the terms of the Microsoft Reciprocal License (Ms-RL)
+
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
