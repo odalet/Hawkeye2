@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Hawkeye.Core
+namespace Hawkeye
 {
     internal static class ListExtensions
     {

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Collections.Generic;
 
-namespace Hawkeye.Core
+namespace Hawkeye
 {
     internal static class ReflectionExtensions
     {
