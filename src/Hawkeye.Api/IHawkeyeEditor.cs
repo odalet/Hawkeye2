@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Hawkeye.Api
+namespace Hawkeye
 {
     /// <summary>
     /// Represents Hawkeye's main window.

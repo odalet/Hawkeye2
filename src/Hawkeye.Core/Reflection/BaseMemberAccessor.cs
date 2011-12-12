@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Reflection;
 
-using Hawkeye.Api.Reflection;
-
 namespace Hawkeye.Reflection
 {
     internal abstract class BaseMemberAccessor : IMemberAccessor

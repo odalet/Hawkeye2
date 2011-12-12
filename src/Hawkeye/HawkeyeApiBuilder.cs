@@ -1,7 +1,6 @@
 ﻿using System;
 
-using Hawkeye.Api;
-using Hawkeye.Api.Reflection;
+using Hawkeye;
 using Hawkeye.Reflection;
 
 namespace Hawkeye

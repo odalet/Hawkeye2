@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Hawkeye.Api.Reflection
+namespace Hawkeye.Reflection
 {
     /// <summary>
     /// Gives plugins access to Hawkeye's Reflection API.

@@ -1,6 +1,6 @@
 using System;
 
-namespace Hawkeye.Api
+namespace Hawkeye
 {
 	/// <summary>
 	/// Implement this interface to allow Hawkeye to use your object to dynamically

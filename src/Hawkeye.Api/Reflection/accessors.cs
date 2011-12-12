@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace Hawkeye.Api.Reflection
+namespace Hawkeye.Reflection
 {
     // TODO
     /// <summary>

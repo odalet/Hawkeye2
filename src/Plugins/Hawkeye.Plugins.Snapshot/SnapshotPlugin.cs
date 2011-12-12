@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-using Hawkeye.Api;
+using Hawkeye;
 
 namespace Hawkeye.Plugins.Snapshot
 {

@@ -3,8 +3,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
 
-using Hawkeye.Api;
-using Hawkeye.Api.Reflection;
+using Hawkeye;
+using Hawkeye.Reflection;
 
 namespace ACorns.PropertyGridExtender
 {

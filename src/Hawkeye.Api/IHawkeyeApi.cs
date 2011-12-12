@@ -1,8 +1,8 @@
 ﻿using System;
 
-using Hawkeye.Api.Reflection;
+using Hawkeye.Reflection;
 
-namespace Hawkeye.Api
+namespace Hawkeye
 {
     /// <summary>
     /// Represents the Hawkeye API. To be used by plugins
