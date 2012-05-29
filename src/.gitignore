@@ -4,3 +4,5 @@
 *.user
 bin/
 obj/
+*.sdf
+*.opensdf
