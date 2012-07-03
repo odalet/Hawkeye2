@@ -14,6 +14,9 @@ namespace Hawkeye
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            This.InitializeApi(new ThisImplementation());
+
             Application.Run(new Form1());
         }
     }

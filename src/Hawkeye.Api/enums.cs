@@ -7,6 +7,8 @@ namespace Hawkeye
     /// </summary>
     public enum Clr
     {
+        /// <summary>Clr could not be determined</summary>
+        Unknown,
         /// <summary>
         /// CLR for .NET 2 (matches .NET 2, .NET 3 and .NET 3.5
         /// </summary>
@@ -22,6 +24,8 @@ namespace Hawkeye
     /// </summary>
     public enum Bitness
     {
+        /// <summary>Bitness could not be determined</summary>
+        Unknown,
         /// <summary>x86 means 32bits</summary>
         x86,
         /// <summary>x64 means 64bits.</summary>

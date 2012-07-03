@@ -1,7 +1,8 @@
 Version 2.0.0
 =============
 * The **LinqBride** project: <http://code.google.com/p/linqbridge/>
-* **Cory Plots** (<http://www.cplotts.com/>) from the **Snoop** project (<http://snoopwpf.codeplex.com/>). His project provided the .NET framework detection code as well as the inspiration for the ***one Hawkeye targets all frameworks***.
+* **Cory Plots** (<http://www.cplotts.com/>) and all the **Snoop** team from the **Snoop** project (<http://snoopwpf.codeplex.com/>). 
+His project provided the .NET framework detection code as well as inspiration for the ***one Hawkeye targets all frameworks*** and many other parts in the new Hawkeye code base.
 
 Version 1.2.5
 =============

@@ -1,48 +1,58 @@
 ﻿using System;
 using System.Linq;
-using System.Text;
 using System.Diagnostics;
 using System.Collections.Generic;
+using System.Text;
 
-/////////////////////////////////////////////////////////////////////
-// Large parts and overall inspiration for this code come from the 
-// Snoop project (http://snoopwpf.codeplex.com/). 
-/////////////////////////////////////////////////////////////////////
-namespace FxDetector
+namespace Hawkeye.WinApi
 {
-    internal enum Bitness
+    internal class WindowInfo : IWindowInfo
     {
-        Unknown, X86, X64
-    }
-
-    internal enum FxVersion
-    {
-        Unknown, V2, V4
-    }
-
-    internal class WindowInfo
-    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WindowInfo"/> class.
+        /// </summary>
+        /// <param name="hwnd">The target window handle.</param>
         public WindowInfo(IntPtr hwnd)
         {
-            Hwnd = hwnd;
+            Handle = hwnd;
             RunDetection();
         }
 
-        public IntPtr Hwnd { get; private set; }
+        #region IWindowInfo Members
 
+        /// <summary>
+        /// Gets this Window handle.
+        /// </summary>
+        public IntPtr Handle { get; private set; }
+
+        /// <summary>
+        /// Gets this Window's owner process bitness.
+        /// </summary>
         public Bitness Bitness { get; private set; }
 
-        public FxVersion FxVersion { get; private set; }
+        /// <summary>
+        /// Gets this Window's owner process CLR version.
+        /// </summary>
+        public Clr Clr { get; private set; }
 
-        public NativeMethods.MODULEENTRY32[] Modules { get; private set; }
+        /// <summary>
+        /// Gets the list of modules loaded by this Window's owner process.
+        /// </summary>
+        public IModuleInfo[] Modules { get; private set; }
 
+        /// <summary>
+        /// Dumps the content of this object in a text form.
+        /// </summary>
+        /// <returns>
+        /// A string with the dumped data.
+        /// </returns>
         public string Dump()
         {
 
             var builder = new StringBuilder();
-            builder.AppendFormattedLine("Hwnd = {0}", Hwnd);
+            builder.AppendFormattedLine("Hwnd = {0}", Handle);
             builder.AppendFormattedLine("Bitness = {0}", Bitness);
-            builder.AppendFormattedLine("FxVersion = {0}", FxVersion);
+            builder.AppendFormattedLine("Clr = {0}", Clr);
             builder.AppendFormattedLine("Modules ({0}):", Modules.Length);
 
             int index = 0;
@@ -56,26 +66,28 @@ namespace FxDetector
             return builder.ToString();
         }
 
+        #endregion
+
         private void RunDetection()
         {
-            Modules = GetModules().ToArray();
+            Modules = GetModules().Select(m => new ModuleInfo(m)).ToArray();
 
-            FxVersion = DetectFramework();
+            Clr = DetectFramework();
             Bitness = DetectBitness();
         }
 
-        private FxVersion DetectFramework()
+        private Clr DetectFramework()
         {
             var mscorlibs = Modules
-                .Where(m => m.szModule.Contains("mscorlib")).ToArray();
-            if (mscorlibs.Length == 0) return FxVersion.Unknown;
+                .Where(m => m.Name.Contains("mscorlib")).ToArray();
+            if (mscorlibs.Length == 0) return Clr.Net2;
             if (mscorlibs
-                .Select(m => FileVersionInfo.GetVersionInfo(m.szExePath).FileMajorPart)
-                .Any(v => v == 4)) return FxVersion.V4;
+                .Select(m => FileVersionInfo.GetVersionInfo(m.Path).FileMajorPart)
+                .Any(v => v == 4)) return Clr.Net4;
             if (mscorlibs
-                .Select(m => FileVersionInfo.GetVersionInfo(m.szExePath).FileMajorPart)
-                .Any(v => v >= 2 && v < 4)) return FxVersion.V2;
-            return FxVersion.Unknown;
+                .Select(m => FileVersionInfo.GetVersionInfo(m.Path).FileMajorPart)
+                .Any(v => v >= 2 && v < 4)) return Clr.Net2;
+            return Clr.Unknown;
         }
 
         private Bitness DetectBitness()
@@ -88,15 +100,16 @@ namespace FxDetector
             if (This.IsX64)
             {
                 var isWow64 = Modules.Any(
-                    m => m.szModule.ToLowerInvariant().Contains("wow64"));
-                return isWow64 ? Bitness.X86 : Bitness.X64;
+                    m => m.Name.ToLowerInvariant().Contains("wow64"));
+                return isWow64 ? Bitness.x86 : Bitness.x64;
             }
-         
+
             // Otherwise, the test is simple: if we can detect modules,
             // it means the app is x86 (as we are).
-            return Modules.Length > 0 ? Bitness.X86 : Bitness.X64;
+            return Modules.Length > 0 ? Bitness.x86 : Bitness.x64;
         }
         
+
         /// <summary>
         /// Similar to System.Diagnostics.WinProcessManager.GetModuleInfos,
         /// except that we include 32 bit modules when we run in x64 mode.
@@ -105,11 +118,11 @@ namespace FxDetector
         private IEnumerable<NativeMethods.MODULEENTRY32> GetModules()
         {
             int processId;
-            NativeMethods.GetWindowThreadProcessId(Hwnd, out processId);
+            NativeMethods.GetWindowThreadProcessId(Handle, out processId);
 
             var me32 = new NativeMethods.MODULEENTRY32();
             var hModuleSnap = NativeMethods.CreateToolhelp32Snapshot(
-                NativeMethods.SnapshotFlags.Module | NativeMethods.SnapshotFlags.Module32, 
+                NativeMethods.SnapshotFlags.Module | NativeMethods.SnapshotFlags.Module32,
                 processId);
 
             if (!hModuleSnap.IsInvalid)
@@ -125,7 +138,7 @@ namespace FxDetector
                         } while (NativeMethods.Module32Next(hModuleSnap, ref me32));
                     }
                 }
-            } 
+            }
         }
     }
 }
