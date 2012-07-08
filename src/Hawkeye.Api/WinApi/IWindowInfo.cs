@@ -5,7 +5,7 @@ namespace Hawkeye
     /// <summary>
     /// Represents a Win32 Window.
     /// </summary>
-    public interface IWindowInfo
+    public interface IWindowInfo : IWindowHandleProvider
     {
         /// <summary>
         /// Gets this Window handle.

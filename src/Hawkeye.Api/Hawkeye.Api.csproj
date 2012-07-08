@@ -48,13 +48,13 @@
     <Compile Include="IHawkeyeApi.cs" />
     <Compile Include="IHawkeyeEditor.cs" />
     <Compile Include="implementation\ModuleInfoConverter.cs" />
-    <Compile Include="implementation\NativeMethods.cs" />
     <Compile Include="IPlugin.cs" />
     <Compile Include="This.cs" />
     <Compile Include="WinApi\IModuleInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\accessors.cs" />
     <Compile Include="Reflection\IReflectionApi.cs" />
+    <Compile Include="WinApi\IWindowHandleProvider.cs" />
     <Compile Include="WinApi\IWindowInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

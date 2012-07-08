@@ -1,4 +1,4 @@
-﻿namespace Hawkeye
+﻿namespace HawkeyeApplication
 {
     partial class Form1
     {
@@ -96,7 +96,7 @@
         private System.Windows.Forms.Button dumpButton;
         private System.Windows.Forms.TextBox hwndBox;
         private System.Windows.Forms.Button detectButton;
-        private PropertyGridEx pgrid;
+        private Hawkeye.PropertyGridEx pgrid;
     }
 }
 

@@ -3,7 +3,7 @@
 using Hawkeye;
 using Hawkeye.Reflection;
 
-namespace Hawkeye
+namespace HawkeyeApplication
 {
     internal static class HawkeyeApiBuilder
     {

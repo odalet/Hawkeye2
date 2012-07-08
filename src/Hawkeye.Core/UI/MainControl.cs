@@ -1,31 +1,43 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
+using Hawkeye.WinApi;
 
-using Hawkeye;
-
-namespace HawkeyeApplication
+namespace Hawkeye.UI
 {
-    public partial class Form1 : Form
+    public partial class MainControl : UserControl
     {
         private IWindowInfo currentInfo = null;
 
-        public Form1()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainControl"/> class.
+        /// </summary>
+        public MainControl()
         {
             InitializeComponent();
         }
 
         /// <summary>
-        /// Raises the <see cref="E:System.Windows.Forms.Form.Load"/> event.
+        /// Raises the <see cref="E:System.Windows.Forms.UserControl.Load"/> event.
         /// </summary>
         /// <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data.</param>
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
+
             if (DesignMode) return;
 
             hwndBox.Text = Handle.ToString();
             OnCurrentInfoChanged();
+
+            windowFinderControl1.ActiveWindowChanged += (s, _) =>
+                hwndBox.Text = windowFinderControl1.ActiveWindowHandle.ToString();
+            windowFinderControl1.WindowSelected += (s, _) =>
+            {
+                var hwnd = windowFinderControl1.ActiveWindowHandle;
+                if (hwnd == IntPtr.Zero) CurrentInfo = null;
+                else CurrentInfo = new WindowInfo(hwnd);
+            };
         }
 
         private IWindowInfo CurrentInfo
@@ -118,18 +130,8 @@ namespace HawkeyeApplication
             }
         }
 
-        /// <summary>
-        /// Handles the Click event of the detectButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void detectButton_Click(object sender, EventArgs e) { Detect(); }
 
-        /// <summary>
-        /// Handles the Click event of the dumpButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void dumpButton_Click(object sender, EventArgs e) { Dump(); }
     }
 }

@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Text;
 using System.Linq;
 using System.Diagnostics;
 using System.Collections.Generic;
-using System.Text;
+using System.Runtime.InteropServices;
 
 namespace Hawkeye.WinApi
 {
@@ -108,35 +109,34 @@ namespace Hawkeye.WinApi
             // it means the app is x86 (as we are).
             return Modules.Length > 0 ? Bitness.x86 : Bitness.x64;
         }
-        
+
 
         /// <summary>
         /// Similar to System.Diagnostics.WinProcessManager.GetModuleInfos,
         /// except that we include 32 bit modules when we run in x64 mode.
         /// See http://blogs.msdn.com/b/jasonz/archive/2007/05/11/code-sample-is-your-process-using-the-silverlight-clr.aspx
         /// </summary>
-        private IEnumerable<NativeMethods.MODULEENTRY32> GetModules()
+        private IEnumerable<MODULEENTRY32> GetModules()
         {
             int processId;
             NativeMethods.GetWindowThreadProcessId(Handle, out processId);
 
-            var me32 = new NativeMethods.MODULEENTRY32();
+            var me32 = new MODULEENTRY32();
             var hModuleSnap = NativeMethods.CreateToolhelp32Snapshot(
-                NativeMethods.SnapshotFlags.Module | NativeMethods.SnapshotFlags.Module32,
+                SnapshotFlags.Module | SnapshotFlags.Module32,
                 processId);
 
-            if (!hModuleSnap.IsInvalid)
+            if (hModuleSnap.IsInvalid) yield break;
+
+            using (hModuleSnap)
             {
-                using (hModuleSnap)
+                me32.dwSize = (uint)Marshal.SizeOf(me32);
+                if (NativeMethods.Module32First(hModuleSnap, ref me32))
                 {
-                    me32.dwSize = (uint)System.Runtime.InteropServices.Marshal.SizeOf(me32);
-                    if (NativeMethods.Module32First(hModuleSnap, ref me32))
+                    do
                     {
-                        do
-                        {
-                            yield return me32;
-                        } while (NativeMethods.Module32Next(hModuleSnap, ref me32));
-                    }
+                        yield return me32;
+                    } while (NativeMethods.Module32Next(hModuleSnap, ref me32));
                 }
             }
         }

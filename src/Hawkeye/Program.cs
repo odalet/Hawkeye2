@@ -1,8 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
-namespace Hawkeye
+using Hawkeye;
+
+namespace HawkeyeApplication
 {
     static class Program
     {
@@ -17,7 +19,8 @@ namespace Hawkeye
 
             This.InitializeApi(new ThisImplementation());
 
-            Application.Run(new Form1());
+            //Application.Run(new Form1());
+            Application.Run(new Hawkeye.UI.MainForm());
         }
     }
 }

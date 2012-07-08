@@ -9,7 +9,7 @@ namespace Hawkeye.WinApi
         /// Initializes a new instance of the <see cref="ModuleInfo"/> class.
         /// </summary>
         /// <param name="module">The Win32 module entry data.</param>
-        public ModuleInfo(NativeMethods.MODULEENTRY32 module)
+        public ModuleInfo(MODULEENTRY32 module)
         {
             ProcessId = module.th32ProcessID;
             BaseAddress = module.modBaseAddr;

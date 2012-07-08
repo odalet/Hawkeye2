@@ -11,7 +11,6 @@ namespace Hawkeye
 
     public static class This
     {
-
         private static IThisImplementation implementation = null;
         private static bool initialized = false;
         
