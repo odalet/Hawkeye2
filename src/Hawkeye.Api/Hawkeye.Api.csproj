@@ -54,7 +54,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\accessors.cs" />
     <Compile Include="Reflection\IReflectionApi.cs" />
-    <Compile Include="WinApi\IWindowHandleProvider.cs" />
     <Compile Include="WinApi\IWindowInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
