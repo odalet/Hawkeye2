@@ -44,6 +44,13 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="enums.cs" />
+    <Compile Include="extensions\DateTimeExtensions.cs" />
+    <Compile Include="extensions\ExceptionExtensions.cs" />
+    <Compile Include="Logging\interfaces.cs" />
+    <Compile Include="Logging\LogEntry.cs" />
+    <Compile Include="Logging\LoggingExtensions.cs" />
+    <Compile Include="Logging\LogLevel.cs" />
+    <Compile Include="Logging\LogManager.cs" />
     <Compile Include="oldHawkeyeApi_TODO\IDynamicSubclass.cs" />
     <Compile Include="oldHawkeyeApi_TODO\IHawkeyeApi.cs" />
     <Compile Include="oldHawkeyeApi_TODO\IHawkeyeEditor.cs" />
@@ -56,6 +63,7 @@
     <Compile Include="oldHawkeyeApi_TODO\Reflection\IReflectionApi.cs" />
     <Compile Include="WinApi\IWindowInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

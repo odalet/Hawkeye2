@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Collections.Generic;
 
 using Hawkeye;
+using Hawkeye.Logging;
 
 namespace HawkeyeApplication
 {
@@ -19,8 +19,13 @@ namespace HawkeyeApplication
 
             This.InitializeApi(new ThisImplementation());
 
+            // Can't initialize the logger before the API!
+            var logService = LogManager.GetLogger(typeof(Program));
+            logService.Debug("Running Hawkeye.");
+
             //Application.Run(new Form1());
             Application.Run(new Hawkeye.UI.MainForm());
+            logService.Debug("Closing Hawkeye.");
         }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using System;
+using Hawkeye.Logging;
 
 namespace Hawkeye
 {
     internal interface IThisImplementation
     {
         IWindowInfo GetWindowInfo(IntPtr hwnd);
+        ILogServiceFactory GetLogServiceFactory();
     }
 
     /// <summary>
@@ -42,6 +44,16 @@ namespace Hawkeye
         {
             EnsureInitialized();
             return implementation.GetWindowInfo(hwnd);
+        }
+
+        /// <summary>
+        /// Returns a new instance of the default logging service factory.
+        /// </summary>
+        /// <returns>An implementation of <see cref="ILogServiceFactory"/>.</returns>
+        public static ILogServiceFactory GetLogServiceFactory()
+        {
+            EnsureInitialized();
+            return implementation.GetLogServiceFactory();
         }
 
         private static void EnsureInitialized()

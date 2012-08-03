@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\..\lib\Log4net\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -45,6 +48,14 @@
     <Compile Include="extensions\ModuleInfoExtensions.cs" />
     <Compile Include="extensions\ReflectionExtensions.cs" />
     <Compile Include="extensions\StringBuilderExtensions.cs" />
+    <Compile Include="Logging\BaseLogService.cs" />
+    <Compile Include="Logging\DebugLogService.cs" />
+    <Compile Include="Logging\log4net\Log4NetHelper.cs" />
+    <Compile Include="Logging\log4net\Log4NetLayoutFormatter.cs" />
+    <Compile Include="Logging\log4net\Log4NetService.cs" />
+    <Compile Include="Logging\log4net\Log4NetServiceFactory.cs" />
+    <Compile Include="Logging\log4net\LogServiceAppender.cs" />
+    <Compile Include="Logging\log4net\SpecialFolderPatternConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
