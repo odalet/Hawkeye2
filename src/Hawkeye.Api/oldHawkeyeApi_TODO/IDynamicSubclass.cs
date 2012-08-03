@@ -1,3 +1,4 @@
+//TODO: Plugins API
 using System;
 
 namespace Hawkeye

@@ -1,52 +1,52 @@
-﻿using System;
+﻿//using System;
 
-using Hawkeye;
-using Hawkeye.Reflection;
+//using Hawkeye;
+//using Hawkeye.Reflection;
 
-namespace HawkeyeApplication
-{
-    internal static class HawkeyeApiBuilder
-    {
-        private class HawkeyeApi : IHawkeyeApi
-        {
-            #region IHawkeyeApi Members
+//namespace HawkeyeApplication
+//{
+//    internal static class HawkeyeApiBuilder
+//    {
+//        private class HawkeyeApi : IHawkeyeApi
+//        {
+//            #region IHawkeyeApi Members
 
-            public IHawkeyeEditor Editor { get; set; }
+//            public IHawkeyeEditor Editor { get; set; }
 
-            public IReflectionApi ReflectionApi { get; set; }
+//            public IReflectionApi ReflectionApi { get; set; }
             
-            #endregion
-        }
+//            #endregion
+//        }
 
-        private class ReflectionApi : IReflectionApi
-        {
-            #region IReflectionApi Members
+//        private class ReflectionApi : IReflectionApi
+//        {
+//            #region IReflectionApi Members
                                     
-            public IFieldAccessor CreateFieldAccessor(object targetObject, string fieldName)
-            {
-                return new FieldAccessor(targetObject, fieldName);
-            }
+//            public IFieldAccessor CreateFieldAccessor(object targetObject, string fieldName)
+//            {
+//                return new FieldAccessor(targetObject, fieldName);
+//            }
 
-            public IPropertyAccessor CreatePropertyAccessor(object targetObject, string propertyName)
-            {
-                return new PropertyAccessor(targetObject, propertyName);
-            }
+//            public IPropertyAccessor CreatePropertyAccessor(object targetObject, string propertyName)
+//            {
+//                return new PropertyAccessor(targetObject, propertyName);
+//            }
 
-            public IMethodAccessor CreateMethodAccessor(object targetObject, string methodName)
-            {
-                return new MethodAccessor(targetObject, methodName);
-            }
+//            public IMethodAccessor CreateMethodAccessor(object targetObject, string methodName)
+//            {
+//                return new MethodAccessor(targetObject, methodName);
+//            }
 
-            #endregion
-        }
+//            #endregion
+//        }
         
-        public static IHawkeyeApi CreateHawkeyeApi()
-        {
-            return new HawkeyeApi()
-            {
-                Editor = null, // TODO
-                ReflectionApi = new ReflectionApi()
-            };
-        }
-    }
-}
+//        public static IHawkeyeApi CreateHawkeyeApi()
+//        {
+//            return new HawkeyeApi()
+//            {
+//                Editor = null, // TODO
+//                ReflectionApi = new ReflectionApi()
+//            };
+//        }
+//    }
+//}

@@ -1,9 +1,9 @@
-﻿using System;
+﻿//TODO: Plugins API
+using System;
 using System.Reflection;
 
 namespace Hawkeye.Reflection
 {
-    // TODO
     /// <summary>
     /// Represents a static member.
     /// </summary>

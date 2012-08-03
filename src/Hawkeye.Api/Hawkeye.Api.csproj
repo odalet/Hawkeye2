@@ -44,16 +44,16 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="enums.cs" />
-    <Compile Include="IDynamicSubclass.cs" />
-    <Compile Include="IHawkeyeApi.cs" />
-    <Compile Include="IHawkeyeEditor.cs" />
+    <Compile Include="oldHawkeyeApi_TODO\IDynamicSubclass.cs" />
+    <Compile Include="oldHawkeyeApi_TODO\IHawkeyeApi.cs" />
+    <Compile Include="oldHawkeyeApi_TODO\IHawkeyeEditor.cs" />
     <Compile Include="implementation\ModuleInfoConverter.cs" />
-    <Compile Include="IPlugin.cs" />
+    <Compile Include="oldHawkeyeApi_TODO\IPlugin.cs" />
     <Compile Include="This.cs" />
     <Compile Include="WinApi\IModuleInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reflection\accessors.cs" />
-    <Compile Include="Reflection\IReflectionApi.cs" />
+    <Compile Include="oldHawkeyeApi_TODO\Reflection\accessors.cs" />
+    <Compile Include="oldHawkeyeApi_TODO\Reflection\IReflectionApi.cs" />
     <Compile Include="WinApi\IWindowInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
