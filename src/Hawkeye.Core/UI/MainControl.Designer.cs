@@ -31,12 +31,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainControl));
             this.dumpButton = new System.Windows.Forms.Button();
             this.hwndBox = new System.Windows.Forms.TextBox();
-            this.detectButton = new System.Windows.Forms.Button();
-            this.pgrid = new Hawkeye.PropertyGridEx();
-            this.windowFinderControl1 = new Hawkeye.UI.WindowFinderControl();
             this.rootPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.windowFinderControl = new Hawkeye.UI.WindowFinderControl();
             this.topRightPanel = new System.Windows.Forms.Panel();
             this.mainPanel = new System.Windows.Forms.Panel();
+            this.pgrid = new Hawkeye.PropertyGridEx();
             this.rootPanel.SuspendLayout();
             this.topRightPanel.SuspendLayout();
             this.mainPanel.SuspendLayout();
@@ -59,44 +58,16 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.hwndBox.Location = new System.Drawing.Point(3, 8);
             this.hwndBox.Name = "hwndBox";
-            this.hwndBox.Size = new System.Drawing.Size(312, 20);
+            this.hwndBox.ReadOnly = true;
+            this.hwndBox.Size = new System.Drawing.Size(393, 20);
             this.hwndBox.TabIndex = 9;
-            // 
-            // detectButton
-            // 
-            this.detectButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.detectButton.Location = new System.Drawing.Point(321, 6);
-            this.detectButton.Name = "detectButton";
-            this.detectButton.Size = new System.Drawing.Size(75, 23);
-            this.detectButton.TabIndex = 8;
-            this.detectButton.Text = "&Detect";
-            this.detectButton.UseVisualStyleBackColor = true;
-            this.detectButton.Click += new System.EventHandler(this.detectButton_Click);
-            // 
-            // pgrid
-            // 
-            this.pgrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pgrid.Location = new System.Drawing.Point(0, 0);
-            this.pgrid.Name = "pgrid";
-            this.pgrid.Size = new System.Drawing.Size(520, 144);
-            this.pgrid.TabIndex = 11;
-            // 
-            // windowFinderControl1
-            // 
-            this.windowFinderControl1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.windowFinderControl1.BackColor = System.Drawing.Color.Transparent;
-            this.windowFinderControl1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("windowFinderControl1.BackgroundImage")));
-            this.windowFinderControl1.Location = new System.Drawing.Point(4, 4);
-            this.windowFinderControl1.Name = "windowFinderControl1";
-            this.windowFinderControl1.Size = new System.Drawing.Size(32, 32);
-            this.windowFinderControl1.TabIndex = 12;
             // 
             // rootPanel
             // 
             this.rootPanel.ColumnCount = 2;
             this.rootPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.rootPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.rootPanel.Controls.Add(this.windowFinderControl1, 0, 0);
+            this.rootPanel.Controls.Add(this.windowFinderControl, 0, 0);
             this.rootPanel.Controls.Add(this.topRightPanel, 1, 0);
             this.rootPanel.Controls.Add(this.mainPanel, 1, 1);
             this.rootPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -109,9 +80,18 @@
             this.rootPanel.Size = new System.Drawing.Size(526, 190);
             this.rootPanel.TabIndex = 13;
             // 
+            // windowFinderControl
+            // 
+            this.windowFinderControl.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.windowFinderControl.BackColor = System.Drawing.Color.Transparent;
+            this.windowFinderControl.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("windowFinderControl.BackgroundImage")));
+            this.windowFinderControl.Location = new System.Drawing.Point(4, 4);
+            this.windowFinderControl.Name = "windowFinderControl";
+            this.windowFinderControl.Size = new System.Drawing.Size(32, 32);
+            this.windowFinderControl.TabIndex = 12;
+            // 
             // topRightPanel
             // 
-            this.topRightPanel.Controls.Add(this.detectButton);
             this.topRightPanel.Controls.Add(this.hwndBox);
             this.topRightPanel.Controls.Add(this.dumpButton);
             this.topRightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -129,6 +109,14 @@
             this.mainPanel.Name = "mainPanel";
             this.mainPanel.Size = new System.Drawing.Size(520, 144);
             this.mainPanel.TabIndex = 14;
+            // 
+            // pgrid
+            // 
+            this.pgrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pgrid.Location = new System.Drawing.Point(0, 0);
+            this.pgrid.Name = "pgrid";
+            this.pgrid.Size = new System.Drawing.Size(520, 144);
+            this.pgrid.TabIndex = 11;
             // 
             // MainControl
             // 
@@ -150,8 +138,7 @@
         private PropertyGridEx pgrid;
         private System.Windows.Forms.Button dumpButton;
         private System.Windows.Forms.TextBox hwndBox;
-        private System.Windows.Forms.Button detectButton;
-        private WindowFinderControl windowFinderControl1;
+        private WindowFinderControl windowFinderControl;
         private System.Windows.Forms.TableLayoutPanel rootPanel;
         private System.Windows.Forms.Panel topRightPanel;
         private System.Windows.Forms.Panel mainPanel;

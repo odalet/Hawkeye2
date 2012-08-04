@@ -3,11 +3,23 @@ using System.Windows.Forms;
 
 namespace Hawkeye.UI
 {
-    public partial class MainForm : Form
+    internal partial class MainForm : Form
     {
         public MainForm()
         {
             InitializeComponent();
+            UpdateTitle();
+        }
+
+        public void SetTarget(IntPtr hwnd)
+        {
+            mainControl.SetTarget(hwnd);
+        }
+
+        private void UpdateTitle()
+        {
+            base.Text = string.Format("Hawkeye {0} - {1}", 
+                This.CurrentClr, This.CurrentBitness.ToString().ToLowerInvariant());
         }
 
         private void Inject(Clr clr, Bitness bitness)

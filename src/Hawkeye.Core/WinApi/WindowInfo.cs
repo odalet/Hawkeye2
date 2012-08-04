@@ -40,6 +40,16 @@ namespace Hawkeye.WinApi
         /// Gets the list of modules loaded by this Window's owner process.
         /// </summary>
         public IModuleInfo[] Modules { get; private set; }
+        
+        /// <summary>
+        /// Get this Window owner's thread Id 
+        /// </summary>
+        public int ThreadId { get; private set; }
+        
+        /// <summary>
+        /// Get this Window owner's process Id 
+        /// </summary>
+        public int ProcessId { get; private set; }
 
         /// <summary>
         /// Dumps the content of this object in a text form.
@@ -67,11 +77,20 @@ namespace Hawkeye.WinApi
             return builder.ToString();
         }
 
+        public string ToShortString()
+        {
+            return Handle.ToString();
+        }
+
         #endregion
 
         private void RunDetection()
         {
-            Modules = GetModules().Select(m => new ModuleInfo(m)).ToArray();
+            int pid;
+            ThreadId = NativeMethods.GetWindowThreadProcessId(Handle, out pid);
+            ProcessId = pid;
+
+            Modules = GetModules(pid).Select(m => new ModuleInfo(m)).ToArray();
 
             Clr = DetectFramework();
             Bitness = DetectBitness();
@@ -81,7 +100,7 @@ namespace Hawkeye.WinApi
         {
             var mscorlibs = Modules
                 .Where(m => m.Name.Contains("mscorlib")).ToArray();
-            if (mscorlibs.Length == 0) return Clr.Net2;
+            if (mscorlibs.Length == 0) return Clr.Unknown;
             if (mscorlibs
                 .Select(m => FileVersionInfo.GetVersionInfo(m.Path).FileMajorPart)
                 .Any(v => v == 4)) return Clr.Net4;
@@ -116,15 +135,12 @@ namespace Hawkeye.WinApi
         /// except that we include 32 bit modules when we run in x64 mode.
         /// See http://blogs.msdn.com/b/jasonz/archive/2007/05/11/code-sample-is-your-process-using-the-silverlight-clr.aspx
         /// </summary>
-        private IEnumerable<MODULEENTRY32> GetModules()
+        private IEnumerable<MODULEENTRY32> GetModules(int pid)
         {
-            int processId;
-            NativeMethods.GetWindowThreadProcessId(Handle, out processId);
-
             var me32 = new MODULEENTRY32();
             var hModuleSnap = NativeMethods.CreateToolhelp32Snapshot(
                 SnapshotFlags.Module | SnapshotFlags.Module32,
-                processId);
+                pid);
 
             if (hModuleSnap.IsInvalid) yield break;
 

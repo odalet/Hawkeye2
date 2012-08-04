@@ -5,6 +5,8 @@ namespace Hawkeye
 {
     internal interface IThisImplementation
     {
+        Clr CurrentClr { get; }
+        Bitness CurrentBitness { get; }
         IWindowInfo GetWindowInfo(IntPtr hwnd);
         ILogServiceFactory GetLogServiceFactory();
     }
@@ -28,11 +30,34 @@ namespace Hawkeye
             get { return IntPtr.Size == 8; }
         }
 
+        internal static bool IsInitialized
+        {
+            get { return initialized; }
+        }
+
         internal static void InitializeApi(IThisImplementation impl)
         {
             if (impl == null) throw new ArgumentNullException("impl");
             implementation = impl;
             initialized = true;
+        }
+
+        public static Clr CurrentClr
+        {
+            get 
+            {
+                EnsureInitialized();
+                return implementation.CurrentClr; 
+            }
+        }
+
+        public static Bitness CurrentBitness
+        {
+            get
+            {
+                EnsureInitialized();
+                return implementation.CurrentBitness;
+            }
         }
 
         /// <summary>
@@ -55,7 +80,7 @@ namespace Hawkeye
             EnsureInitialized();
             return implementation.GetLogServiceFactory();
         }
-
+        
         private static void EnsureInitialized()
         {
             if (!initialized) throw new ApplicationException(

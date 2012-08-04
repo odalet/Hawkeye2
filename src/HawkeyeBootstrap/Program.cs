@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
 using ManagedInjector;
-using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace HawkeyeBootstrap
 {
@@ -31,18 +31,19 @@ namespace HawkeyeBootstrap
             Log("Starting the injection process...", false);
 
             var windowHandle = (IntPtr)Int64.Parse(args[0]);
-            var assemblyName = args[1];
-            var className = args[2];
-            var methodName = args[3];
+            var originalHandle = (IntPtr)Int64.Parse(args[1]);
+            var assemblyName = args[2];
+            var className = args[3];
+            var methodName = args[4];
 
-            Injector.Launch(windowHandle, assemblyName, className, methodName, logFileName);
+            Injector.Launch(windowHandle, originalHandle, assemblyName, className, methodName, logFileName);
 
             //check to see that it was injected, and if not, retry with the main window handle.
             var process = GetProcessFromWindowHandle(windowHandle);
             if (process != null && !CheckInjectedStatus(process) && process.MainWindowHandle != windowHandle)
             {
                 Log("Could not inject with current handle... retrying with MainWindowHandle");
-                Injector.Launch(process.MainWindowHandle, assemblyName, className, methodName, logFileName);
+                Injector.Launch(process.MainWindowHandle, originalHandle, assemblyName, className, methodName, logFileName);
                 CheckInjectedStatus(process);
             }
         }
@@ -77,7 +78,7 @@ namespace HawkeyeBootstrap
             }
 
             if (containsFile) Log(string.Format(
-                "Successfully injected Snoop for process {0} (PID = {1})", process.ProcessName, process.Id));
+                "Successfully injected Hawkeye for process {0} (PID = {1})", process.ProcessName, process.Id));
             else Log(string.Format(
                 "Failed to inject for process {0} (PID = {1})", process.ProcessName, process.Id));
 

@@ -44,12 +44,12 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Reflection\AssemblyResolver.cs" />
     <Compile Include="extensions\ListExtensions.cs" />
     <Compile Include="extensions\ModuleInfoExtensions.cs" />
     <Compile Include="extensions\ReflectionExtensions.cs" />
     <Compile Include="extensions\StringBuilderExtensions.cs" />
-    <Compile Include="Logging\BaseLogService.cs" />
-    <Compile Include="Logging\DebugLogService.cs" />
+    <Compile Include="HawkeyeRunner.cs" />
     <Compile Include="Logging\log4net\Log4NetHelper.cs" />
     <Compile Include="Logging\log4net\Log4NetLayoutFormatter.cs" />
     <Compile Include="Logging\log4net\Log4NetService.cs" />
@@ -66,6 +66,11 @@
     <Compile Include="Reflection\FieldAccessor.cs" />
     <Compile Include="Reflection\MethodAccessor.cs" />
     <Compile Include="Reflection\PropertyAccessor.cs" />
+    <Compile Include="SR.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SR.resx</DependentUpon>
+    </Compile>
     <Compile Include="ThisImplementation.cs" />
     <Compile Include="UI\MainControl.cs">
       <SubType>UserControl</SubType>
@@ -79,6 +84,7 @@
     <Compile Include="UI\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\MessageBoxes.cs" />
     <Compile Include="UI\PropertyGridEx.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -109,6 +115,10 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SR.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SR.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\MainControl.resx">
       <DependentUpon>MainControl.cs</DependentUpon>

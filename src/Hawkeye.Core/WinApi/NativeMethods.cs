@@ -40,32 +40,35 @@ namespace Hawkeye.WinApi
         public static extern IntPtr WindowFromPoint(POINT Point);
 
         [DllImport("user32.dll")]
-        public static extern IntPtr ChildWindowFromPoint(IntPtr hWndParent, POINT Point);
+        public static extern IntPtr ChildWindowFromPoint(IntPtr hwndParent, POINT Point);
 
         [DllImport("user32.dll")]
-        public static extern bool ScreenToClient(IntPtr hWnd, ref POINT lpPoint);
+        public static extern bool ScreenToClient(IntPtr hwnd, ref POINT lpPoint);
 
         [DllImport("user32.dll")]
         public static extern IntPtr GetWindowRect(IntPtr hwnd, ref RECT rc);
 
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern IntPtr GetParent(IntPtr hWnd);
+        public static extern IntPtr GetParent(IntPtr hwnd);
 
         [DllImport("user32.dll")]
-        public static extern IntPtr GetWindowDC(IntPtr hWnd);
+        public static extern IntPtr GetWindowDC(IntPtr hwnd);
 
         [DllImport("user32.dll")]
-        public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
+        public static extern int ReleaseDC(IntPtr hwnd, IntPtr hDC);
 
         [DllImport("user32.dll")]
-        public static extern bool InvalidateRect(IntPtr hWnd, IntPtr lpRect, bool bErase);
+        public static extern bool InvalidateRect(IntPtr hwnd, IntPtr lpRect, bool bErase);
 
         [DllImport("user32.dll")]
-        public static extern bool UpdateWindow(IntPtr hWnd);
+        public static extern bool UpdateWindow(IntPtr hwnd);
 
         [DllImport("user32.dll")]
-        public static extern bool RedrawWindow(IntPtr hWnd, IntPtr lpRect, IntPtr hrgnUpdate, uint flags);
+        public static extern bool RedrawWindow(IntPtr hwnd, IntPtr lpRect, IntPtr hrgnUpdate, uint flags);
 
+        [DllImport("user32.dll")]
+        public static extern IntPtr SendMessage(IntPtr hwnd, int msg, IntPtr wparam, IntPtr lparam);
+        
         #endregion
 
         /// <summary>

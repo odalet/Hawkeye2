@@ -42,8 +42,9 @@ namespace Hawkeye.UI
             base.MouseDown += (s, _) => { if (!searching) StartSearch(); };
             base.MouseMove += (s, ev) =>
             {
-                if (!searching) StopSearch();
-                else Search(ev.Location);
+                if (searching) Search(ev.Location);
+                //if (!searching) StopSearch();
+                //else Search(ev.Location);
             };
             base.MouseUp += (s, _) => StopSearch();
         }
@@ -94,8 +95,8 @@ namespace Hawkeye.UI
         private void StopSearch()
         {
             searching = false;
-            base.Capture = false;
             base.Cursor = Cursors.Default;
+            base.Capture = false;
 
             if (windowHandle != IntPtr.Zero)
                 WindowHelper.RemoveAdorner(windowHandle); // Remove highlight

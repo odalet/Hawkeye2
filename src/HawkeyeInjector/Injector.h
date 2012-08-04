@@ -20,6 +20,7 @@ namespace ManagedInjector
 
 		static void Launch(
 			System::IntPtr windowHandle, 
+			System::IntPtr hawkeyeHandle, 
 			System::String^ assemblyName, 
 			System::String^ className, 
 			System::String^ methodName, 

@@ -28,9 +28,25 @@ namespace Hawkeye
         IModuleInfo[] Modules { get; }
 
         /// <summary>
+        /// Get this Window owner's thread Id 
+        /// </summary>
+        int ThreadId { get; }
+
+        /// <summary>
+        /// Get this Window owner's process Id 
+        /// </summary>
+        int ProcessId { get; }
+
+        /// <summary>
         /// Dumps the content of this object in a text form.
         /// </summary>
         /// <returns>A string with the dumped data.</returns>
         string Dump();
+
+        /// <summary>
+        /// Returns a short string representation of the window information
+        /// </summary>
+        /// <returns>A string</returns>
+        string ToShortString();
     }
 }

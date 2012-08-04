@@ -117,26 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="windowFinderControl.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAZdEVYdFNvZnR3YXJlAEFkb2JlIEltYWdlUmVhZHlxyWU8AAADUklEQVRYR8WXT0hUURTGr7SQ
-        lkUuAiMIWgiBqxYtkgpXQYWUYKhJBGkyltq4CLNIhP6AmgUVGZQhKZFFUFoZ0boWupBsH2grQYICDb7O
-        b2YeXt/Mm3EWzSwu8+ae7/vOd8899848J8kVc+SX/M1zqaVWOrZP2mFUfzBHDEwei8ptYPGHdK1D2lue
-        njRsIvgOFg7cHGayG2A1+SQOG4KboyLRBihnJkFWFogGcVbJXFSl0IqoRGYD4eSsZHggXcQ34CcAG65c
-        hIl0A+HkfL932GnmhdP8u0oNHqjReMusLu+cVaPRGTwzRwwMWDiZtEKVWG+AMvplR2DsnNP9I05fRuv1
-        6tIvxbesKGa08zZaU4Nn5oiBAQsHbthEqCfWDNCxftkgLsw5jVuWh8cb1Lfnry6SuFTqr1rQo7qXqrfv
-        DJ6ZIwYGLBy4aPgmyOGdjjUDNJB/jJYXnX7Om4HYSXVvly4Y9MquGT1pjNso0fsbTnU2x+CZOWJgwMKB
-        iwZa/uLIldqKNQM+gCb6s1yqxW+ndL1yVZ0lsv39qsGDW/W4welOtdPV3U5tbjIxeGaOGBiwcOCigRaa
-        /gLXGfD3HiME595WaKJrVV3msbdiVqOny0zYafSMU2yTsx5w1gPTicEzc8QSGMPCgYsGWmj6i0z1QrIC
-        /h4F5flws0Zd236rffOKpvpimr7l9KzZ+uFEkBwD5amRnCMGBiwcuGigRR5/m1PHMmnAv9uDLh07+93K
-        Kw1VL+nTbaehQ04dlqQtsfLMgxgYsAmOcdFAK7isgm0gp80lDfhHLzinPXa2OV4jTRN6cNSpM0visCGw
-        cOCigVagG8qVbiAAcMHYMVZTqtNbrdmSg7JHVYFYEsfpgIsGWpl+uDJWwDfA5dJsTVlrn/kagAMXjbwM
-        +FvQbuSpPtuCGqe4rTrZ+dkHGLBw4KKRcwuimhD3/VVL+thvHW6CPVYemizKBDEwYOHARSNnE+Y6hpO9
-        MX2+6/S622k4yzEkBgYsnA0fw41cRCNNZRrY7/Q0y0VEDAzYvC6i8C1V8Ks4fEtxZRb8x6joP8fhq5L7
-        oKB/SILzX9S/ZFEmCvqnNMoEWxK8cPz3v+WBiaK+mAQmivpqFn6bKcrLaR5vurleRDPF/wHuWAkJ9b1K
-        GQAAAABJRU5ErkJggg==
-</value>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>Question</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
   </data>
 </root>

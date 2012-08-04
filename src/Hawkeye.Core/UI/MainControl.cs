@@ -2,11 +2,15 @@
 using System.IO;
 using System.Windows.Forms;
 using Hawkeye.WinApi;
+using Hawkeye.Logging;
+using System.Diagnostics;
 
 namespace Hawkeye.UI
 {
     public partial class MainControl : UserControl
     {
+        private static readonly ILogService log = LogManager.GetLogger<MainControl>();
+
         private IWindowInfo currentInfo = null;
 
         /// <summary>
@@ -15,6 +19,11 @@ namespace Hawkeye.UI
         public MainControl()
         {
             InitializeComponent();
+        }
+
+        public void SetTarget(IntPtr hwnd)
+        {
+            BuildCurrentWindowInfo(hwnd);
         }
 
         /// <summary>
@@ -27,17 +36,19 @@ namespace Hawkeye.UI
 
             if (DesignMode) return;
 
-            hwndBox.Text = Handle.ToString();
             OnCurrentInfoChanged();
 
-            windowFinderControl1.ActiveWindowChanged += (s, _) =>
-                hwndBox.Text = windowFinderControl1.ActiveWindowHandle.ToString();
-            windowFinderControl1.WindowSelected += (s, _) =>
+            windowFinderControl.ActiveWindowChanged += (s, _) =>
+                hwndBox.Text = windowFinderControl.ActiveWindowHandle.ToString();
+            windowFinderControl.WindowSelected += (s, _) =>
             {
-                var hwnd = windowFinderControl1.ActiveWindowHandle;
+                var hwnd = windowFinderControl.ActiveWindowHandle;
                 if (hwnd == IntPtr.Zero) CurrentInfo = null;
-                else CurrentInfo = new WindowInfo(hwnd);
+                else BuildCurrentWindowInfo(hwnd);
             };
+
+            // Default window is Hawkeye itself
+            //BuildCurrentWindowInfo(ParentForm.Handle);
         }
 
         private IWindowInfo CurrentInfo
@@ -54,44 +65,57 @@ namespace Hawkeye.UI
         private void OnCurrentInfoChanged()
         {
             pgrid.SelectedObject = CurrentInfo;
-            pgrid.ExpandAllGridItems();
-
+            //pgrid.ExpandAllGridItems(); // this takes too much time!
             dumpButton.Enabled = CurrentInfo != null;
+            if (CurrentInfo == null) return; // nope
+
+            hwndBox.Text = CurrentInfo.ToShortString();
+
+            // Should we inject?                        
+            // Same process, don't inject.
+            if (CurrentInfo.ProcessId == Process.GetCurrentProcess().Id) return;
+
+            // Not a .NET process
+            if (CurrentInfo.Clr == Clr.Unknown) return;
+            
+            // Ok, inject ourself
+            HawkeyeRunner.Inject(CurrentInfo);
         }
 
-        private IWindowInfo CreateWindowInfo(IntPtr hwnd)
+        private void BuildCurrentWindowInfo(IntPtr hwnd)
         {
-            return This.GetWindowInfo(hwnd);
-        }
-
-        private void Detect()
-        {
-            CurrentInfo = null;
-            IntPtr hwnd = IntPtr.Zero;
-            if (This.IsX64)
+            base.Cursor = Cursors.WaitCursor;
+            base.Enabled = false;
+            base.Refresh();
+            try
             {
-                long windowHandle;
-                if (!long.TryParse(hwndBox.Text, out windowHandle)) MessageBox.Show(
-                    this, string.Format("{0} is not a valid window handle.", hwndBox.Text), "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                else hwnd = new IntPtr(windowHandle);
+                WindowInfo info = null;
+                try
+                {
+                    info = new WindowInfo(hwnd);
+                }
+                catch (Exception ex)
+                {
+                    log.Error(string.Format(
+                        "Error while building window info: {0}", ex.Message), ex);
+                }
+                
+                CurrentInfo = info;
             }
-            else
+            finally
             {
-                int windowHandle;
-                if (!int.TryParse(hwndBox.Text, out windowHandle)) MessageBox.Show(
-                    this, string.Format("{0} is not a valid window handle.", hwndBox.Text), "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                else hwnd = new IntPtr(windowHandle);
+                base.Enabled = true;
+                base.Cursor = Cursors.Default;
             }
-
-            CurrentInfo = CreateWindowInfo(hwnd);
         }
 
         private void Dump()
         {
-            if (CurrentInfo == null) throw new InvalidOperationException(
-                "Can't dump if no window selected.");
+            if (CurrentInfo == null)
+            {
+                ErrorBox.Show(this, "Can't dump if no window selected.");
+                return;
+            }
 
             var filename = GetFileName();
             if (string.IsNullOrEmpty(filename)) return;
@@ -107,16 +131,14 @@ namespace Hawkeye.UI
             }
             catch (Exception ex)
             {
-                //ErrorBox.Show(ex.ToString());
-                MessageBox.Show(ex.ToString());
+                var message = string.Format("Could not create dump file for handle {0}: {1}", CurrentInfo.Handle, ex.Message);
+                log.Error(message, ex);
+                ErrorBox.Show(this, message);
             }
         }
 
         private string GetFileName()
         {
-            if (CurrentInfo == null) throw new InvalidOperationException(
-                "Can't dump if no window selected.");
-
             using (var dialog = new SaveFileDialog()
             {
                 //FileName = string.Format("dump_{0}.log", CurrentInfo.Hwnd),
@@ -129,9 +151,7 @@ namespace Hawkeye.UI
                 else return string.Empty;
             }
         }
-
-        private void detectButton_Click(object sender, EventArgs e) { Detect(); }
-
+        
         private void dumpButton_Click(object sender, EventArgs e) { Dump(); }
     }
 }

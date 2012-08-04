@@ -46,11 +46,13 @@
     <Compile Include="enums.cs" />
     <Compile Include="extensions\DateTimeExtensions.cs" />
     <Compile Include="extensions\ExceptionExtensions.cs" />
+    <Compile Include="Logging\BaseLogService.cs" />
     <Compile Include="Logging\interfaces.cs" />
     <Compile Include="Logging\LogEntry.cs" />
     <Compile Include="Logging\LoggingExtensions.cs" />
     <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="Logging\LogManager.cs" />
+    <Compile Include="Logging\LogManager.Debug.cs" />
     <Compile Include="oldHawkeyeApi_TODO\IDynamicSubclass.cs" />
     <Compile Include="oldHawkeyeApi_TODO\IHawkeyeApi.cs" />
     <Compile Include="oldHawkeyeApi_TODO\IHawkeyeEditor.cs" />
