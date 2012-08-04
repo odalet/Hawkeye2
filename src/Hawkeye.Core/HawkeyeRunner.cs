@@ -71,7 +71,7 @@ namespace Hawkeye
             mainForm.SetTarget(targetHandle);
 
             // close original window
-            NativeMethods.SendMessage(hawkeyeHandle, 0x0010, IntPtr.Zero, IntPtr.Zero); // close
+            NativeMethods.SendMessage(hawkeyeHandle, WindowMessages.WM_CLOSE, IntPtr.Zero, IntPtr.Zero); // close
             
             // Show new window
             mainForm.Show();

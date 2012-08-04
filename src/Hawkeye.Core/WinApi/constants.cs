@@ -6,7 +6,7 @@ namespace Hawkeye.WinApi
 {
     // Constants & flags
     [Flags]
-    public enum SnapshotFlags : uint
+    internal enum SnapshotFlags : uint
     {
         HeapList = 0x00000001,
         Process = 0x00000002,
@@ -19,7 +19,7 @@ namespace Hawkeye.WinApi
 
     // RedrawWindow flags
     [Flags]
-    public enum RDW : uint
+    internal enum RDW : uint
     {
         RDW_INVALIDATE = 0x0001,
         RDW_INTERNALPAINT = 0x0002,
@@ -37,5 +37,10 @@ namespace Hawkeye.WinApi
 
         RDW_FRAME = 0x0400,
         RDW_NOFRAME = 0x0800
+    }
+
+    internal static class WindowMessages
+    {
+        public const uint WM_CLOSE = 0x0010;
     }
 }

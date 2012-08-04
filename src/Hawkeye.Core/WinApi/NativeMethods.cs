@@ -67,7 +67,7 @@ namespace Hawkeye.WinApi
         public static extern bool RedrawWindow(IntPtr hwnd, IntPtr lpRect, IntPtr hrgnUpdate, uint flags);
 
         [DllImport("user32.dll")]
-        public static extern IntPtr SendMessage(IntPtr hwnd, int msg, IntPtr wparam, IntPtr lparam);
+        public static extern IntPtr SendMessage(IntPtr hwnd, uint msg, IntPtr wparam, IntPtr lparam);
         
         #endregion
 
