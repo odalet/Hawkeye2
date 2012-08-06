@@ -18,7 +18,7 @@ namespace Hawkeye.Logging
             private static Type thisServiceType = typeof(DebugLogger);
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="DebugLogService"/> class.
+            /// Initializes a new instance of the <see cref="DebugLogger"/> class.
             /// </summary>
             /// <param name="type">The type.</param>
             public DebugLogger(Type type)
@@ -40,7 +40,7 @@ namespace Hawkeye.Logging
             /// Logs the specified log entry.
             /// </summary>
             /// <param name="entry">The entry to log.</param>
-            public override void Log(LogEntry entry)
+            public override void Log(ILogEntry entry)
             {
                 entry.Source = SourceType.Name;
                 Debug.WriteLine(entry.ToString());

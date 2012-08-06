@@ -2,10 +2,10 @@
 
 namespace Hawkeye.Logging
 {
-	/// <summary>
+    /// <summary>
     /// Adds shortcut methods to the <see cref="Hawkeye.Logging.ILogService"/> interface.
-	/// </summary>
-	public static class LoggingExtensions
+    /// </summary>
+    public static class LoggingExtensions
     {
         #region Log
 
@@ -40,7 +40,7 @@ namespace Hawkeye.Logging
         /// <param name="exception">The exception to trace.</param>
         public static void Log(this ILogService log, LogLevel level, string message, Exception exception)
         {
-            log.Log(new LogEntry() { Level = level, Message = message, Exception = exception });
+            log.Log(log.MakeLogEntry(level, message, exception));
         }
 
         #endregion
@@ -53,7 +53,7 @@ namespace Hawkeye.Logging
         /// <param name="log">The logging service used to output the trace.</param>
         /// <param name="message">The message to trace.</param>
         public static void Verbose(this ILogService log, string message) { log.Log(LogLevel.Verbose, message); }
-        
+
         /// <summary>
         /// Logs the specified exception with the <see cref="LogLevel.Verbose"/> trace level.
         /// </summary>
@@ -68,18 +68,18 @@ namespace Hawkeye.Logging
         /// <param name="message">The message to trace.</param>
         /// <param name="exception">The exception to trace.</param>
         public static void Verbose(this ILogService log, string message, Exception exception) { log.Log(LogLevel.Verbose, message, exception); }
-        
+
         #endregion
 
-		#region Debug
+        #region Debug
 
-		/// <summary>
+        /// <summary>
         /// Logs the specified message with the <see cref="LogLevel.Debug"/> trace level.
         /// </summary>
         /// <param name="log">The logging service used to output the trace.</param>
         /// <param name="message">The message to trace.</param>
         public static void Debug(this ILogService log, string message) { log.Log(LogLevel.Debug, message); }
-        
+
         /// <summary>
         /// Logs the specified exception with the <see cref="LogLevel.Debug"/> trace level.
         /// </summary>
@@ -94,18 +94,18 @@ namespace Hawkeye.Logging
         /// <param name="message">The message to trace.</param>
         /// <param name="exception">The exception to trace.</param>
         public static void Debug(this ILogService log, string message, Exception exception) { log.Log(LogLevel.Debug, message, exception); }
-        
+
         #endregion
 
-		#region Info
+        #region Info
 
-		/// <summary>
+        /// <summary>
         /// Logs the specified message with the <see cref="LogLevel.Info"/> trace level.
         /// </summary>
         /// <param name="log">The logging service used to output the trace.</param>
         /// <param name="message">The message to trace.</param>
         public static void Info(this ILogService log, string message) { log.Log(LogLevel.Info, message); }
-        
+
         /// <summary>
         /// Logs the specified exception with the <see cref="LogLevel.Info"/> trace level.
         /// </summary>
@@ -120,18 +120,18 @@ namespace Hawkeye.Logging
         /// <param name="message">The message to trace.</param>
         /// <param name="exception">The exception to trace.</param>
         public static void Info(this ILogService log, string message, Exception exception) { log.Log(LogLevel.Info, message, exception); }
-        
+
         #endregion
 
-		#region Warning
+        #region Warning
 
-		/// <summary>
+        /// <summary>
         /// Logs the specified message with the <see cref="LogLevel.Warning"/> trace level.
         /// </summary>
         /// <param name="log">The logging service used to output the trace.</param>
         /// <param name="message">The message to trace.</param>
         public static void Warning(this ILogService log, string message) { log.Log(LogLevel.Warning, message); }
-        
+
         /// <summary>
         /// Logs the specified exception with the <see cref="LogLevel.Warning"/> trace level.
         /// </summary>
@@ -146,18 +146,18 @@ namespace Hawkeye.Logging
         /// <param name="message">The message to trace.</param>
         /// <param name="exception">The exception to trace.</param>
         public static void Warning(this ILogService log, string message, Exception exception) { log.Log(LogLevel.Warning, message, exception); }
-        
+
         #endregion
 
-		#region Error
+        #region Error
 
-		/// <summary>
+        /// <summary>
         /// Logs the specified message with the <see cref="LogLevel.Error"/> trace level.
         /// </summary>
         /// <param name="log">The logging service used to output the trace.</param>
         /// <param name="message">The message to trace.</param>
         public static void Error(this ILogService log, string message) { log.Log(LogLevel.Error, message); }
-        
+
         /// <summary>
         /// Logs the specified exception with the <see cref="LogLevel.Error"/> trace level.
         /// </summary>
@@ -172,18 +172,18 @@ namespace Hawkeye.Logging
         /// <param name="message">The message to trace.</param>
         /// <param name="exception">The exception to trace.</param>
         public static void Error(this ILogService log, string message, Exception exception) { log.Log(LogLevel.Error, message, exception); }
-        
+
         #endregion
 
-		#region Fatal
+        #region Fatal
 
-		/// <summary>
+        /// <summary>
         /// Logs the specified message with the <see cref="LogLevel.Fatal"/> trace level.
         /// </summary>
         /// <param name="log">The logging service used to output the trace.</param>
         /// <param name="message">The message to trace.</param>
         public static void Fatal(this ILogService log, string message) { log.Log(LogLevel.Fatal, message); }
-        
+
         /// <summary>
         /// Logs the specified exception with the <see cref="LogLevel.Fatal"/> trace level.
         /// </summary>
@@ -198,7 +198,7 @@ namespace Hawkeye.Logging
         /// <param name="message">The message to trace.</param>
         /// <param name="exception">The exception to trace.</param>
         public static void Fatal(this ILogService log, string message, Exception exception) { log.Log(LogLevel.Fatal, message, exception); }
-        
+
         #endregion
-	}
+    }
 }

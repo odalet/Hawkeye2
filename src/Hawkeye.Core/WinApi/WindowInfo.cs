@@ -117,7 +117,7 @@ namespace Hawkeye.WinApi
             // inspected app is a 32bits application running on a x64 box.
             // Hope nobody will have the good idea to name one of its dll
             // wow64 in a 32bits app... ;)
-            if (This.IsX64)
+            if (HawkeyeApplication.IsX64)
             {
                 var isWow64 = Modules.Any(
                     m => m.Name.ToLowerInvariant().Contains("wow64"));

@@ -112,10 +112,18 @@ LRESULT __stdcall MessageHookProc(int nCode, WPARAM wparam, LPARAM lparam)
 					if (methodInfo != nullptr)
 					{
 						System::Diagnostics::Debug::WriteLine(System::String::Format("About to invoke {0} on type {1}", methodInfo->Name, acmSplit[3]));
-						Object^ returnValue = methodInfo->Invoke(nullptr, acmSplit);
-						if (nullptr == returnValue)
-							returnValue = "NULL";
-						System::Diagnostics::Debug::WriteLine(String::Format("Return value of {0} on type {1} is {2}", methodInfo->Name, acmSplit[3], returnValue));
+						try
+						{
+							Object^ returnValue = methodInfo->Invoke(nullptr, acmSplit);
+							if (nullptr == returnValue)
+								returnValue = "NULL";
+							System::Diagnostics::Debug::WriteLine(String::Format("Return value of {0} on type {1} is {2}", methodInfo->Name, acmSplit[3], returnValue));
+						}
+						catch (System::Exception^ e)
+						{
+							// for debugging purpose
+							System::Exception^ debugException = e; 
+						}
 					}
 					else System::Diagnostics::Debug::WriteLine(System::String::Format("Could not find method {0} in type {1}", acmSplit[4], acmSplit[3]), "Error");
 				}

@@ -6,7 +6,7 @@ namespace Hawkeye.Logging
     /// <summary>
     /// Use this class to obtain an instance of a logging service.
     /// </summary>
-    public static partial class LogManager
+    internal static partial class LogManager
     {
         private static readonly ILogServiceFactory factory;
 
@@ -15,10 +15,10 @@ namespace Hawkeye.Logging
         /// </summary>
         static LogManager()
         {
-            //factory = new DebugLogServiceFactory();
-            //factory = new log4net.Log4NetServiceFactory();            
-            if (This.IsInitialized) factory = This.GetLogServiceFactory();
-            else factory = new DebugLogger(null);
+            // Try to get a factory from HawkeyeApplication
+            factory = HawkeyeApplication.LogFactory;
+            if (factory == null)
+                factory = new DebugLogger(null); // fallback
         }
 
         /// <summary>
@@ -64,7 +64,9 @@ namespace Hawkeye.Logging
         /// </returns>
         public static ILogService GetLogger(Type type, IDictionary<string, object> additionalData = null)
         {
-            return factory.GetLogger(type, additionalData);
+			if (factory == null) // This may happen in VS designer and this makes VS crash!
+				return new DebugLogger(type);
+            else return factory.GetLogger(type, additionalData);
         }
 
         /// <summary>

@@ -79,7 +79,7 @@ namespace Hawkeye.UI
             if (CurrentInfo.Clr == Clr.Unknown) return;
             
             // Ok, inject ourself
-            HawkeyeRunner.Inject(CurrentInfo);
+            HawkeyeApplication.Inject(CurrentInfo);
         }
 
         private void BuildCurrentWindowInfo(IntPtr hwnd)

@@ -44,12 +44,20 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="HawkeyeApplication.cs" />
+    <Compile Include="HawkeyeApplication.host.cs" />
+    <Compile Include="HawkeyeApplication.impl.cs" />
+    <Compile Include="HawkeyeAttacher.cs" />
+    <Compile Include="Logging\BaseLogService.cs" />
+    <Compile Include="Logging\interfaces.cs" />
+    <Compile Include="Logging\LogEntry.cs" />
+    <Compile Include="Logging\LogManager.cs" />
+    <Compile Include="Logging\LogManager.Debug.cs" />
     <Compile Include="Reflection\AssemblyResolver.cs" />
     <Compile Include="extensions\ListExtensions.cs" />
     <Compile Include="extensions\ModuleInfoExtensions.cs" />
     <Compile Include="extensions\ReflectionExtensions.cs" />
     <Compile Include="extensions\StringBuilderExtensions.cs" />
-    <Compile Include="HawkeyeRunner.cs" />
     <Compile Include="Logging\log4net\Log4NetHelper.cs" />
     <Compile Include="Logging\log4net\Log4NetLayoutFormatter.cs" />
     <Compile Include="Logging\log4net\Log4NetService.cs" />
@@ -71,7 +79,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SR.resx</DependentUpon>
     </Compile>
-    <Compile Include="ThisImplementation.cs" />
     <Compile Include="UI\MainControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

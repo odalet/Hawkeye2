@@ -19,7 +19,8 @@ namespace Hawkeye.UI
         private void UpdateTitle()
         {
             base.Text = string.Format("Hawkeye {0} - {1}", 
-                This.CurrentClr, This.CurrentBitness.ToString().ToLowerInvariant());
+                HawkeyeApplication.CurrentClr, 
+                HawkeyeApplication.CurrentBitness.ToString().ToLowerInvariant());
         }
 
         private void Inject(Clr clr, Bitness bitness)
@@ -44,6 +45,14 @@ namespace Hawkeye.UI
         private void injectN4x64Button_Click(object sender, EventArgs e)
         {
             Inject(Clr.Net4, Bitness.x64);
+        }
+
+        private static int logCount = 0;
+        private void button1_Click(object sender, EventArgs e)
+        {
+            logCount++;
+            var l = Hawkeye.Logging.LogManager.GetLogger(GetType());
+            Hawkeye.Logging.LoggingExtensions.Verbose(l, "TEST LOGGING: " + logCount);
         }
     }
 }

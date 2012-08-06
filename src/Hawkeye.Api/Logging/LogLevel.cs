@@ -25,8 +25,8 @@ namespace Hawkeye.Logging
 
         /// <summary>Highest logging trace level: used to log serious and fatal errors.</summary>
         Fatal = 6,
-        
+
         /// <summary>Do not log anything.</summary>
-		Off  = 7,
+        Off = 7,
     }
 }

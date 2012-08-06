@@ -16,7 +16,7 @@ namespace HawkeyeApplication
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            HawkeyeRunner.Run();
+            global::Hawkeye.HawkeyeApplication.Run();
         }
     }
 }

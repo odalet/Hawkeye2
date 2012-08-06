@@ -6,7 +6,7 @@ namespace Hawkeye.Logging
     /// <summary>
     /// This class stores the properties, a logging message is made of.
     /// </summary>
-    public class LogEntry
+    internal class LogEntry : ILogEntry
     {
         private class DefaultFormatter : ILogEntryFormatter
         {
@@ -51,7 +51,7 @@ namespace Hawkeye.Logging
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LogEntry"/> class.
+        /// Initializes a new instance of the <see cref="ILogEntry"/> class.
         /// </summary>
         public LogEntry() 
         {
