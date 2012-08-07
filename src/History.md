@@ -1,3 +1,7 @@
+Version 0.1.0 - 2012/08/07
+==========================
+* Not quite yet fnished! but tagged so that issues created in github can reference it.
+
 Version 1.2.5 - 2011/01/10
 ==========================
 * Fixed the **Hawkeye does not detect x86 applications on x86 Windows!!!**. See <http://hawkeye.codeplex.com/workitem/7791>
