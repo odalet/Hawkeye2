@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Hawkeye.Logging;
-using Hawkeye.WinApi;
-using Hawkeye.UI;
-using System.Diagnostics;
-using System.Reflection;
-using System.Windows.Forms;
 using System.IO;
+using System.Reflection;
+using System.Diagnostics;
+using System.Windows.Forms;
+
+using Hawkeye.UI;
+using Hawkeye.WinApi;
+using Hawkeye.Logging;
 using Hawkeye.Logging.log4net;
 
 namespace Hawkeye
@@ -82,7 +81,7 @@ namespace Hawkeye
                 // Not a supported CLR
                 if (info.Clr == Clr.Unsupported) return false;
                 
-                // Don't know! But maybe this is because we triedto inspect a x64 process and we are x86...
+                // Don't know! But maybe this is because we tried to inspect a x64 process and we are x86...
                 if (info.Clr == Clr.Undefined) 
                     return HawkeyeApplication.CurrentBitness == Bitness.x86 && info.Bitness == Bitness.x64;
                 
@@ -103,11 +102,11 @@ namespace Hawkeye
                 var hawkeyeAttacherType = typeof(__HawkeyeAttacherNamespace__.HawkeyeAttacher);
                 var arguments = new string[]
                 {
-                    handle.ToString(),                                          // Target window
-                    mainForm.Handle.ToString(),                                 // Original Hawkeye 
-                    "\"" + hawkeyeAttacherType.Assembly.Location + "\"",     // This assembly
-                    "\"" + hawkeyeAttacherType.FullName + "\"",          // The main hawkeye application class
-                    "Attach"                                                    // Attach method
+                    handle.ToString(),                                      // Target window
+                    mainForm.Handle.ToString(),                             // Original Hawkeye 
+                    "\"" + hawkeyeAttacherType.Assembly.Location + "\"",    // This assembly
+                    "\"" + hawkeyeAttacherType.FullName + "\"",             // The main hawkeye application class
+                    "Attach"                                                // Attach method
                 };
 
                 var pinfo = new ProcessStartInfo(
@@ -214,7 +213,9 @@ namespace Hawkeye
                 // Very special case: Hawkeye is x86 and the spied process is x64: we can't know for sure
                 // whether the process is .NET 2 or 4 or none.
                 // So, we must simply re-run Hawkeye.exe (which is compiled as Any Cpu and therefore
-                // Will run as x64 in a x64 environment.
+                // will run as x64 in a x64 environment) passing it the handle of the spied window so that another 
+                // detection is achieved, this time from a x64 process.
+                // Note that because we run Hawkeye.exe, we won't inject anything.
                 if (clr == Clr.Undefined && HawkeyeApplication.CurrentBitness == Bitness.x86 && bitness == Bitness.x64)
                     return Path.Combine(directory, "Hawkeye.exe");
 

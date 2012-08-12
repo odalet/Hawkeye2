@@ -1,7 +1,6 @@
 ﻿using System;
 
 using Hawkeye.Logging;
-using Hawkeye.Reflection;
 
 namespace Hawkeye
 {
@@ -96,18 +95,7 @@ namespace Hawkeye
         {
             get { return implementation.GetLogServiceFactory(); }
         }
-
-        /// <summary>
-        /// Gets a value indicating whether we are running in x64 mode.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if x64; otherwise, <c>false</c>.
-        /// </value>
-        public static bool IsX64
-        {
-            get { return IntPtr.Size == 8; }
-        }
-
+        
         /// <summary>
         /// Gets a value indicating whether the Hawkeye application is running injected in a 
         /// host process or in its original process.
