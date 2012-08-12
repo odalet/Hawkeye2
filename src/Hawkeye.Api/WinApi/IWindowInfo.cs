@@ -38,6 +38,11 @@ namespace Hawkeye
         int ProcessId { get; }
 
         /// <summary>
+        /// Gets this window class name
+        /// </summary>
+        string ClassName { get; }
+
+        /// <summary>
         /// Dumps the content of this object in a text form.
         /// </summary>
         /// <returns>A string with the dumped data.</returns>

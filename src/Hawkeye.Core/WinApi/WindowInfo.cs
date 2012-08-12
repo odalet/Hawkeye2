@@ -5,10 +5,14 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
+using Hawkeye.Logging;
+
 namespace Hawkeye.WinApi
 {
     internal class WindowInfo : IWindowInfo
     {
+        private static readonly ILogService log = LogManager.GetLogger<WindowInfo>();
+
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowInfo"/> class.
         /// </summary>
@@ -52,6 +56,11 @@ namespace Hawkeye.WinApi
         public int ProcessId { get; private set; }
 
         /// <summary>
+        /// Gets this window class name
+        /// </summary>
+        public string ClassName { get; private set; }
+
+        /// <summary>
         /// Dumps the content of this object in a text form.
         /// </summary>
         /// <returns>
@@ -62,6 +71,7 @@ namespace Hawkeye.WinApi
 
             var builder = new StringBuilder();
             builder.AppendFormattedLine("Hwnd = {0}", Handle);
+            builder.AppendFormattedLine("WndClass = {0}", ClassName);
             builder.AppendFormattedLine("Bitness = {0}", Bitness);
             builder.AppendFormattedLine("Clr = {0}", Clr);
             builder.AppendFormattedLine("Modules ({0}):", Modules.Length);
@@ -91,23 +101,33 @@ namespace Hawkeye.WinApi
             ProcessId = pid;
 
             Modules = GetModules(pid).Select(m => new ModuleInfo(m)).ToArray();
-
-            Clr = DetectFramework();
+            
             Bitness = DetectBitness();
+            
+            Clr = DetectFramework();            
         }
 
         private Clr DetectFramework()
         {
+            if (Modules.Length == 0)
+                return Clr.Undefined;
+
             var mscorlibs = Modules
                 .Where(m => m.Name.Contains("mscorlib")).ToArray();
-            if (mscorlibs.Length == 0) return Clr.Unknown;
-            if (mscorlibs
-                .Select(m => FileVersionInfo.GetVersionInfo(m.Path).FileMajorPart)
-                .Any(v => v == 4)) return Clr.Net4;
-            if (mscorlibs
-                .Select(m => FileVersionInfo.GetVersionInfo(m.Path).FileMajorPart)
-                .Any(v => v >= 2 && v < 4)) return Clr.Net2;
-            return Clr.Unknown;
+            if (mscorlibs.Length == 0) return Clr.None;
+
+            var mscorlibsVersion = mscorlibs
+                .Select(m => FileVersionInfo.GetVersionInfo(m.Path).FileMajorPart).ToArray();
+
+            if (mscorlibsVersion.Any(v => v == 4)) return Clr.Net4;
+            if (mscorlibsVersion.Any(v => v >= 2 && v < 4)) return Clr.Net2;
+            
+            // We have mscorlib assemblies, but we can't tell whether they are .NET 2 or 4; let's say they are unsupported.
+            log.Warning(string.Format("Unknown mscorlib versions:\r\n{0}", 
+                string.Join("----------------------------------------\r\n",
+                mscorlibs.Select(m => FileVersionInfo.GetVersionInfo(m.Path).ToString()).ToArray())));
+
+            return Clr.Unsupported;
         }
 
         private Bitness DetectBitness()

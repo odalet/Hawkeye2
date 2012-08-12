@@ -36,8 +36,6 @@ namespace Hawkeye.UI
 
             if (DesignMode) return;
 
-            OnCurrentInfoChanged();
-
             windowFinderControl.ActiveWindowChanged += (s, _) =>
                 hwndBox.Text = windowFinderControl.ActiveWindowHandle.ToString();
             windowFinderControl.WindowSelected += (s, _) =>
@@ -70,16 +68,16 @@ namespace Hawkeye.UI
             if (CurrentInfo == null) return; // nope
 
             hwndBox.Text = CurrentInfo.ToShortString();
-
-            // Should we inject?                        
-            // Same process, don't inject.
-            if (CurrentInfo.ProcessId == Process.GetCurrentProcess().Id) return;
-
-            // Not a .NET process
-            if (CurrentInfo.Clr == Clr.Unknown) return;
             
-            // Ok, inject ourself
-            HawkeyeApplication.Inject(CurrentInfo);
+            // Inject ourself if possible
+            if (HawkeyeApplication.CanInject(CurrentInfo))
+                HawkeyeApplication.Inject(CurrentInfo);
+            else DisplayDetails();
+        }
+
+        private void DisplayDetails()
+        {
+            //TODO!
         }
 
         private void BuildCurrentWindowInfo(IntPtr hwnd)

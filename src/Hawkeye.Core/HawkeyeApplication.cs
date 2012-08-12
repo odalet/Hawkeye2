@@ -32,6 +32,25 @@ namespace Hawkeye
             /// Use this method to run Hawkeye in its own process.
             /// </remarks>
             void Run();
+            
+            /// <summary>
+            /// Runs the Hawkeye application.
+            /// </summary>
+            /// <param name="windowToSpy">The window to spy.</param>
+            /// <param name="windowToKill">The window to kill.</param>
+            /// <remarks>
+            /// Use this method to run Hawkeye in its own process.
+            /// </remarks>
+            void Run(IntPtr windowToSpy, IntPtr windowToKill);
+
+            /// <summary>
+            /// Determines whether Hawkeye can be injected given the specified window info.
+            /// </summary>
+            /// <param name="info">The window info.</param>
+            /// <returns>
+            ///   <c>true</c> if Hawkeye can be injected; otherwise, <c>false</c>.
+            /// </returns>
+            bool CanInject(IWindowInfo info);
 
             /// <summary>
             /// Injects the Hawkeye application into the process owning the specified window.
@@ -101,11 +120,17 @@ namespace Hawkeye
             get { return implementation.IsInjected; }
         }
 
+        /// <summary>
+        /// Gets Hawkeye current CLR.
+        /// </summary>
         public static Clr CurrentClr
         {
             get { return currentClr; }
         }
 
+        /// <summary>
+        /// Gets Hawkeye current bitness.
+        /// </summary>
         public static Bitness CurrentBitness
         {
             get { return currentBitness; }
@@ -120,6 +145,31 @@ namespace Hawkeye
         public static void Run()
         {
             implementation.Run();
+        }
+
+        /// <summary>
+        /// Runs the Hawkeye application.
+        /// </summary>
+        /// <param name="windowToSpy">The window to spy.</param>
+        /// <param name="windowToKill">The window to kill.</param>
+        /// <remarks>
+        /// Use this method to run Hawkeye in its own process.
+        /// </remarks>
+        public static void Run(IntPtr windowToSpy, IntPtr windowToKill)
+        {
+            implementation.Run(windowToSpy, windowToKill);
+        }
+
+        /// <summary>
+        /// Determines whether Hawkeye can be injected given the specified window info.
+        /// </summary>
+        /// <param name="info">The window info.</param>
+        /// <returns>
+        ///   <c>true</c> if Hawkeye can be injected; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool CanInject(IWindowInfo info)
+        {
+            return implementation.CanInject(info);
         }
 
         /// <summary>
