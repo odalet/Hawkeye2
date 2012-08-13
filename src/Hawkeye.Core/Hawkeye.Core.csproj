@@ -103,6 +103,7 @@
     </Compile>
     <Compile Include="WinApi\constants.cs" />
     <Compile Include="WinApi\CursorHelper.cs" />
+    <Compile Include="WinApi\DotNetInfo.cs" />
     <Compile Include="WinApi\ModuleInfo.cs" />
     <Compile Include="WinApi\NativeMethods.cs" />
     <Compile Include="WinApi\structures.cs" />

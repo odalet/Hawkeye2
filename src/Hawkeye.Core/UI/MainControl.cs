@@ -11,7 +11,7 @@ namespace Hawkeye.UI
     {
         private static readonly ILogService log = LogManager.GetLogger<MainControl>();
 
-        private IWindowInfo currentInfo = null;
+        private WindowInfo currentInfo = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainControl"/> class.
@@ -33,23 +33,20 @@ namespace Hawkeye.UI
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-
             if (DesignMode) return;
 
             windowFinderControl.ActiveWindowChanged += (s, _) =>
                 hwndBox.Text = windowFinderControl.ActiveWindowHandle.ToString();
+
             windowFinderControl.WindowSelected += (s, _) =>
             {
                 var hwnd = windowFinderControl.ActiveWindowHandle;
                 if (hwnd == IntPtr.Zero) CurrentInfo = null;
                 else BuildCurrentWindowInfo(hwnd);
             };
-
-            // Default window is Hawkeye itself
-            //BuildCurrentWindowInfo(ParentForm.Handle);
         }
 
-        private IWindowInfo CurrentInfo
+        private WindowInfo CurrentInfo
         {
             get { return currentInfo; }
             set
@@ -68,16 +65,25 @@ namespace Hawkeye.UI
             if (CurrentInfo == null) return; // nope
 
             hwndBox.Text = CurrentInfo.ToShortString();
-            
+
             // Inject ourself if possible
             if (HawkeyeApplication.CanInject(CurrentInfo))
+            {
                 HawkeyeApplication.Inject(CurrentInfo);
-            else DisplayDetails();
+                return;
+            }
+
+            // Injection was not needed.
+
+            CurrentInfo.DetectDotNetProperties();
+            var dotNetProperties = CurrentInfo.DotNetInfo;
+            if (dotNetProperties != null)
+                ShowDotNetProperties(dotNetProperties);
         }
 
-        private void DisplayDetails()
+        private void ShowDotNetProperties(IDotNetInfo info)
         {
-            //TODO!
+            //TODO
         }
 
         private void BuildCurrentWindowInfo(IntPtr hwnd)
@@ -97,7 +103,7 @@ namespace Hawkeye.UI
                     log.Error(string.Format(
                         "Error while building window info: {0}", ex.Message), ex);
                 }
-                
+
                 CurrentInfo = info;
             }
             finally
@@ -149,7 +155,7 @@ namespace Hawkeye.UI
                 else return string.Empty;
             }
         }
-        
+
         private void dumpButton_Click(object sender, EventArgs e) { Dump(); }
     }
 }

@@ -60,6 +60,8 @@ namespace Hawkeye.WinApi
         /// </summary>
         public string ClassName { get; private set; }
 
+        public IDotNetInfo DotNetInfo { get; private set; }
+
         /// <summary>
         /// Dumps the content of this object in a text form.
         /// </summary>
@@ -89,17 +91,24 @@ namespace Hawkeye.WinApi
 
         public string ToShortString()
         {
-            return Handle.ToString();
+            return string.Format("{0} - {1}", Handle, ClassName);
         }
 
         #endregion
+
+        public void DetectDotNetProperties()
+        {
+            DotNetInfo = null;
+            if (Clr == Clr.Net2 || Clr == Clr.Net4)
+                DotNetInfo = new DotNetInfo(Handle);            
+        }
 
         private void RunDetection()
         {
             int pid;
             ThreadId = NativeMethods.GetWindowThreadProcessId(Handle, out pid);
             ProcessId = pid;
-
+            ClassName = NativeMethods.GetWindowClassName(Handle);
             Modules = GetModules(pid).Select(m => new ModuleInfo(m)).ToArray();
             
             Bitness = DetectBitness();
@@ -176,5 +185,11 @@ namespace Hawkeye.WinApi
                 }
             }
         }
+
+        #region IWindowInfo Members
+        
+        
+
+        #endregion
     }
 }

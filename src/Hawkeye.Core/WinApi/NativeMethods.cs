@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Runtime.InteropServices;
 using System.Runtime.ConstrainedExecution;
 
@@ -17,6 +18,9 @@ namespace Hawkeye.WinApi
 
         [DllImport("user32.dll")]
         public static extern int GetWindowThreadProcessId(IntPtr hwnd, out int processId);
+
+        [DllImport("user32.dll")]
+        private static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
 
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern ToolHelpHandle CreateToolhelp32Snapshot(SnapshotFlags dwFlags, int th32ProcessID);
@@ -69,6 +73,18 @@ namespace Hawkeye.WinApi
         [DllImport("user32.dll")]
         public static extern IntPtr SendMessage(IntPtr hwnd, uint msg, IntPtr wparam, IntPtr lparam);
         
+        #endregion
+
+        #region Helpers
+
+        public static string GetWindowClassName(IntPtr hwnd)
+        {
+            const int max = 256;
+            var buffer = new StringBuilder(max);
+            GetClassName(hwnd, buffer, max);
+            return buffer.ToString();
+        }
+
         #endregion
 
         /// <summary>

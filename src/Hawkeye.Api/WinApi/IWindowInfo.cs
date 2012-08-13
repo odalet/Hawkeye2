@@ -42,6 +42,8 @@ namespace Hawkeye
         /// </summary>
         string ClassName { get; }
 
+        IDotNetInfo DotNetInfo { get; }
+
         /// <summary>
         /// Dumps the content of this object in a text form.
         /// </summary>
