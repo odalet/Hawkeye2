@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 using Hawkeye.Logging;
+using System.ComponentModel;
 
 namespace Hawkeye.WinApi
 {
@@ -60,7 +61,11 @@ namespace Hawkeye.WinApi
         /// </summary>
         public string ClassName { get; private set; }
 
-        public IDotNetInfo DotNetInfo { get; private set; }
+        /// <summary>
+        /// Gets the Windows Forms Control info associated with this window.
+        /// </summary>
+        [Browsable(false)]
+        public IControlInfo ControlInfo { get; private set; }
 
         /// <summary>
         /// Dumps the content of this object in a text form.
@@ -98,9 +103,9 @@ namespace Hawkeye.WinApi
 
         public void DetectDotNetProperties()
         {
-            DotNetInfo = null;
+            ControlInfo = null;
             if (Clr == Clr.Net2 || Clr == Clr.Net4)
-                DotNetInfo = new DotNetInfo(Handle);            
+                ControlInfo = new ControlInfo(Handle);            
         }
 
         private void RunDetection()

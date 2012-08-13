@@ -79,6 +79,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SR.resx</DependentUpon>
     </Compile>
+    <Compile Include="UI\CustomTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\DotNetPropertyGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\MainControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -92,7 +98,13 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\MessageBoxes.cs" />
+    <Compile Include="UI\NativePropertyGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\PropertyGridEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\TabControlEx.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\WindowFinderControl.cs">
@@ -103,7 +115,7 @@
     </Compile>
     <Compile Include="WinApi\constants.cs" />
     <Compile Include="WinApi\CursorHelper.cs" />
-    <Compile Include="WinApi\DotNetInfo.cs" />
+    <Compile Include="WinApi\ControlInfo.cs" />
     <Compile Include="WinApi\ModuleInfo.cs" />
     <Compile Include="WinApi\NativeMethods.cs" />
     <Compile Include="WinApi\structures.cs" />

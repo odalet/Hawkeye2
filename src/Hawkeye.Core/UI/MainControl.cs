@@ -35,6 +35,8 @@ namespace Hawkeye.UI
             base.OnLoad(e);
             if (DesignMode) return;
 
+            tabs.TabPages.Remove(dotNetTabPage);
+
             windowFinderControl.ActiveWindowChanged += (s, _) =>
                 hwndBox.Text = windowFinderControl.ActiveWindowHandle.ToString();
 
@@ -59,7 +61,7 @@ namespace Hawkeye.UI
 
         private void OnCurrentInfoChanged()
         {
-            pgrid.SelectedObject = CurrentInfo;
+            nativePropertyGrid.SelectedObject = CurrentInfo;
             //pgrid.ExpandAllGridItems(); // this takes too much time!
             dumpButton.Enabled = CurrentInfo != null;
             if (CurrentInfo == null) return; // nope
@@ -76,14 +78,25 @@ namespace Hawkeye.UI
             // Injection was not needed.
 
             CurrentInfo.DetectDotNetProperties();
-            var dotNetProperties = CurrentInfo.DotNetInfo;
-            if (dotNetProperties != null)
-                ShowDotNetProperties(dotNetProperties);
+            var controlInfo = CurrentInfo.ControlInfo;
+            if (controlInfo != null)
+            {
+                if (!tabs.TabPages.Contains(dotNetTabPage))
+                    tabs.TabPages.Add(dotNetTabPage);
+                FillControlInfo(controlInfo);
+                tabs.SelectedTab = dotNetTabPage;
+            }
+            else
+            {
+                if (tabs.TabPages.Contains(dotNetTabPage))
+                    tabs.TabPages.Remove(dotNetTabPage);
+                tabs.SelectedTab = nativeTabPage;
+            }
         }
-
-        private void ShowDotNetProperties(IDotNetInfo info)
+        
+        private void FillControlInfo(IControlInfo controlInfo)
         {
-            //TODO
+            dotNetPropertyGrid.SelectedObject = controlInfo;
         }
 
         private void BuildCurrentWindowInfo(IntPtr hwnd)

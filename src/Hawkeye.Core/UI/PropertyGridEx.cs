@@ -1,8 +1,7 @@
-﻿using System;
+﻿using System.Reflection;
 using System.Windows.Forms;
-using System.Reflection;
 
-namespace Hawkeye
+namespace Hawkeye.UI
 {
     // Inspiration found in Hawkeye's search box extender
     public /*internal*/ class PropertyGridEx : PropertyGrid
@@ -14,23 +13,21 @@ namespace Hawkeye
         /// Initializes a new instance of the <see cref="PropertyGridEx"/> class.
         /// </summary>
         public PropertyGridEx()
-            : base()
         {
             base.ToolStripRenderer = new ToolStripProfessionalRenderer()
             {
                 RoundedEdges = false
             };
 
-            if (IsHandleCreated)
-                InitializeToolStrip();
+            if (IsHandleCreated) Initialize();
             else
             {
-                HandleCreated += (s, e) => InitializeToolStrip();
-                VisibleChanged += (s, e) => InitializeToolStrip();
+                HandleCreated += (s, e) => Initialize();
+                VisibleChanged += (s, e) => Initialize();
             }
         }
 
-        private ToolStrip ToolStrip
+        protected ToolStrip ToolStrip
         {
             get
             {
@@ -45,37 +42,35 @@ namespace Hawkeye
             }
         }
 
-        public ToolStripButton DetectButton
-        {
-            get;
-            private set;
-        }
-
-        public ToolStripButton DumpButton
-        {
-            get;
-            private set;
-        }
-
-        private void InitializeToolStrip()
+        /// <summary>
+        /// Initializes this instance.
+        /// </summary>
+        private void Initialize()
         {
             if (alreadyInitialized) return;
             if (ToolStrip == null) return;
 
-            DetectButton = new ToolStripButton("Detect")
-            {
-                DisplayStyle = ToolStripItemDisplayStyle.Text
-            };
+            InitializeToolStrip();
 
-            DumpButton = new ToolStripButton("Dump")
-            {
-                DisplayStyle = ToolStripItemDisplayStyle.Text
-            };
-
-            ToolStrip.Items.Add(new ToolStripSeparator());
-            ToolStrip.Items.Add(DetectButton);
-            ToolStrip.Items.Add(DumpButton);
             alreadyInitialized = true;
+        }
+
+        /// <summary>
+        /// Initializes the tool strip.
+        /// </summary>
+        protected virtual void InitializeToolStrip()
+        {
+            ToolStrip.Items.Add(new ToolStripSeparator());
+            ToolStrip.Items.AddRange(CreateToolStripItems());
+        }
+
+        /// <summary>
+        /// Creates the tool strip items.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual ToolStripItem[] CreateToolStripItems()
+        {
+            return new ToolStripItem[] { };
         }
     }
 }

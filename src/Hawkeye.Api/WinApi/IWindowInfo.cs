@@ -42,7 +42,10 @@ namespace Hawkeye
         /// </summary>
         string ClassName { get; }
 
-        IDotNetInfo DotNetInfo { get; }
+        /// <summary>
+        /// Gets the Windows Forms Control info associated with this window.
+        /// </summary>
+        IControlInfo ControlInfo { get; }
 
         /// <summary>
         /// Dumps the content of this object in a text form.

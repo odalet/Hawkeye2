@@ -7,7 +7,7 @@ using System.Windows.Forms;
 namespace Hawkeye.WinApi
 {
     [TypeConverter(typeof(DotNetInfoConverter))]
-    internal class DotNetInfo : IDotNetInfo
+    internal class ControlInfo : IControlInfo
     {
         #region IDotNetInfo Members
 
@@ -24,7 +24,7 @@ namespace Hawkeye.WinApi
             private set;
         }
 
-        public DotNetInfo(IntPtr hwnd)
+        public ControlInfo(IntPtr hwnd)
         {
             Control = Control.FromHandle(hwnd);
         }

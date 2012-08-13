@@ -35,10 +35,17 @@
             this.windowFinderControl = new Hawkeye.UI.WindowFinderControl();
             this.topRightPanel = new System.Windows.Forms.Panel();
             this.mainPanel = new System.Windows.Forms.Panel();
-            this.pgrid = new Hawkeye.PropertyGridEx();
+            this.tabs = new Hawkeye.UI.TabControlEx();
+            this.nativeTabPage = new System.Windows.Forms.TabPage();
+            this.nativePropertyGrid = new Hawkeye.UI.NativePropertyGrid();
+            this.dotNetTabPage = new System.Windows.Forms.TabPage();
+            this.dotNetPropertyGrid = new Hawkeye.UI.DotNetPropertyGrid();
             this.rootPanel.SuspendLayout();
             this.topRightPanel.SuspendLayout();
             this.mainPanel.SuspendLayout();
+            this.tabs.SuspendLayout();
+            this.nativeTabPage.SuspendLayout();
+            this.dotNetTabPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // dumpButton
@@ -103,20 +110,62 @@
             // mainPanel
             // 
             this.rootPanel.SetColumnSpan(this.mainPanel, 2);
-            this.mainPanel.Controls.Add(this.pgrid);
+            this.mainPanel.Controls.Add(this.tabs);
             this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainPanel.Location = new System.Drawing.Point(3, 43);
             this.mainPanel.Name = "mainPanel";
             this.mainPanel.Size = new System.Drawing.Size(520, 144);
             this.mainPanel.TabIndex = 14;
             // 
-            // pgrid
+            // tabs
             // 
-            this.pgrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pgrid.Location = new System.Drawing.Point(0, 0);
-            this.pgrid.Name = "pgrid";
-            this.pgrid.Size = new System.Drawing.Size(520, 144);
-            this.pgrid.TabIndex = 11;
+            this.tabs.Alignment = System.Windows.Forms.TabAlignment.Bottom;
+            this.tabs.Controls.Add(this.nativeTabPage);
+            this.tabs.Controls.Add(this.dotNetTabPage);
+            this.tabs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabs.Location = new System.Drawing.Point(0, 0);
+            this.tabs.Name = "tabs";
+            this.tabs.SelectedIndex = 0;
+            this.tabs.Size = new System.Drawing.Size(520, 144);
+            this.tabs.TabIndex = 12;
+            // 
+            // nativeTabPage
+            // 
+            this.nativeTabPage.Controls.Add(this.nativePropertyGrid);
+            this.nativeTabPage.Location = new System.Drawing.Point(4, 4);
+            this.nativeTabPage.Name = "nativeTabPage";
+            this.nativeTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.nativeTabPage.Size = new System.Drawing.Size(512, 118);
+            this.nativeTabPage.TabIndex = 0;
+            this.nativeTabPage.Text = "Native";
+            this.nativeTabPage.UseVisualStyleBackColor = true;
+            // 
+            // nativePropertyGrid
+            // 
+            this.nativePropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.nativePropertyGrid.Location = new System.Drawing.Point(3, 3);
+            this.nativePropertyGrid.Name = "nativePropertyGrid";
+            this.nativePropertyGrid.Size = new System.Drawing.Size(506, 112);
+            this.nativePropertyGrid.TabIndex = 11;
+            // 
+            // dotNetTabPage
+            // 
+            this.dotNetTabPage.Controls.Add(this.dotNetPropertyGrid);
+            this.dotNetTabPage.Location = new System.Drawing.Point(4, 4);
+            this.dotNetTabPage.Name = "dotNetTabPage";
+            this.dotNetTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.dotNetTabPage.Size = new System.Drawing.Size(512, 118);
+            this.dotNetTabPage.TabIndex = 1;
+            this.dotNetTabPage.Text = ".NET";
+            this.dotNetTabPage.UseVisualStyleBackColor = true;
+            // 
+            // dotNetPropertyGrid
+            // 
+            this.dotNetPropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dotNetPropertyGrid.Location = new System.Drawing.Point(3, 3);
+            this.dotNetPropertyGrid.Name = "dotNetPropertyGrid";
+            this.dotNetPropertyGrid.Size = new System.Drawing.Size(506, 112);
+            this.dotNetPropertyGrid.TabIndex = 0;
             // 
             // MainControl
             // 
@@ -129,18 +178,25 @@
             this.topRightPanel.ResumeLayout(false);
             this.topRightPanel.PerformLayout();
             this.mainPanel.ResumeLayout(false);
+            this.tabs.ResumeLayout(false);
+            this.nativeTabPage.ResumeLayout(false);
+            this.dotNetTabPage.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private PropertyGridEx pgrid;
+        private NativePropertyGrid nativePropertyGrid;
         private System.Windows.Forms.Button dumpButton;
         private System.Windows.Forms.TextBox hwndBox;
         private WindowFinderControl windowFinderControl;
         private System.Windows.Forms.TableLayoutPanel rootPanel;
         private System.Windows.Forms.Panel topRightPanel;
         private System.Windows.Forms.Panel mainPanel;
+        private TabControlEx tabs;
+        private System.Windows.Forms.TabPage nativeTabPage;
+        private System.Windows.Forms.TabPage dotNetTabPage;
+        private DotNetPropertyGrid dotNetPropertyGrid;
     }
 }

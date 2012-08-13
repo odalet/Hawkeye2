@@ -57,7 +57,7 @@
     <Compile Include="implementation\ModuleInfoConverter.cs" />
     <Compile Include="oldHawkeyeApi_TODO\IPlugin.cs" />
     <Compile Include="HawkeyeHost.cs" />
-    <Compile Include="WinApi\IDotNetInfo.cs" />
+    <Compile Include="WinApi\IControlInfo.cs" />
     <Compile Include="WinApi\IModuleInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="oldHawkeyeApi_TODO\Reflection\accessors.cs" />
