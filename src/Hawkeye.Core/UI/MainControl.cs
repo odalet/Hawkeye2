@@ -1,13 +1,16 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
-using Hawkeye.WinApi;
+
 using Hawkeye.Logging;
-using System.Diagnostics;
+using Hawkeye.ComponentModel;
 
 namespace Hawkeye.UI
 {
-    public partial class MainControl : UserControl
+    /// <summary>
+    /// The main Hawkeye UI control.
+    /// </summary>
+    internal partial class MainControl : UserControl
     {
         private static readonly ILogService log = LogManager.GetLogger<MainControl>();
 

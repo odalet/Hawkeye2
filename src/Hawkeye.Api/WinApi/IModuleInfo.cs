@@ -6,7 +6,6 @@ namespace Hawkeye
     /// <summary>
     /// This interface represents a Win32 module.
     /// </summary>
-    [TypeConverter(typeof(ModuleInfoConverter))]
     public interface IModuleInfo
     {
         /// <summary>

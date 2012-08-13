@@ -9,8 +9,8 @@ namespace Hawkeye.WinApi
 {
     ///////////////////////////////////////////////////////////////////////
     //// Large parts and overall inspiration for the module detection code 
-    //// come from the Snoop project (http://xxx). Cory Plotts should be
-    //// granted credit for this. 
+    //// come from the Snoop project (http://snoopwpf.codeplex.com/). 
+    //// Cory Plotts should be granted credit for this. 
     ///////////////////////////////////////////////////////////////////////
     internal static class NativeMethods
     {

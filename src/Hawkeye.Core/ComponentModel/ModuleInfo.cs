@@ -1,6 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
-namespace Hawkeye.WinApi
+
+using Hawkeye.WinApi;
+
+namespace Hawkeye.ComponentModel
 {
     [TypeConverter(typeof(ModuleInfoConverter))]
     internal class ModuleInfo : IModuleInfo

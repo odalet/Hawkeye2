@@ -44,6 +44,8 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ComponentModel\DotNetInfoConverter.cs" />
+    <Compile Include="ComponentModel\ModuleInfoConverter.cs" />
     <Compile Include="HawkeyeApplication.cs" />
     <Compile Include="HawkeyeApplication.host.cs" />
     <Compile Include="HawkeyeApplication.impl.cs" />
@@ -115,16 +117,14 @@
     </Compile>
     <Compile Include="WinApi\constants.cs" />
     <Compile Include="WinApi\CursorHelper.cs" />
-    <Compile Include="WinApi\ControlInfo.cs" />
-    <Compile Include="WinApi\ModuleInfo.cs" />
+    <Compile Include="ComponentModel\ControlInfo.cs" />
+    <Compile Include="ComponentModel\ModuleInfo.cs" />
     <Compile Include="WinApi\NativeMethods.cs" />
     <Compile Include="WinApi\structures.cs" />
     <Compile Include="WinApi\WindowHelper.cs" />
-    <Compile Include="WinApi\WindowInfo.cs" />
+    <Compile Include="ComponentModel\WindowInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ComponentModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Hawkeye.Api\Hawkeye.Api.csproj">
       <Project>{854D919B-FABD-4D9B-ADAF-CA94ECAAD70E}</Project>

@@ -9,7 +9,7 @@ namespace Hawkeye.UI
     /// <summary>
     /// Hawkeye-style Tab control
     /// </summary>
-    public class TabControlEx : CustomTabControl
+    internal class TabControlEx : CustomTabControl
     {
         private const int outerBezier = 5;
         private const int innerBezier = 2;

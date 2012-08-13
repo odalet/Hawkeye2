@@ -2,6 +2,9 @@
 
 namespace Hawkeye.UI
 {
+    /// <summary>
+    /// The property grid used to display native information about a window.
+    /// </summary>
     internal class NativePropertyGrid : PropertyGridEx
     {
         /// <summary>

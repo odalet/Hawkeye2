@@ -2,7 +2,7 @@
 using System.Text;
 using System.ComponentModel;
 
-using Hawkeye.WinApi;
+using Hawkeye.ComponentModel;
 
 namespace Hawkeye
 {

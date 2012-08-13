@@ -3,8 +3,14 @@ using System.Windows.Forms;
 
 namespace Hawkeye.UI
 {
+    /// <summary>
+    /// The application form.
+    /// </summary>
     internal partial class MainForm : Form
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainForm"/> class.
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();

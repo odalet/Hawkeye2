@@ -1,7 +1,7 @@
 using System;
 using System.IO;
-using System.Collections.Generic;
 using System.Reflection;
+using System.Collections.Generic;
 
 namespace Hawkeye.Logging.log4net
 {

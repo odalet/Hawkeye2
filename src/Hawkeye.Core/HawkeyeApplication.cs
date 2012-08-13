@@ -1,5 +1,4 @@
 ﻿using System;
-
 using Hawkeye.Logging;
 
 namespace Hawkeye

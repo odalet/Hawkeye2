@@ -2,13 +2,14 @@
 using System.Text;
 using System.Linq;
 using System.Diagnostics;
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
+using Hawkeye.WinApi;
 using Hawkeye.Logging;
-using System.ComponentModel;
 
-namespace Hawkeye.WinApi
+namespace Hawkeye.ComponentModel
 {
     internal class WindowInfo : IWindowInfo
     {

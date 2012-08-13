@@ -6,7 +6,6 @@ namespace Hawkeye
     /// <summary>
     /// Stores properties of a Window Forms Control
     /// </summary>
-    [TypeConverter(typeof(DotNetInfoConverter))]
     public interface IControlInfo
     {
         /// <summary>

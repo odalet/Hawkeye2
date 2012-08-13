@@ -46,7 +46,6 @@
     <Compile Include="enums.cs" />
     <Compile Include="extensions\DateTimeExtensions.cs" />
     <Compile Include="extensions\ExceptionExtensions.cs" />
-    <Compile Include="implementation\DotNetInfoConverter.cs" />
     <Compile Include="Logging\BaseLogService.cs" />
     <Compile Include="Logging\interfaces.cs" />
     <Compile Include="Logging\LoggingExtensions.cs" />
@@ -54,7 +53,6 @@
     <Compile Include="oldHawkeyeApi_TODO\IDynamicSubclass.cs" />
     <Compile Include="oldHawkeyeApi_TODO\IHawkeyeApi.cs" />
     <Compile Include="oldHawkeyeApi_TODO\IHawkeyeEditor.cs" />
-    <Compile Include="implementation\ModuleInfoConverter.cs" />
     <Compile Include="oldHawkeyeApi_TODO\IPlugin.cs" />
     <Compile Include="HawkeyeHost.cs" />
     <Compile Include="WinApi\IControlInfo.cs" />

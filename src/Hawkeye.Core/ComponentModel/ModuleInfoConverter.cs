@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.ComponentModel;
 
-namespace Hawkeye
+namespace Hawkeye.ComponentModel
 {
     internal class ModuleInfoConverter : ExpandableObjectConverter
     {

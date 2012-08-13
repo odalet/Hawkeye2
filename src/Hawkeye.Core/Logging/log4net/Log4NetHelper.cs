@@ -1,5 +1,4 @@
-﻿using System;
-using log4net.Core;
+﻿using log4net.Core;
 
 namespace Hawkeye.Logging.log4net
 {

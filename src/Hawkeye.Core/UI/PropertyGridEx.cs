@@ -4,7 +4,7 @@ using System.Windows.Forms;
 namespace Hawkeye.UI
 {
     // Inspiration found in Hawkeye's search box extender
-    public /*internal*/ class PropertyGridEx : PropertyGrid
+    internal class PropertyGridEx : PropertyGrid
     {
         private bool alreadyInitialized = false;
         private ToolStrip thisToolStrip = null;

@@ -2,7 +2,6 @@
 using System.Reflection;
 using System.Collections.Generic;
 
-
 namespace Hawkeye.Reflection
 {
     /// <summary>

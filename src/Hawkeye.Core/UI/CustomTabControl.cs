@@ -9,7 +9,7 @@ namespace Hawkeye.UI
     /// <summary>
     /// Owner-drawn tab control
     /// </summary>
-    public class CustomTabControl : TabControl
+    internal class CustomTabControl : TabControl
     {
         protected readonly Color DefaultBorderColor = Color.FromArgb(149, 169, 212);
         protected readonly Color DefaultTextColor = Color.FromArgb(77, 103, 162);
