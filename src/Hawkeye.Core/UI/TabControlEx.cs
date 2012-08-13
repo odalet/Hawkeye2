@@ -6,6 +6,9 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Hawkeye.UI
 {
+    /// <summary>
+    /// Hawkeye-style Tab control
+    /// </summary>
     public class TabControlEx : CustomTabControl
     {
         private const int outerBezier = 5;
@@ -14,6 +17,12 @@ namespace Hawkeye.UI
         private int bezierInnerCurveOffset = innerBezier;
         private int bezierOuterCurveOffset = outerBezier;
 
+        /// <summary>
+        /// Gets or sets the bezier inner curve offset.
+        /// </summary>
+        /// <value>
+        /// The bezier inner curve offset.
+        /// </value>
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode"),
          EditorBrowsable(EditorBrowsableState.Always), DefaultValue(innerBezier)]
         public int BezierInnerCurveOffset 
@@ -22,6 +31,12 @@ namespace Hawkeye.UI
             set { bezierInnerCurveOffset = value; } 
         }
 
+        /// <summary>
+        /// Gets or sets the bezier outer curve offset.
+        /// </summary>
+        /// <value>
+        /// The bezier outer curve offset.
+        /// </value>
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode"),
          EditorBrowsable(EditorBrowsableState.Always), DefaultValue(outerBezier)]
         public int BezierOuterCurveOffset 
@@ -30,6 +45,13 @@ namespace Hawkeye.UI
             set { bezierOuterCurveOffset = value; } 
         }
 
+        /// <summary>
+        /// Gets a graphics path representing how to draw the tab at the specified index.
+        /// </summary>
+        /// <param name="index">The tab index.</param>
+        /// <returns>
+        /// A <see cref="GraphicsPath"/> object.
+        /// </returns>
         protected override GraphicsPath GetPath(int index)
         {
             var rect = base.GetTabRect(index);

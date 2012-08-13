@@ -6,6 +6,9 @@ using System.ComponentModel;
 
 namespace Hawkeye.UI
 {
+    /// <summary>
+    /// Owner-drawn tab control
+    /// </summary>
     public class CustomTabControl : TabControl
     {
         protected readonly Color DefaultBorderColor = Color.FromArgb(149, 169, 212);
@@ -15,6 +18,9 @@ namespace Hawkeye.UI
         private Color textColor = Color.Empty;
         private bool showTabSeparator = true;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CustomTabControl"/> class.
+        /// </summary>
         public CustomTabControl()
         {
             tabBorderColor = DefaultBorderColor;
@@ -26,12 +32,30 @@ namespace Hawkeye.UI
             base.SetStyle(ControlStyles.ResizeRedraw, true);
         }
 
+        /// <summary>
+        /// Gets or sets the color of the tab border.
+        /// </summary>
+        /// <value>
+        /// The color of the tab border.
+        /// </value>
         [EditorBrowsable(EditorBrowsableState.Always), DefaultValue(typeof(Color), "149, 169, 212")]
         public Color TabBorderColor { get { return tabBorderColor; } set { tabBorderColor = value; } }
 
+        /// <summary>
+        /// Gets or sets the color of the text.
+        /// </summary>
+        /// <value>
+        /// The color of the text.
+        /// </value>
         [EditorBrowsable(EditorBrowsableState.Always), DefaultValue(typeof(Color), "77, 103, 162")]
         public Color TextColor { get { return textColor; } set { textColor = value; } }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to show tab separators.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if tab separators should be shown; otherwise, <c>false</c>.
+        /// </value>
         [EditorBrowsable(EditorBrowsableState.Always), DefaultValue("true")]
         public bool ShowTabSeparator
         {
@@ -46,6 +70,10 @@ namespace Hawkeye.UI
             }
         }
 
+        /// <summary>
+        /// Raises the <see cref="E:System.Windows.Forms.Control.Paint"/> event.
+        /// </summary>
+        /// <param name="e">A <see cref="T:System.Windows.Forms.PaintEventArgs"/> that contains the event data.</param>
         protected override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
@@ -54,6 +82,10 @@ namespace Hawkeye.UI
             PaintSelectedTab(e);
         }
 
+        /// <summary>
+        /// Paints the background of the control.
+        /// </summary>
+        /// <param name="pevent">A <see cref="T:System.Windows.Forms.PaintEventArgs"/> that contains information about the control to paint.</param>
         protected override void OnPaintBackground(PaintEventArgs pevent)
         {
             var o = base.Parent.PointToClient(base.PointToScreen(new Point(0, 0)));
@@ -63,12 +95,25 @@ namespace Hawkeye.UI
             pevent.Graphics.TranslateTransform((float)o.X, (float)o.Y);
         }
 
+        /// <summary>
+        /// This member overrides <see cref="M:System.Windows.Forms.Control.OnResize(System.EventArgs)"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data.</param>
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            if (base.TabCount > 0 && base.SelectedTab != null) base.SelectedTab.Invalidate();
+            if (base.TabCount > 0 && base.SelectedTab != null)
+                base.SelectedTab.Invalidate();
         }
 
+        /// <summary>
+        /// Gets a graphics path representing how to draw the tab at the specified index.
+        /// </summary>
+        /// <remarks>
+        /// In this implementation, tab are drawn as square.
+        /// </remarks>
+        /// <param name="index">The tab index.</param>
+        /// <returns>A <see cref="GraphicsPath"/> object.</returns>
         protected virtual GraphicsPath GetPath(int index)
         {
             var rect = base.GetTabRect(index);
@@ -97,11 +142,21 @@ namespace Hawkeye.UI
             return gp;
         }
 
+        /// <summary>
+        /// Paints the tab at the specified index.
+        /// </summary>
+        /// <param name="e">The <see cref="System.Windows.Forms.PaintEventArgs"/> instance containing the event data.</param>
+        /// <param name="index">The tab index.</param>
         protected virtual void PaintTab(PaintEventArgs e, int index)
         {
             PaintTabText(e.Graphics, index);
         }
 
+        /// <summary>
+        /// Paints the tab separator at the specified index.
+        /// </summary>
+        /// <param name="e">The <see cref="System.Windows.Forms.PaintEventArgs"/> instance containing the event data.</param>
+        /// <param name="index">The index.</param>
         protected virtual void PaintTabSeparator(PaintEventArgs e, int index)
         {
             var bounds = base.GetTabRect(index);
@@ -125,9 +180,15 @@ namespace Hawkeye.UI
             }
         }
 
-        protected virtual void PaintTabBorder(Graphics graph, int index, GraphicsPath path)
+        /// <summary>
+        /// Paints the border of the tab at the specified object.
+        /// </summary>
+        /// <param name="g">The graphics object on which to paint.</param>
+        /// <param name="index">The tab index.</param>
+        /// <param name="path">The graphics path representing the tab border.</param>
+        protected virtual void PaintTabBorder(Graphics g, int index, GraphicsPath path)
         {
-            using (var pen = new Pen(tabBorderColor)) graph.DrawPath(pen, path);
+            using (var pen = new Pen(tabBorderColor)) g.DrawPath(pen, path);
         }
 
         private Image GetTabImage(int index)
@@ -143,9 +204,14 @@ namespace Hawkeye.UI
             else return base.ImageList.Images[tab.ImageKey];
         }
 
+        /// <summary>
+        /// Paints the text of the tab at the specified index.
+        /// </summary>
+        /// <param name="g">The graphics object on which to paint.</param>
+        /// <param name="index">The tab index.</param>
         protected virtual void PaintTabText(Graphics g, int index)
         {
-            float gap = 0;
+            var gap = 0f;
             var image = GetTabImage(index);
             var rect = base.GetTabRect(index);
             var bounds = new RectangleF(
@@ -170,70 +236,80 @@ namespace Hawkeye.UI
             {
                 using (SolidBrush brush = new SolidBrush(textColor)) g.DrawString(
                    base.TabPages[index].Text, Font, brush, (RectangleF)base.GetTabRect(index), sf);
+                return;
             }
-            else // We have an image, we try to measure the text.
+
+            // Otherwise, we have an image, let's try to measure the text.
+            var rectf = (RectangleF)base.GetTabRect(index);
+            var text = base.TabPages[index].Text;
+            var maxAvailableArea = SizeF.Empty;
+            if (IsHorizontal)
+                maxAvailableArea = new SizeF(rectf.Width - 3f * gap - (float)image.Width, (float)image.Height);
+            else maxAvailableArea = new SizeF((float)image.Width, rectf.Height - 3f * gap - (float)image.Height);
+
+            var textSize = g.MeasureString(text, Font, maxAvailableArea, sf);
+
+            if (textSize.Width > maxAvailableArea.Width) textSize.Width = maxAvailableArea.Width;
+            if (textSize.Height > maxAvailableArea.Height) textSize.Height = maxAvailableArea.Height;
+
+            var imageAndTextSize = SizeF.Empty;
+            if (IsHorizontal)
             {
-                var rectf = (RectangleF)base.GetTabRect(index);
-                var text = base.TabPages[index].Text;
-                var maxAvailableArea = SizeF.Empty;
-                if (IsHorizontal)
-                    maxAvailableArea = new SizeF(rectf.Width - 3f * gap - (float)image.Width, (float)image.Height);
-                else maxAvailableArea = new SizeF((float)image.Width, rectf.Height - 3f * gap - (float)image.Height);
-
-                var textSize = g.MeasureString(text, Font, maxAvailableArea, sf);
-
-                if (textSize.Width > maxAvailableArea.Width) textSize.Width = maxAvailableArea.Width;
-                if (textSize.Height > maxAvailableArea.Height) textSize.Height = maxAvailableArea.Height;
-
-                var imageAndTextSize = SizeF.Empty;
-                if (IsHorizontal)
-                {
-                    imageAndTextSize.Width = (float)image.Width + gap + textSize.Width;
-                    imageAndTextSize.Height = (float)image.Height > textSize.Height ?
-                        (float)image.Height : textSize.Height;
-                }
-                else
-                {
-                    imageAndTextSize.Height = (float)image.Height + gap + textSize.Height;
-                    imageAndTextSize.Width = (float)image.Width > textSize.Width ?
-                        (float)image.Width : textSize.Width;
-                }
-
-                var imageAndTextBounds = new RectangleF(
-                    bounds.X + (bounds.Width - imageAndTextSize.Width) / 2f,
-                    bounds.Y + (bounds.Height - imageAndTextSize.Height) / 2f,
-                    imageAndTextSize.Width, imageAndTextSize.Height);
-
-                // Draw the image
-                var imageBounds = new Rectangle(
-                    (int)imageAndTextBounds.X, (int)imageAndTextBounds.Y,
-                    image.Width, image.Height);
-
-                g.DrawImageUnscaledAndClipped(image, imageBounds);
-
-                // Draw the text
-                var textBounds = RectangleF.Empty;
-                if (IsHorizontal) textBounds = new RectangleF(
-                    imageAndTextBounds.X + (float)image.Width + gap,
-                    imageAndTextBounds.Y,
-                    imageAndTextBounds.Width - ((float)image.Width + gap),
-                    imageAndTextBounds.Height);
-                else textBounds = new RectangleF(
-                   imageAndTextBounds.X,
-                   imageAndTextBounds.Y + (float)image.Height + gap,
-                   imageAndTextBounds.Width,
-                   imageAndTextBounds.Height - ((float)image.Height + gap));
-
-                using (var brush = new SolidBrush(textColor)) g.DrawString(
-                   base.TabPages[index].Text, Font, brush, textBounds, sf);
+                imageAndTextSize.Width = (float)image.Width + gap + textSize.Width;
+                imageAndTextSize.Height = (float)image.Height > textSize.Height ?
+                    (float)image.Height : textSize.Height;
             }
+            else
+            {
+                imageAndTextSize.Height = (float)image.Height + gap + textSize.Height;
+                imageAndTextSize.Width = (float)image.Width > textSize.Width ?
+                    (float)image.Width : textSize.Width;
+            }
+
+            var imageAndTextBounds = new RectangleF(
+                bounds.X + (bounds.Width - imageAndTextSize.Width) / 2f,
+                bounds.Y + (bounds.Height - imageAndTextSize.Height) / 2f,
+                imageAndTextSize.Width, imageAndTextSize.Height);
+
+            // Draw the image
+            var imageBounds = new Rectangle(
+                (int)imageAndTextBounds.X, (int)imageAndTextBounds.Y,
+                image.Width, image.Height);
+
+            g.DrawImageUnscaledAndClipped(image, imageBounds);
+
+            // Draw the text
+            var textBounds = RectangleF.Empty;
+            if (IsHorizontal) textBounds = new RectangleF(
+                imageAndTextBounds.X + (float)image.Width + gap,
+                imageAndTextBounds.Y,
+                imageAndTextBounds.Width - ((float)image.Width + gap),
+                imageAndTextBounds.Height);
+            else textBounds = new RectangleF(
+               imageAndTextBounds.X,
+               imageAndTextBounds.Y + (float)image.Height + gap,
+               imageAndTextBounds.Width,
+               imageAndTextBounds.Height - ((float)image.Height + gap));
+
+            using (var brush = new SolidBrush(textColor)) g.DrawString(
+               base.TabPages[index].Text, Font, brush, textBounds, sf);
         }
 
+        /// <summary>
+        /// Gets a value indicating whether this tab control draws its tabs horizontally.
+        /// </summary>
+        /// <value>
+        /// 	<c>true</c> if this tab control is horizontal; otherwise, <c>false</c>.
+        /// </value>
         private bool IsHorizontal
         {
-            get { return (base.Alignment == TabAlignment.Top) || (base.Alignment == TabAlignment.Bottom); }
+            get { return base.Alignment == TabAlignment.Top || base.Alignment == TabAlignment.Bottom; }
         }
 
+        /// <summary>
+        /// Paints the selected tab.
+        /// </summary>
+        /// <param name="e">The <see cref="System.Windows.Forms.PaintEventArgs"/> instance containing the event data.</param>
         protected virtual void PaintSelectedTab(PaintEventArgs e)
         {
             if (base.SelectedIndex < 0) return;
@@ -263,6 +339,10 @@ namespace Hawkeye.UI
             }
         }
 
+        /// <summary>
+        /// Paints the tab page border.
+        /// </summary>
+        /// <param name="e">The <see cref="System.Windows.Forms.PaintEventArgs"/> instance containing the event data.</param>
         protected virtual void PaintTabPageBorder(PaintEventArgs e)
         {
             if (base.TabCount <= 0) return;
@@ -273,6 +353,10 @@ namespace Hawkeye.UI
             ControlPaint.DrawBorder(e.Graphics, rect, tabBorderColor, ButtonBorderStyle.Solid);
         }
 
+        /// <summary>
+        /// Paints all tabs.
+        /// </summary>
+        /// <param name="e">The <see cref="System.Windows.Forms.PaintEventArgs"/> instance containing the event data.</param>
         private void PaintAllTabs(PaintEventArgs e)
         {
             for (int i = base.TabCount - 1; i >= 0; i--)
