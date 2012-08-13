@@ -55,12 +55,12 @@
     <Compile Include="oldHawkeyeApi_TODO\IHawkeyeEditor.cs" />
     <Compile Include="oldHawkeyeApi_TODO\IPlugin.cs" />
     <Compile Include="HawkeyeHost.cs" />
-    <Compile Include="WinApi\IControlInfo.cs" />
-    <Compile Include="WinApi\IModuleInfo.cs" />
+    <Compile Include="IControlInfo.cs" />
+    <Compile Include="IModuleInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="oldHawkeyeApi_TODO\Reflection\accessors.cs" />
     <Compile Include="oldHawkeyeApi_TODO\Reflection\IReflectionApi.cs" />
-    <Compile Include="WinApi\IWindowInfo.cs" />
+    <Compile Include="IWindowInfo.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
