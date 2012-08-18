@@ -22,6 +22,11 @@ namespace Hawkeye.UI
         public MainControl()
         {
             InitializeComponent();
+
+            // Remove the .NET Tab (to hide it)
+            tabs.SuspendLayout();
+            tabs.TabPages.Remove(dotNetTabPage);
+            tabs.ResumeLayout(false);
         }
 
         public void SetTarget(IntPtr hwnd)
@@ -38,7 +43,6 @@ namespace Hawkeye.UI
             base.OnLoad(e);
             if (DesignMode) return;
 
-            tabs.TabPages.Remove(dotNetTabPage);
 
             windowFinderControl.ActiveWindowChanged += (s, _) =>
                 hwndBox.Text = windowFinderControl.ActiveWindowHandle.ToString();
