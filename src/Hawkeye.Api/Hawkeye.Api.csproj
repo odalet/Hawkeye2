@@ -61,6 +61,7 @@
     <Compile Include="oldHawkeyeApi_TODO\Reflection\accessors.cs" />
     <Compile Include="oldHawkeyeApi_TODO\Reflection\IReflectionApi.cs" />
     <Compile Include="IWindowInfo.cs" />
+    <Compile Include="UI\IHawkeyeUI.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
