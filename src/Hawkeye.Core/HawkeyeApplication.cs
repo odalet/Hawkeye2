@@ -30,7 +30,7 @@ namespace Hawkeye
             /// Use this method to run Hawkeye in its own process.
             /// </remarks>
             void Run();
-            
+
             /// <summary>
             /// Runs the Hawkeye application.
             /// </summary>
@@ -40,6 +40,11 @@ namespace Hawkeye
             /// Use this method to run Hawkeye in its own process.
             /// </remarks>
             void Run(IntPtr windowToSpy, IntPtr windowToKill);
+            
+            /// <summary>
+            /// Operations that should be realized before we close Hawkeye.
+            /// </summary>
+            void Close();
 
             /// <summary>
             /// Determines whether Hawkeye can be injected given the specified window info.
@@ -63,7 +68,7 @@ namespace Hawkeye
             /// <param name="targetWindow">The target window.</param>
             /// <param name="originalHawkeyeWindow">The original Hawkeye window.</param>
             void Attach(IntPtr targetWindow, IntPtr originalHawkeyeWindow);
-            
+
             /// <summary>
             /// Gets the default log service factory.
             /// </summary>
@@ -75,7 +80,7 @@ namespace Hawkeye
         private static readonly Clr currentClr;
         private static readonly IHawkeyeApplicationImplementation implementation =
             new Implementation();
-        
+
         /// <summary>
         /// Initializes the <see cref="HawkeyeApplication"/> class.
         /// </summary>
@@ -94,7 +99,7 @@ namespace Hawkeye
         {
             get { return implementation.GetLogServiceFactory(); }
         }
-        
+
         /// <summary>
         /// Gets a value indicating whether the Hawkeye application is running injected in a 
         /// host process or in its original process.
@@ -145,6 +150,14 @@ namespace Hawkeye
         public static void Run(IntPtr windowToSpy, IntPtr windowToKill)
         {
             implementation.Run(windowToSpy, windowToKill);
+        }
+
+        /// <summary>
+        /// Operations that should be realized before we close Hawkeye.
+        /// </summary>
+        public static void Close()
+        {
+            implementation.Close();
         }
 
         /// <summary>

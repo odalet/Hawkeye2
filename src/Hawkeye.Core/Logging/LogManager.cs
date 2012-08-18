@@ -64,8 +64,8 @@ namespace Hawkeye.Logging
         /// </returns>
         public static ILogService GetLogger(Type type, IDictionary<string, object> additionalData = null)
         {
-			if (factory == null) // This may happen in VS designer and this makes VS crash!
-				return new DebugLogger(type);
+            if (factory == null) // This may happen in VS designer and this makes VS crash!
+                return new DebugLogger(type);
             else return factory.GetLogger(type, additionalData);
         }
 
@@ -82,6 +82,15 @@ namespace Hawkeye.Logging
             if (toAppend == null) throw new ArgumentNullException("toAppend");
 
             return ((ILogServiceAppendable)factory).AppendLogService(toAppend, additionalData);
+        }
+
+        /// <summary>
+        /// Closes all the resources held by the various loggers.
+        /// </summary>
+        public static void Shutdown()
+        {
+            if (factory == null) return;
+            factory.Shutdown();
         }
     }
 }

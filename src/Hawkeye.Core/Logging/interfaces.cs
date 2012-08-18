@@ -53,5 +53,10 @@ namespace Hawkeye.Logging
         /// <param name="additionalData">The additional data.</param>
         /// <returns>An implementation of <see cref="ILogService"/>.</returns>
         ILogService GetLogger(Type type, IDictionary<string, object> additionalData = null);
+
+        /// <summary>
+        /// Closes all the resources held by the various loggers.
+        /// </summary>
+        void Shutdown();
     }
 }

@@ -34,6 +34,14 @@ namespace Hawkeye.Logging
                 return new DebugLogger(type);
             }
 
+            /// <summary>
+            /// Closes all the resources held by the various loggers.
+            /// </summary>
+            public void Shutdown()
+            {
+                // Nothing to do here!
+            }
+
             #endregion
 
             /// <summary>

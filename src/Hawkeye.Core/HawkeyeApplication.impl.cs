@@ -26,7 +26,7 @@ namespace Hawkeye
                 get;
                 private set;
             }
-
+            
             /// <summary>
             /// Runs the Hawkeye application.
             /// </summary>
@@ -48,7 +48,7 @@ namespace Hawkeye
                     windowToKill, WindowMessages.WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
 
                 var appId = hawkeyeId.GetHashCode();
-                LogDebug("Running Hawkeye in its own process.", appId);
+                LogInfo("Running Hawkeye in its own process.", appId);
                 LogDebug(string.Format("Parameters: {0}, {1}.", windowToSpy, windowToKill), appId);
                 Initialize();
                 LogDebug("Hawkeye initialization is complete", appId);
@@ -60,7 +60,17 @@ namespace Hawkeye
 
                 Application.Run(mainForm);
             }
-            
+
+            /// <summary>
+            /// Operations that should be realized before we close Hawkeye.
+            /// </summary>
+            public void Close()
+            {
+                LogDebug(new string('-', 80));
+                // Release resources (the log file for example) held by log4net.
+                LogManager.Shutdown();
+            }
+
             /// <summary>
             /// Determines whether Hawkeye can be injected given the specified window info.
             /// </summary>
@@ -109,8 +119,15 @@ namespace Hawkeye
                     "Attach"                                                // Attach method
                 };
 
-                var pinfo = new ProcessStartInfo(
-                    bootstrapExecutable, string.Join(" ", arguments));
+                var args = string.Join(" ", arguments);
+                var pinfo = new ProcessStartInfo(bootstrapExecutable, args);
+
+                LogInfo(string.Format("Starting a new instance of Hawkeye: {0}", bootstrapExecutable));
+                LogDebug(string.Format("Command is: {0} {1}", bootstrapExecutable, args));
+				
+                // Close Hawkeye; i.e. clean everything beore it is really killed in the Attach method.
+                Close(); 
+
                 Process.Start(pinfo);
             }
 
@@ -133,7 +150,7 @@ namespace Hawkeye
                 NativeMethods.GetWindowThreadProcessId(targetWindow, out pid);
 
                 var appId = hawkeyeId.GetHashCode();
-                LogDebug(string.Format("Running Hawkeye attached to application {0} (pid={1})",
+                LogInfo(string.Format("Running Hawkeye attached to application {0} (pid={1})",
                     Application.ProductName, pid), appId);
                 Initialize();
                 LogDebug("Hawkeye initialization is complete", appId);
@@ -187,16 +204,7 @@ namespace Hawkeye
 
                 LogDebug(string.Format("{0}/{1} Hawkeye plugins were successfully loaded.", loadedCount, discoveredCount));
             }
-
-            private static void LogDebug(string message, int appId = 0)
-            {
-                var log = LogManager.GetLogger<HawkeyeApplication.Implementation>();
-
-                if (appId == 0) log.Debug(message);
-                else log.Debug(string.Format(
-                    "{0} - {1}", appId.GetHashCode(), message));
-            }
-
+            
             private static string GetBootstrap(Clr clr, Bitness bitness)
             {
                 var bitnessVersion = string.Empty;
@@ -231,6 +239,27 @@ namespace Hawkeye
                 var exe = string.Format("HawkeyeBootstrap{0}{1}.exe", clrVersion, bitnessVersion);                
                 return Path.Combine(directory, exe);
             }
+
+            #region Logging
+
+            private static void LogInfo(string message, int appId = 0)
+            {
+                Log(LogLevel.Info, message, appId);
+            }
+
+            private static void LogDebug(string message, int appId = 0)
+            {
+                Log(LogLevel.Debug, message, appId);
+            }
+
+            private static void Log(LogLevel level, string message, int appId)
+            {
+                var log = LogManager.GetLogger<HawkeyeApplication.Implementation>();
+                log.Log(level, appId == 0 ? message :
+                    string.Format("{0} - {1}", appId.GetHashCode(), message));
+            }
+
+            #endregion
         }
     }
 }

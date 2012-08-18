@@ -60,6 +60,16 @@ namespace Hawkeye.Logging.log4net
             return RootLog4NetService.AppendLogService(logService, additionalData);
         }
 
+        /// <summary>
+        /// Closes all the resources held by the various loggers.
+        /// </summary>
+        public void Shutdown()
+        {
+            var hierarchy = (global::log4net.Repository.Hierarchy.Hierarchy)global::log4net.LogManager.GetRepository();
+            if (hierarchy != null)
+                hierarchy.Shutdown();
+        }
+
         #endregion
         
         private static bool log4netConfiguredYet = false;
