@@ -29,14 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.mainTabs = new System.Windows.Forms.TabControl();
-            this.mainTab = new System.Windows.Forms.TabPage();
-            this.mainControl = new Hawkeye.UI.MainControl();
-            this.testsTab = new System.Windows.Forms.TabPage();
-            this.injectN4x64Button = new System.Windows.Forms.Button();
-            this.injectN4x86Button = new System.Windows.Forms.Button();
-            this.injectN2X64Button = new System.Windows.Forms.Button();
-            this.injectN2x86Button = new System.Windows.Forms.Button();
             this.mstrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,100 +61,11 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sstrip = new System.Windows.Forms.StatusStrip();
             this.tstripContainer = new System.Windows.Forms.ToolStripContainer();
-            this.button1 = new System.Windows.Forms.Button();
-            this.mainTabs.SuspendLayout();
-            this.mainTab.SuspendLayout();
-            this.testsTab.SuspendLayout();
+            this.mainControl = new Hawkeye.UI.MainControl();
             this.mstrip.SuspendLayout();
             this.tstripContainer.ContentPanel.SuspendLayout();
             this.tstripContainer.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // mainTabs
-            // 
-            this.mainTabs.Controls.Add(this.mainTab);
-            this.mainTabs.Controls.Add(this.testsTab);
-            this.mainTabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainTabs.Location = new System.Drawing.Point(0, 0);
-            this.mainTabs.Multiline = true;
-            this.mainTabs.Name = "mainTabs";
-            this.mainTabs.SelectedIndex = 0;
-            this.mainTabs.Size = new System.Drawing.Size(608, 366);
-            this.mainTabs.TabIndex = 0;
-            // 
-            // mainTab
-            // 
-            this.mainTab.Controls.Add(this.mainControl);
-            this.mainTab.Location = new System.Drawing.Point(4, 22);
-            this.mainTab.Name = "mainTab";
-            this.mainTab.Padding = new System.Windows.Forms.Padding(3);
-            this.mainTab.Size = new System.Drawing.Size(600, 340);
-            this.mainTab.TabIndex = 0;
-            this.mainTab.Text = "Main";
-            this.mainTab.UseVisualStyleBackColor = true;
-            // 
-            // mainControl
-            // 
-            this.mainControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainControl.Location = new System.Drawing.Point(3, 3);
-            this.mainControl.Name = "mainControl";
-            this.mainControl.Size = new System.Drawing.Size(594, 334);
-            this.mainControl.TabIndex = 0;
-            // 
-            // testsTab
-            // 
-            this.testsTab.Controls.Add(this.button1);
-            this.testsTab.Controls.Add(this.injectN4x64Button);
-            this.testsTab.Controls.Add(this.injectN4x86Button);
-            this.testsTab.Controls.Add(this.injectN2X64Button);
-            this.testsTab.Controls.Add(this.injectN2x86Button);
-            this.testsTab.Location = new System.Drawing.Point(4, 22);
-            this.testsTab.Name = "testsTab";
-            this.testsTab.Padding = new System.Windows.Forms.Padding(3);
-            this.testsTab.Size = new System.Drawing.Size(600, 340);
-            this.testsTab.TabIndex = 1;
-            this.testsTab.Text = "Tests";
-            this.testsTab.UseVisualStyleBackColor = true;
-            // 
-            // injectN4x64Button
-            // 
-            this.injectN4x64Button.Location = new System.Drawing.Point(4, 93);
-            this.injectN4x64Button.Name = "injectN4x64Button";
-            this.injectN4x64Button.Size = new System.Drawing.Size(75, 23);
-            this.injectN4x64Button.TabIndex = 3;
-            this.injectN4x64Button.Text = "N4 x64";
-            this.injectN4x64Button.UseVisualStyleBackColor = true;
-            this.injectN4x64Button.Click += new System.EventHandler(this.injectN4x64Button_Click);
-            // 
-            // injectN4x86Button
-            // 
-            this.injectN4x86Button.Location = new System.Drawing.Point(4, 64);
-            this.injectN4x86Button.Name = "injectN4x86Button";
-            this.injectN4x86Button.Size = new System.Drawing.Size(75, 23);
-            this.injectN4x86Button.TabIndex = 4;
-            this.injectN4x86Button.Text = "N4 x86";
-            this.injectN4x86Button.UseVisualStyleBackColor = true;
-            this.injectN4x86Button.Click += new System.EventHandler(this.injectN4x86Button_Click);
-            // 
-            // injectN2X64Button
-            // 
-            this.injectN2X64Button.Location = new System.Drawing.Point(6, 35);
-            this.injectN2X64Button.Name = "injectN2X64Button";
-            this.injectN2X64Button.Size = new System.Drawing.Size(75, 23);
-            this.injectN2X64Button.TabIndex = 1;
-            this.injectN2X64Button.Text = "N2 x64";
-            this.injectN2X64Button.UseVisualStyleBackColor = true;
-            this.injectN2X64Button.Click += new System.EventHandler(this.injectN2X64Button_Click);
-            // 
-            // injectN2x86Button
-            // 
-            this.injectN2x86Button.Location = new System.Drawing.Point(6, 6);
-            this.injectN2x86Button.Name = "injectN2x86Button";
-            this.injectN2x86Button.Size = new System.Drawing.Size(75, 23);
-            this.injectN2x86Button.TabIndex = 2;
-            this.injectN2x86Button.Text = "N2 x86";
-            this.injectN2x86Button.UseVisualStyleBackColor = true;
-            this.injectN2x86Button.Click += new System.EventHandler(this.injectN2x86Button_Click);
             // 
             // mstrip
             // 
@@ -412,7 +315,7 @@
             // 
             // tstripContainer.ContentPanel
             // 
-            this.tstripContainer.ContentPanel.Controls.Add(this.mainTabs);
+            this.tstripContainer.ContentPanel.Controls.Add(this.mainControl);
             this.tstripContainer.ContentPanel.Size = new System.Drawing.Size(608, 366);
             this.tstripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tstripContainer.Location = new System.Drawing.Point(0, 24);
@@ -421,15 +324,14 @@
             this.tstripContainer.TabIndex = 3;
             this.tstripContainer.Text = "toolStripContainer1";
             // 
-            // button1
+            // mainControl
             // 
-            this.button1.Location = new System.Drawing.Point(3, 122);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.mainControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainControl.Location = new System.Drawing.Point(0, 0);
+            this.mainControl.Name = "mainControl";
+            this.mainControl.Padding = new System.Windows.Forms.Padding(4);
+            this.mainControl.Size = new System.Drawing.Size(608, 366);
+            this.mainControl.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -442,9 +344,6 @@
             this.MainMenuStrip = this.mstrip;
             this.Name = "MainForm";
             this.Text = "HawkEye";
-            this.mainTabs.ResumeLayout(false);
-            this.mainTab.ResumeLayout(false);
-            this.testsTab.ResumeLayout(false);
             this.mstrip.ResumeLayout(false);
             this.mstrip.PerformLayout();
             this.tstripContainer.ContentPanel.ResumeLayout(false);
@@ -457,9 +356,6 @@
 
         #endregion
 
-        private System.Windows.Forms.TabControl mainTabs;
-        private System.Windows.Forms.TabPage mainTab;
-        private System.Windows.Forms.TabPage testsTab;
         private System.Windows.Forms.MenuStrip mstrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
@@ -492,11 +388,6 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.StatusStrip sstrip;
         private System.Windows.Forms.ToolStripContainer tstripContainer;
-        private System.Windows.Forms.Button injectN4x64Button;
-        private System.Windows.Forms.Button injectN4x86Button;
-        private System.Windows.Forms.Button injectN2X64Button;
-        private System.Windows.Forms.Button injectN2x86Button;
         private MainControl mainControl;
-        private System.Windows.Forms.Button button1;
     }
 }

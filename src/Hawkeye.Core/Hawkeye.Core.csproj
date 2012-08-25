@@ -87,6 +87,12 @@
     <Compile Include="UI\DotNetPropertyGrid.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\HawkeyePanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\HawkeyeTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\MainControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
