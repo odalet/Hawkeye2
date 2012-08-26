@@ -12,6 +12,8 @@ namespace HawkeyeBootstrap
 
         static Program()
         {
+            //SimpleLogManager.Initialize(
+
             // Determine where to log; should be C:\ProgramData\Hawkeye\HawkeyeInjector.log on Win7
             var logFileDirectory = Path.Combine(Environment.GetFolderPath(
                 Environment.SpecialFolder.CommonApplicationData), "Hawkeye");
