@@ -27,16 +27,17 @@ namespace __HawkeyeAttacherNamespace__
         /// <param name="assembly">not used.</param>
         /// <param name="type">not used.</param>
         /// <param name="method">not used.</param>
-        //TODO: private static void Attach(IntPtr target, IntPtr origin)
-        private static void Attach(string target, string hawkeye, string assembly, string type, string method)
+        /*TODO: */
+        private static void Attach(System.IntPtr targetHandle, System.IntPtr hawkeyeHandle)
+        //private static void Attach(string target, string hawkeye, string assembly, string type, string method)
         {
             // Because when injected the base probing path is the one 
             // of the injected app, not the hawkeye root path.
             System.AppDomain.CurrentDomain.AssemblyResolve += (s, r) =>
                 Hawkeye.Reflection.AssemblyResolver.Resolve(r.Name);
             
-            System.IntPtr targetHandle = StringToIntPtr(target);
-            System.IntPtr hawkeyeHandle = StringToIntPtr(hawkeye);
+            //System.IntPtr targetHandle = StringToIntPtr(target);
+            //System.IntPtr hawkeyeHandle = StringToIntPtr(hawkeye);
 
             CallAttach(targetHandle, hawkeyeHandle);
         }

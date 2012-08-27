@@ -2,7 +2,7 @@
 
 using namespace System;
 
-namespace ManagedInjector {
+namespace HawkeyeInjector {
 
 	public ref class SimpleLogService
 	{
@@ -21,9 +21,9 @@ namespace ManagedInjector {
 			Debug = 2
 		};
 
-		String^ theFileName;
-		Type^ theType;
-		String^ theMethod;
+		property String^ FileName;
+		property String^ TypeName;
+		property String^ MethodName;
 
 		void Log(LogLevel level, String^ message);
 	};

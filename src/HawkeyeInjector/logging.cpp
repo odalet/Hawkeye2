@@ -7,7 +7,7 @@ using namespace System::Text;
 using namespace System::Threading;
 using namespace System::Diagnostics;
 
-namespace ManagedInjector
+namespace HawkeyeInjector
 {
 #pragma region SimpleLogService
 
@@ -17,9 +17,9 @@ namespace ManagedInjector
 	/// <param name="method">The method to log.</param>
 	SimpleLogService::SimpleLogService(String^ filename, Type^ type, String^ method)
 	{
-		theFileName = filename;
-		theType = type;
-		theMethod = method;
+		FileName = filename;
+		TypeName = type == nullptr ? "<global>" : type->ToString();
+		MethodName = method;
 	}
 
 	/// <summary>
@@ -58,14 +58,14 @@ namespace ManagedInjector
 	{
 		StringBuilder^ sb = gcnew StringBuilder();
 		sb->Append(DateTime::Now.ToString("yyyy-MM-dd HH:MM:ss,fff"));
-		sb->AppendFormat(" [{0}]", Thread::CurrentThread->ManagedThreadId);
+		sb->AppendFormat(" [{0},{1}]", Process::GetCurrentProcess()->Id, Thread::CurrentThread->ManagedThreadId);
 		sb->AppendFormat(" {0} - ", level.ToString()->ToUpperInvariant()->PadRight(5));
-		sb->AppendFormat(" {0}.{1} - ", theType->ToString(), theMethod);
+		sb->AppendFormat(" {0}.{1} - ", TypeName, MethodName);
 		sb->Append(message);
 		String^ text = sb->ToString();
 		Debug::WriteLine(text);
 
-		FileInfo^ fi = gcnew FileInfo(theFileName);
+		FileInfo^ fi = gcnew FileInfo(FileName);
 		StreamWriter^ sw = nullptr;
 		try
 		{
