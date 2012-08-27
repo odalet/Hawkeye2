@@ -14,21 +14,14 @@ using namespace System;
 
 namespace ManagedInjector
 {
-	public ref class Injector : System::Object
+	public ref class Injector : Object
 	{
 		public:
 
 		static void Launch(
-			System::IntPtr windowHandle, 
-			System::IntPtr hawkeyeHandle, 
-			System::String^ assemblyName, 
-			System::String^ className, 
-			System::String^ methodName, 
-			System::String^ logFileName);
+			IntPtr windowHandle, IntPtr hawkeyeHandle, 
+			String^ assemblyName, String^ className, String^ methodName, String^ logFileName);
 
-		static void LogMessage(
-			System::String^ logFileName,
-			System::String^ message, 
-			bool append);
+		static void LogMessage(String^ logFileName, String^ message, bool append);
 	};
 }
