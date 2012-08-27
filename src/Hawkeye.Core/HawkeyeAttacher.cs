@@ -19,14 +19,12 @@ namespace __HawkeyeAttacherNamespace__
         // assemblies search path: remember that now the running process is not Hawkeye.exe
         // any more but the spied application.
 
+        /// <summary>
         /// Attaches the (injected) Hawkeye application to the specified target window
         /// (and destroys the original Hawkeye window).
         /// </summary>
-        /// <param name="target">The target window.</param>
-        /// <param name="hawkeye">The original Hawkeye window.</param>
-        /// <param name="assembly">not used.</param>
-        /// <param name="type">not used.</param>
-        /// <param name="method">not used.</param>
+        /// <param name="targetHandle">The target window.</param>
+        /// <param name="hawkeyeHandle">The original Hawkeye window.</param>
         private static void Attach(System.IntPtr targetHandle, System.IntPtr hawkeyeHandle)
         {
             // Because when injected the base probing path is the one 
