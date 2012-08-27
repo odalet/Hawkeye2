@@ -1,8 +1,9 @@
 ﻿using System;
 using System.IO;
-using ManagedInjector;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+
+using HawkeyeInjector;
 
 namespace HawkeyeBootstrap
 {
@@ -35,40 +36,57 @@ namespace HawkeyeBootstrap
                 Process.GetCurrentProcess().ProcessName,
                 string.Join(" ", args)));
 
-            Log("Starting the injection process...", false);
-
-            var windowHandle = (IntPtr)Int64.Parse(args[0]);
-            var originalHandle = (IntPtr)Int64.Parse(args[1]);
-            var assemblyName = args[2];
-            var className = args[3];
-            var methodName = args[4];
-
-            Injector.Launch(windowHandle, originalHandle, assemblyName, className, methodName, logFileName);
-
-            //check to see that it was injected, and if not, retry with the main window handle.
-            var process = GetProcessFromWindowHandle(windowHandle);
-            if (process != null && !CheckInjectedStatus(process) && process.MainWindowHandle != windowHandle)
+            InjectorParameters parameters = null;
+            try
             {
-                Log("Could not inject with current handle... retrying with MainWindowHandle");
-                Injector.Launch(process.MainWindowHandle, originalHandle, assemblyName, className, methodName, logFileName);
-                CheckInjectedStatus(process);
+                parameters = new InjectorParameters(args);
             }
+            catch (Exception ex)
+            {
+                log.Error(string.Format(
+                    "Wrong command-line arguments: {0}.\r\n{1}", ex.Message, ex));
+                return;
+            }
+
+            try
+            {
+                Injector.Launch(parameters);
+
+                // Make sure we were injected; it not, retry with the main window handle.
+                var process = GetProcessFromWindowHandle(parameters.WindowHandle);
+                if (process != null && !CheckInjectedStatus(process) && process.MainWindowHandle != parameters.WindowHandle)
+                {
+                    log.Debug("Could not inject with current handle... retrying with MainWindowHandle");
+                    parameters.WindowHandle = process.MainWindowHandle;
+                    Injector.Launch(parameters);
+                    CheckInjectedStatus(process);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(string.Format(
+                    "There was an error during the injection process: {0}.\r\n{1}", ex.Message, ex));
+                return;
+            }
+
+            log.Info(new string('-', 120));
         }
 
         private static Process GetProcessFromWindowHandle(IntPtr windowHandle)
         {
-            int processId;
+            var log = SimpleLogManager.GetLogger(typeof(Program), "GetProcessFromWindowHandle");
+            IntPtr processId = IntPtr.Zero;
             GetWindowThreadProcessId(windowHandle, out processId);
-            if (processId == 0)
+            if (processId == IntPtr.Zero)
             {
-                Log(string.Format("could not get process for window handle {0}", windowHandle));
+                log.Error(string.Format("could not get process for window handle {0}", windowHandle));
                 return null;
             }
 
-            var process = Process.GetProcessById(processId);
+            var process = Process.GetProcessById(processId.ToInt32());
             if (process == null)
             {
-                Log(string.Format("could not get process for PID = {0}", processId));
+                log.Error(string.Format("could not get process for PID = {0}", processId));
                 return null;
             }
             return process;
@@ -76,28 +94,28 @@ namespace HawkeyeBootstrap
 
         private static bool CheckInjectedStatus(Process process)
         {
-            bool containsFile = false;
+            var log = SimpleLogManager.GetLogger(typeof(Program), "CheckInjectedStatus");
+
+            var containsFile = false;
             process.Refresh();
             foreach (ProcessModule module in process.Modules)
             {
                 if (module.FileName.Contains("HawkeyeInjector"))
+                {
                     containsFile = true;
+                    break;
+                }
             }
 
-            if (containsFile) Log(string.Format(
+            if (containsFile) log.Info(string.Format(
                 "Successfully injected Hawkeye for process {0} (PID = {1})", process.ProcessName, process.Id));
-            else Log(string.Format(
+            else log.Error(string.Format(
                 "Failed to inject for process {0} (PID = {1})", process.ProcessName, process.Id));
 
             return containsFile;
         }
 
         [DllImport("user32.dll")]
-        private static extern int GetWindowThreadProcessId(IntPtr hwnd, out int processId);
-
-        private static void Log(string message, bool append = true)
-        {
-            Injector.LogMessage(logFileName, message, append);
-        }
+        public static extern uint GetWindowThreadProcessId(IntPtr hwnd, [Out]out IntPtr processId);
     }
 }
