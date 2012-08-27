@@ -127,17 +127,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
+    <ClCompile Include="injector.cpp" />
     <ClCompile Include="logging.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="_Injector.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="injector.h" />
     <ClInclude Include="logging.h" />
     <ClInclude Include="Stdafx.h" />
-    <ClInclude Include="_Injector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

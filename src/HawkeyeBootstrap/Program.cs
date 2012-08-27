@@ -30,6 +30,11 @@ namespace HawkeyeBootstrap
         [STAThread]
         private static void Main(string[] args)
         {
+            var log = SimpleLogManager.GetLogger(typeof(Program), "Main");
+            log.Info(string.Format("Command line: {0} {1}",
+                Process.GetCurrentProcess().ProcessName,
+                string.Join(" ", args)));
+
             Log("Starting the injection process...", false);
 
             var windowHandle = (IntPtr)Int64.Parse(args[0]);
