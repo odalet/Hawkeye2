@@ -4,7 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using System.ComponentModel;
 
-namespace Hawkeye.UI
+namespace Hawkeye.UI.Controls
 {
     /// <summary>
     /// Owner-drawn tab control

@@ -6,18 +6,8 @@ using log4net.Util.TypeConverters;
 namespace Hawkeye.ComponentModel
 {
     [TypeConverter(typeof(DotNetInfoConverter))]
-    internal class ControlInfo : IControlInfo
+    internal class ControlInfo : IControlInfo, IProxy
     {
-        #region IControlInfo Members
-
-        public Control Control
-        {
-            get;
-            private set;
-        }
-
-        #endregion     
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ControlInfo"/> class.
         /// </summary>
@@ -26,5 +16,28 @@ namespace Hawkeye.ComponentModel
         {
             Control = Control.FromHandle(hwnd);
         }
+
+        #region IControlInfo Members
+
+        public Control Control
+        {
+            get;
+#if DEBUG
+            set; // Needed for tests purpose
+#else
+            private set;
+#endif
+        }
+
+        #endregion     
+        
+        #region IProxy Members
+
+        public object Value
+        {
+            get { return Control; }
+        }
+
+        #endregion
     }
 }

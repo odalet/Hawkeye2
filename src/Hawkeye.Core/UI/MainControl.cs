@@ -103,6 +103,12 @@ namespace Hawkeye.UI
         
         private void FillControlInfo(IControlInfo controlInfo)
         {
+#if DEBUG
+            //ODT: TESTS TESTS TESTS TESTS TESTS TESTS TESTS TESTS TESTS
+            var testControl = new TestControl();
+            controlInfo.Control = testControl;
+#endif
+
             dotNetPropertyGrid.SelectedObject = controlInfo;
         }
 

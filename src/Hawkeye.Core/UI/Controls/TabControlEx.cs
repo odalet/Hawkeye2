@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Hawkeye.UI
+namespace Hawkeye.UI.Controls
 {
     /// <summary>
     /// Hawkeye-style Tab control

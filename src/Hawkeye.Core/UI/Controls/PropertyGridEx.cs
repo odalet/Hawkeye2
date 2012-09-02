@@ -1,7 +1,10 @@
-﻿using System.Reflection;
+﻿using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
+using System.Collections.Generic;
+using Hawkeye.ComponentModel;
 
-namespace Hawkeye.UI
+namespace Hawkeye.UI.Controls
 {
     // Inspiration found in Hawkeye's search box extender
     internal class PropertyGridEx : PropertyGrid
@@ -25,8 +28,10 @@ namespace Hawkeye.UI
                 HandleCreated += (s, e) => Initialize();
                 VisibleChanged += (s, e) => Initialize();
             }
-        }
 
+            base.SelectedObjectsChanged += (s, e) => OnSelectionChanged();
+        }
+        
         protected ToolStrip ToolStrip
         {
             get
@@ -40,6 +45,12 @@ namespace Hawkeye.UI
 
                 return thisToolStrip;
             }
+        }
+
+        protected bool IsProcessingSelection
+        {
+            get;
+            private set;
         }
 
         /// <summary>
@@ -71,6 +82,32 @@ namespace Hawkeye.UI
         protected virtual ToolStripItem[] CreateToolStripItems()
         {
             return new ToolStripItem[] { };
+        }
+
+        /// <summary>
+        /// Called when the current selection has changed.
+        /// </summary>
+        private void OnSelectionChanged()
+        {
+            if (IsProcessingSelection) return;
+            IsProcessingSelection = true;
+            try
+            {
+                var selection = base.SelectedObjects;
+                base.SelectedObjects = ProcessSelection(selection).ToArray();
+            }
+            finally { IsProcessingSelection = false; }
+        }
+
+        /// <summary>
+        /// Processes the current property grid <see cref="SelectedObjects"/>, giving a chance to alter it.
+        /// </summary>
+        /// <param name="selection">The selection.</param>
+        /// <returns>The altered selection</returns>
+        protected virtual IEnumerable<object> ProcessSelection(IEnumerable<object> selection)
+        {
+            if (selection == null) return selection;
+            return selection.Select(item => item.GetInnerObject());
         }
     }
 }

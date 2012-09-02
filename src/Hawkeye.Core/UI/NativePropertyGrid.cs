@@ -1,5 +1,7 @@
 ﻿using System.Windows.Forms;
 
+using Hawkeye.UI.Controls;
+
 namespace Hawkeye.UI
 {
     /// <summary>

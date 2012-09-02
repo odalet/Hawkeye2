@@ -44,8 +44,13 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ComponentModel\descriptors\BasePropertyDescriptor.cs" />
+    <Compile Include="ComponentModel\descriptors\RealPropertyDescriptor.cs" />
+    <Compile Include="ComponentModel\descriptors\StaticPropertyDescriptor.cs" />
     <Compile Include="ComponentModel\DotNetInfoConverter.cs" />
+    <Compile Include="ComponentModel\IProxy.cs" />
     <Compile Include="ComponentModel\ModuleInfoConverter.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="HawkeyeApplication.cs" />
     <Compile Include="HawkeyeApplication.host.cs" />
     <Compile Include="HawkeyeApplication.impl.cs" />
@@ -72,16 +77,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Reflection\BaseMemberAccessor.cs" />
-    <Compile Include="Reflection\FieldAccessor.cs" />
-    <Compile Include="Reflection\MethodAccessor.cs" />
-    <Compile Include="Reflection\PropertyAccessor.cs" />
+    <Compile Include="Reflection\old\BaseMemberAccessor.cs" />
+    <Compile Include="Reflection\old\FieldAccessor.cs" />
+    <Compile Include="Reflection\old\MethodAccessor.cs" />
+    <Compile Include="Reflection\old\PropertyAccessor.cs" />
+    <Compile Include="ComponentModel\descriptors\Extensions.cs" />
     <Compile Include="SR.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SR.resx</DependentUpon>
     </Compile>
-    <Compile Include="UI\CustomTabControl.cs">
+    <Compile Include="UI\Controls\CustomTabControl.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\DotNetPropertyGrid.cs">
@@ -109,12 +115,13 @@
     <Compile Include="UI\NativePropertyGrid.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\PropertyGridEx.cs">
+    <Compile Include="UI\Controls\PropertyGridEx.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\TabControlEx.cs">
+    <Compile Include="UI\Controls\TabControlEx.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\PropertyTabs\AllPropertiesTab.cs" />
     <Compile Include="UI\WindowFinderControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -129,8 +136,13 @@
     <Compile Include="WinApi\structures.cs" />
     <Compile Include="WinApi\WindowHelper.cs" />
     <Compile Include="ComponentModel\WindowInfo.cs" />
+    <Compile Include="_tests\TestControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Properties.png" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hawkeye.Api\Hawkeye.Api.csproj">
       <Project>{854D919B-FABD-4D9B-ADAF-CA94ECAAD70E}</Project>

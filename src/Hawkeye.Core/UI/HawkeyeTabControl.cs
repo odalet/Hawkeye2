@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
+using Hawkeye.UI.Controls;
+
 namespace Hawkeye.UI
 {
     /// <summary>
