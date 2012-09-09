@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Windows.Forms;
-
-using log4net.Util.TypeConverters;
+using System.ComponentModel;
+using Hawkeye.Logging;
 
 namespace Hawkeye.ComponentModel
 {
     [TypeConverter(typeof(DotNetInfoConverter))]
     internal class ControlInfo : IControlInfo, IProxy
     {
+        private static ILogService log = LogManager.GetLogger<ControlInfo>();
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ControlInfo"/> class.
         /// </summary>
         /// <param name="hwnd">The Window handle of the control.</param>
         public ControlInfo(IntPtr hwnd)
         {
-            Control = Control.FromHandle(hwnd);
+            Control = GetControlFromHandle(hwnd);
         }
 
         #region IControlInfo Members
@@ -39,5 +41,20 @@ namespace Hawkeye.ComponentModel
         }
 
         #endregion
+
+        private Control GetControlFromHandle(IntPtr hwnd)
+        {
+            var control = Control.FromHandle(hwnd); // Usually this is enough
+            if (control == null)
+            {
+                // But in some cases (when inspecting most Visual Studio controls for instance), it is not...
+                // Is there a workaround? It seems that only the VS property grid & the windows forms designer
+                // can be inpected
+                log.Warning(string.Format(
+                    "Handle {0} is not associated with a .NET control: 'Control.FromHandle(hwnd)' returns null.", hwnd));
+            }
+
+            return control;
+        }
     }
 }

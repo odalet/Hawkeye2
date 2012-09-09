@@ -107,7 +107,9 @@ namespace Hawkeye.UI.Controls
         protected virtual IEnumerable<object> ProcessSelection(IEnumerable<object> selection)
         {
             if (selection == null) return selection;
-            return selection.Select(item => item.GetInnerObject());
+            return selection
+                .Select(item => item.GetInnerObject())
+                .Where(item => item != null);
         }
     }
 }
