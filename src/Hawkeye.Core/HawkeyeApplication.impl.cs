@@ -8,6 +8,7 @@ using Hawkeye.UI;
 using Hawkeye.WinApi;
 using Hawkeye.Logging;
 using Hawkeye.Logging.log4net;
+using System.Threading;
 
 namespace Hawkeye
 {
@@ -67,7 +68,8 @@ namespace Hawkeye
             public void Close()
             {
                 LogDebug(new string('-', 80));
-                // Release resources (the log file for example) held by log4net.
+
+                // Release resources (the log file for example) held by log4net.                
                 LogManager.Shutdown();
             }
 

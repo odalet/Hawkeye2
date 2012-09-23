@@ -29,9 +29,13 @@ namespace Hawkeye.UI
             tabs.ResumeLayout(false);
         }
 
-        public void SetTarget(IntPtr hwnd)
+        public IntPtr Target
         {
-            BuildCurrentWindowInfo(hwnd);
+            get 
+            {
+                return currentInfo == null ? IntPtr.Zero : currentInfo.Handle;
+            }
+            set { BuildCurrentWindowInfo(value); }
         }
 
         /// <summary>

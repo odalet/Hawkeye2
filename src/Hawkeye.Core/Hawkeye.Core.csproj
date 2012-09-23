@@ -111,6 +111,7 @@
     <Compile Include="UI\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\MainFormSettings.cs" />
     <Compile Include="UI\MessageBoxes.cs" />
     <Compile Include="UI\NativePropertyGrid.cs">
       <SubType>Component</SubType>
@@ -136,9 +137,6 @@
     <Compile Include="WinApi\structures.cs" />
     <Compile Include="WinApi\WindowHelper.cs" />
     <Compile Include="ComponentModel\WindowInfo.cs" />
-    <Compile Include="_tests\TestControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Properties.png" />

@@ -40,5 +40,7 @@ namespace Hawkeye.WinApi
     internal static class WindowMessages
     {
         public const uint WM_CLOSE = 0x0010;
+        public const uint WM_CANCELMODE = 0x001F;
+        public const uint WM_ENABLE = 0x000A;
     }
 }

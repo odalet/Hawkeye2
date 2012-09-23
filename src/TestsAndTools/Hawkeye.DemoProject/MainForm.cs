@@ -4,9 +4,12 @@ using System.Runtime.InteropServices;
 
 namespace Hawkeye.DemoProject
 {
-    public partial class Form1 : Form
+    /// <summary>
+    /// Main form
+    /// </summary>
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
@@ -34,6 +37,17 @@ namespace Hawkeye.DemoProject
                 8 * Marshal.SizeOf(typeof(IntPtr)),
                 Handle,
                 fx);
+        }
+
+        /// <summary>
+        /// Handles the Click event of the showDialogButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        private void showDialogButton_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new ChildForm())
+                dialog.ShowDialog(this);
         }
     }
 }

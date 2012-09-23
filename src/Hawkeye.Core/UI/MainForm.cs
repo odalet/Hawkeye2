@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
+using Hawkeye.WinApi;
 
 namespace Hawkeye.UI
 {
@@ -8,6 +10,8 @@ namespace Hawkeye.UI
     /// </summary>
     internal partial class MainForm : Form
     {
+        private IntPtr currentSpiedWindow = IntPtr.Zero;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MainForm"/> class.
         /// </summary>
@@ -15,17 +19,43 @@ namespace Hawkeye.UI
         {
             InitializeComponent();
             UpdateTitle();
+
+            base.Parent = null;
+        }
+
+        /// <summary>
+        /// Gets or sets this form's settings.
+        /// </summary>
+        public MainFormSettings Settings
+        {
+            get
+            {
+                return new MainFormSettings()
+                {
+
+                    SpiedWindow = mainControl.Target,
+                    Location = Location,
+                    Size = Size,
+                    WindowState = WindowState,
+                    Screen = Screen.FromControl(this)
+                };
+            }
+            set
+            {
+                if (value == null) return;
+                SetWindowSettings(value);
+            }
         }
 
         public void SetTarget(IntPtr hwnd)
         {
-            mainControl.SetTarget(hwnd);
+            mainControl.Target = hwnd;
         }
 
         private void UpdateTitle()
         {
-            base.Text = string.Format("Hawkeye {0} - {1}", 
-                HawkeyeApplication.CurrentClr, 
+            base.Text = string.Format("Hawkeye {0} - {1}",
+                HawkeyeApplication.CurrentClr,
                 HawkeyeApplication.CurrentBitness.ToString().ToLowerInvariant());
         }
 
@@ -59,6 +89,51 @@ namespace Hawkeye.UI
             logCount++;
             var l = Hawkeye.Logging.LogManager.GetLogger(GetType());
             Hawkeye.Logging.LoggingExtensions.Verbose(l, "TEST LOGGING: " + logCount);
+        }
+
+        private void SetWindowSettings(MainFormSettings settings)
+        {
+            //TODO: handle multiple-screens (and config changes!)
+            Location = settings.Location;
+            Size = settings.Size;
+            WindowState = settings.WindowState;
+
+            SetTarget(settings.SpiedWindow);
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InformationBox.Show(this, "About Hawkeye!");
+        }
+
+        /// <summary>
+        /// Handles this window messages
+        /// </summary>
+        /// <param name="m">The message.</param>
+        protected override void WndProc(ref Message m)
+        {
+            bool eat = false;
+            switch (m.Msg)
+            {
+                case (int)WindowMessages.WM_CANCELMODE:
+                    // We eat this one; due to modal dialogs. See below
+                    eat = true;
+                    break;
+
+                case (int)WindowMessages.WM_ENABLE:
+                    var wparam = m.WParam.ToInt32();
+                    if (wparam == 0)
+                    {
+                        // This means the window was disabled. 
+                        // Whenever we are disabled, let's re-enable ourself
+                        // This is needed if we want to be able to spy modal windows
+                        NativeMethods.EnableWindow(Handle, true);
+                        eat = true;
+                    }
+                    break;
+            }
+            
+            if (!eat) base.WndProc(ref m);
         }
     }
 }

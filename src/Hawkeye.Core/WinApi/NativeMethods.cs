@@ -72,7 +72,10 @@ namespace Hawkeye.WinApi
 
         [DllImport("user32.dll")]
         public static extern IntPtr SendMessage(IntPtr hwnd, uint msg, IntPtr wparam, IntPtr lparam);
-        
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+        public static extern bool EnableWindow(IntPtr hwnd, bool enable);
+
         #endregion
 
         #region Helpers
