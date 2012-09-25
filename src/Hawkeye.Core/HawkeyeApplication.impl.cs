@@ -8,7 +8,6 @@ using Hawkeye.UI;
 using Hawkeye.WinApi;
 using Hawkeye.Logging;
 using Hawkeye.Logging.log4net;
-using System.Threading;
 
 namespace Hawkeye
 {

@@ -2,6 +2,10 @@ using System.Windows.Forms;
 
 namespace Hawkeye.UI
 {
+    //TODO: prevent Hawkeye main form from eating WM_ENABLE. 
+    //      When modal dialogs are shownn by hawkeye itself,
+    //      we want it to react normally (ie be disabled).
+
     /// <summary>Shows an Error dialog box.</summary>
     public static class ErrorBox
     {

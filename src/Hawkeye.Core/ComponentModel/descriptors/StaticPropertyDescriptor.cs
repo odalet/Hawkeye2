@@ -24,7 +24,7 @@ namespace Hawkeye.ComponentModel
             pinfo = propertyInfo;
         }
 
-        public override bool CanResetValue(object component) { return false; } //TODO
+        public override bool CanResetValue(object component) { return false; } //TODO: why should this be false?
 
         public override Type ComponentType
         {

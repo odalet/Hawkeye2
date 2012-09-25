@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.ComponentModel;
+
 using Hawkeye.Logging;
 
 namespace Hawkeye.ComponentModel

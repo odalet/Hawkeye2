@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\lib\LinqBridge\LinqBridge-1.3.cs">
@@ -43,6 +44,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Configuration\ISettingsStore.cs" />
     <Compile Include="enums.cs" />
     <Compile Include="extensions\DateTimeExtensions.cs" />
     <Compile Include="extensions\ExceptionExtensions.cs" />

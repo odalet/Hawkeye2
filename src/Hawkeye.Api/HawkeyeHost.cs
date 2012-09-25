@@ -1,5 +1,6 @@
 ﻿using System;
 using Hawkeye.Logging;
+using Hawkeye.Configuration;
 
 namespace Hawkeye
 {
@@ -22,9 +23,27 @@ namespace Hawkeye
             /// An instance of an object implementing <see cref="ILogService"/>.
             /// </returns>
             ILogService GetLogger(Type type);
+
+            /// <summary>
+            /// Gets the settings stored in Hawkeye configuration file matching the specified key.
+            /// </summary>
+            /// <remarks>
+            /// <list type="bullet">
+            /// <item>If the key does not match any saved settings, a new empty store is created.</item>
+            /// <item>
+            /// If the key is null or empty, a read-only store containing representing 
+            /// the Hawkeye application settings is returned.
+            /// </item>
+            /// </list>
+            /// </remarks>
+            /// <param name="key">The settings store key.</param>
+            /// <returns>An <see cref="ISettingsStore"/> containing the requested settings data.</returns>
+            ISettingsStore GetSettings(string key = "");
         }
 
         private static IHost implementation = null;
+
+        #region Initialization
 
         /// <summary>
         /// Gets a value indicating whether the Hawkeye Host is initialized.
@@ -36,6 +55,21 @@ namespace Hawkeye
         {
             get { return implementation != null; }
         }
+
+        internal static void Initialize(IHost host)
+        {
+            implementation = host;
+        }
+
+        private static void EnsureInitialized()
+        {
+            if (!IsInitialized) throw new ApplicationException(
+                "The Hawkeye application Host is not initialized.");
+        }
+
+        #endregion
+
+        #region Logging
 
         /// <summary>
         /// Gets the default logger.
@@ -71,100 +105,42 @@ namespace Hawkeye
             return implementation.GetLogger(type);
         }
 
-        internal static void Initialize(IHost host)
+        #endregion
+
+        #region Settings
+
+        /// <summary>
+        /// Gets the settings stored in Hawkeye configuration file matching the specified key.
+        /// </summary>
+        /// <remarks>
+        /// <list type="bullet">
+        /// <item>If the key does not match any saved settings, a new empty store is created.</item>
+        /// <item>
+        /// If the key is null or empty, a read-only store containing representing 
+        /// the Hawkeye application settings is returned.
+        /// </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="key">The settings store key.</param>
+        /// <returns>An <see cref="ISettingsStore"/> containing the requested settings data.</returns>
+        public static ISettingsStore GetSettings(string key = "")
         {
-            implementation = host;
+            EnsureInitialized();
+            return implementation.GetSettings(key);
         }
 
-        private static void EnsureInitialized()        
+        /// <summary>
+        /// Gets an object containing the Hawkeye settings object.
+        /// </summary>
+        /// <remarks>
+        /// The returned settings store is read-only.
+        /// </remarks>
+        /// <returns>An <see cref="ISettingsStore"/> representing the Hawkeye application settings.</returns>
+        public static ISettingsStore GetHawkeyeSettings()
         {
-            if (!IsInitialized) throw new ApplicationException(
-                "The Hawkeye application Host is not initialized.");
+            return GetSettings();
         }
+
+        #endregion
     }
-
-    //internal interface IThisImplementation
-    //{
-    //    Clr CurrentClr { get; }
-    //    Bitness CurrentBitness { get; }
-    //    IWindowInfo GetWindowInfo(IntPtr hwnd);
-    //    ILogServiceFactory GetLogServiceFactory();
-    //}
-
-    ///// <summary>
-    ///// Central point for Hawkeye API access.
-    ///// </summary>
-    //public static class This
-    //{
-    //    private static IThisImplementation implementation = null;
-    //    private static bool initialized = false;
-
-    //    /// <summary>
-    //    /// Gets a value indicating whether the running instance is x64.
-    //    /// </summary>
-    //    /// <value>
-    //    ///   <c>true</c> if x64; otherwise, <c>false</c>.
-    //    /// </value>
-    //    public static bool IsX64
-    //    {
-    //        get { return IntPtr.Size == 8; }
-    //    }
-
-    //    internal static bool IsInitialized
-    //    {
-    //        get { return initialized; }
-    //    }
-
-    //    internal static void InitializeApi(IThisImplementation impl)
-    //    {
-    //        if (impl == null) throw new ArgumentNullException("impl");
-    //        implementation = impl;
-    //        initialized = true;
-    //    }
-
-    //    public static Clr CurrentClr
-    //    {
-    //        get 
-    //        {
-    //            EnsureInitialized();
-    //            return implementation.CurrentClr; 
-    //        }
-    //    }
-
-    //    public static Bitness CurrentBitness
-    //    {
-    //        get
-    //        {
-    //            EnsureInitialized();
-    //            return implementation.CurrentBitness;
-    //        }
-    //    }
-
-    //    /// <summary>
-    //    /// Gets window information given its handle.
-    //    /// </summary>
-    //    /// <param name="hwnd">The Window handle.</param>
-    //    /// <returns>Window information</returns>
-    //    public static IWindowInfo GetWindowInfo(IntPtr hwnd)
-    //    {
-    //        EnsureInitialized();
-    //        return implementation.GetWindowInfo(hwnd);
-    //    }
-
-    //    /// <summary>
-    //    /// Returns a new instance of the default logging service factory.
-    //    /// </summary>
-    //    /// <returns>An implementation of <see cref="ILogServiceFactory"/>.</returns>
-    //    public static ILogServiceFactory GetLogServiceFactory()
-    //    {
-    //        EnsureInitialized();
-    //        return implementation.GetLogServiceFactory();
-    //    }
-
-    //    private static void EnsureInitialized()
-    //    {
-    //        if (!initialized) throw new ApplicationException(
-    //            "The core API is not initialized. You should call This.InitializeApi first.");
-    //    }
-    //}
 }

@@ -3,8 +3,6 @@ using System.Drawing;
 using System.ComponentModel;
 using System.Windows.Forms.Design;
 
-using Hawkeye.ComponentModel;
-
 namespace Hawkeye.UI.PropertyTabs
 {
     internal class AllPropertiesTab : PropertyTab

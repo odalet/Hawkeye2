@@ -12,6 +12,12 @@ namespace Hawkeye.ComponentModel
             private string propname = string.Empty;
             private Type proptype = null;
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ModuleInfoPropertyDescriptor" /> class.
+            /// </summary>
+            /// <param name="name">The name.</param>
+            /// <param name="attributes">The attributes.</param>
+            /// <param name="type">The type.</param>
             public ModuleInfoPropertyDescriptor(string name, Attribute[] attributes, Type type)
                 : base(typeof(IModuleInfo), name, type, attributes)
             {

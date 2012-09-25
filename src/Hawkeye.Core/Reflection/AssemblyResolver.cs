@@ -23,7 +23,7 @@ namespace Hawkeye.Reflection
             if (resolvedAssemblies.ContainsKey(assemblyName))
                 return Assembly.LoadFrom(resolvedAssemblies[assemblyName]);
 
-            // r.RequestingAssembly exists in .NET 4 but not before
+            // RequestingAssembly exists in .NET 4 but not before
             var requestingAssembly = Assembly.GetExecutingAssembly();
             var directory = Path.GetDirectoryName(requestingAssembly.Location);
             // see http://stackoverflow.com/questions/1373100/how-to-add-folder-to-assembly-search-path-at-runtime-in-net

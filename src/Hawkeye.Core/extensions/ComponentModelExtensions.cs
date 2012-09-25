@@ -6,12 +6,13 @@ using System.ComponentModel;
 using System.Collections.Generic;
 
 using Hawkeye.Logging;
+using Hawkeye.ComponentModel;
 
-namespace Hawkeye.ComponentModel
+namespace Hawkeye
 {
-    internal static class Extensions
+    internal static class ComponentModelExtensions
     {
-        private static ILogService log = LogManager.GetLogger(typeof(Extensions));
+        private static ILogService log = LogManager.GetLogger(typeof(ComponentModelExtensions));
 
         private static readonly string[] excludedProperties = new[]
         {
@@ -36,9 +37,9 @@ namespace Hawkeye.ComponentModel
         #region ITypeDescriptorContext extensions
 
         public static PropertyDescriptorCollection GetAllProperties(
-            this ITypeDescriptorContext context, 
-            object component, 
-            Attribute[] attributes, 
+            this ITypeDescriptorContext context,
+            object component,
+            Attribute[] attributes,
             bool inspectBaseClasses = true)
         {
             if (component == null || component.GetType().IsPrimitive || component is string)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 using Hawkeye.Logging;
 using Hawkeye.ComponentModel;
@@ -29,9 +30,16 @@ namespace Hawkeye.UI
             tabs.ResumeLayout(false);
         }
 
+        /// <summary>
+        /// Gets or sets the target Window handle.
+        /// </summary>
+        /// <value>
+        /// The handle of the spied window.
+        /// </value>
+        [Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IntPtr Target
         {
-            get 
+            get
             {
                 return currentInfo == null ? IntPtr.Zero : currentInfo.Handle;
             }
@@ -104,7 +112,7 @@ namespace Hawkeye.UI
                 tabs.SelectedTab = nativeTabPage;
             }
         }
-        
+
         private void FillControlInfo(IControlInfo controlInfo)
         {
 #if DEBUG

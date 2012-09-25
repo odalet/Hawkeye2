@@ -28,7 +28,7 @@ namespace Hawkeye.ComponentModel
         /// <returns>
         /// true if resetting the component changes its value; otherwise, false.
         /// </returns>
-        public override bool CanResetValue(object component)//TODO
+        public override bool CanResetValue(object component) //TODO: why should this be false?
         {
             return false;
         }

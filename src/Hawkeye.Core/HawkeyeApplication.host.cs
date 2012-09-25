@@ -1,5 +1,6 @@
 ﻿using System;
 using Hawkeye.Logging;
+using Hawkeye.Configuration;
 
 namespace Hawkeye
 {
@@ -31,6 +32,18 @@ namespace Hawkeye
             public ILogService GetLogger(Type type)
             {
                 return LogManager.GetLogger(type);
+            }
+            
+            public ISettingsStore GetSettings(string key = "")
+            {
+                if (string.IsNullOrEmpty(key) || key == SettingsManager.HawkeyeStoreKey) 
+                {
+                    // Let's get a read-only version of Hawkeye settings
+                    var hawkeyeSettings = SettingsManager.GetHawkeyeStore();
+                    return new SettingsManager.ReadOnlyStoreWrapper(hawkeyeSettings);
+                }
+                
+                return SettingsManager.GetStore(key);
             }
 
             #endregion

@@ -50,7 +50,11 @@
     <Compile Include="ComponentModel\DotNetInfoConverter.cs" />
     <Compile Include="ComponentModel\IProxy.cs" />
     <Compile Include="ComponentModel\ModuleInfoConverter.cs" />
-    <Compile Include="Extensions.cs" />
+    <Compile Include="Configuration\SettingsManager.impl.cs" />
+    <Compile Include="Configuration\SettingsManager.cs" />
+    <Compile Include="Configuration\SettingsManager.store.cs" />
+    <Compile Include="extensions\ComponentModelExtensions.cs" />
+    <Compile Include="extensions\ObjectExtensions.cs" />
     <Compile Include="HawkeyeApplication.cs" />
     <Compile Include="HawkeyeApplication.host.cs" />
     <Compile Include="HawkeyeApplication.impl.cs" />
@@ -81,7 +85,6 @@
     <Compile Include="Reflection\old\FieldAccessor.cs" />
     <Compile Include="Reflection\old\MethodAccessor.cs" />
     <Compile Include="Reflection\old\PropertyAccessor.cs" />
-    <Compile Include="ComponentModel\descriptors\Extensions.cs" />
     <Compile Include="SR.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

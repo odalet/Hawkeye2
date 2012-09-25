@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Hawkeye.Logging;
 
 namespace Hawkeye
@@ -76,6 +77,7 @@ namespace Hawkeye
             ILogServiceFactory GetLogServiceFactory();
         }
 
+        private static readonly string hawkeyeDataDirectory;
         private static readonly Bitness currentBitness;
         private static readonly Clr currentClr;
         private static readonly IHawkeyeApplicationImplementation implementation =
@@ -86,6 +88,9 @@ namespace Hawkeye
         /// </summary>
         static HawkeyeApplication()
         {
+            hawkeyeDataDirectory = Path.Combine(Environment.GetFolderPath(
+                Environment.SpecialFolder.CommonApplicationData), "Hawkeye");
+
             currentBitness = IntPtr.Size == 8 ?
                 Bitness.x64 : Bitness.x86;
             currentClr = typeof(int).Assembly.GetName().Version.Major == 4 ?
@@ -98,6 +103,17 @@ namespace Hawkeye
         public static ILogServiceFactory LogFactory
         {
             get { return implementation.GetLogServiceFactory(); }
+        }
+
+        /// <summary>
+        /// Gets the hawkeye Common Data directory.
+        /// </summary>
+        /// <value>
+        /// The hawkeye Common Data directory.
+        /// </value>
+        public static string HawkeyeDataDirectory
+        {
+            get { return hawkeyeDataDirectory; }
         }
 
         /// <summary>

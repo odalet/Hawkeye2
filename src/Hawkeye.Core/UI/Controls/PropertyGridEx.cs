@@ -2,7 +2,6 @@
 using System.Reflection;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using Hawkeye.ComponentModel;
 
 namespace Hawkeye.UI.Controls
 {

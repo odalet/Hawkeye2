@@ -2,9 +2,8 @@
 
 namespace Hawkeye
 {
-    internal static class Extensions
+    internal static class ObjectExtensions
     {
-
         /// <summary>
         /// Recursively inspect the provided object in case it is a <see cref="IProxy"/> to return its inner value.
         /// </summary>
