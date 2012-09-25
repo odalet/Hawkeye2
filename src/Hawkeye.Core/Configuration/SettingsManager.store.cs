@@ -25,12 +25,12 @@ namespace Hawkeye.Configuration
             }
 
             /// <summary>
-            /// Gets a value indicating whether this store is readonly.
+            /// Gets a value indicating whether this store is read only.
             /// </summary>
             /// <value>
-            ///   <c>true</c> if this store is readonly; otherwise, <c>false</c>.
+            ///   <c>true</c> if this store is read only; otherwise, <c>false</c>.
             /// </value>
-            public bool IsReadonly { get { return false; } }
+            public bool IsReadOnly { get { return false; } }
 
             #endregion
         }
@@ -69,12 +69,12 @@ namespace Hawkeye.Configuration
             }
 
             /// <summary>
-            /// Gets a value indicating whether this store is readonly.
+            /// Gets a value indicating whether this store is read only.
             /// </summary>
             /// <value>
-            ///   <c>true</c> if this store is readonly; otherwise, <c>false</c>.
+            ///   <c>true</c> if this store is read only; otherwise, <c>false</c>.
             /// </value>
-            public bool IsReadonly { get { return true; } }
+            public bool IsReadOnly { get { return true; } }
 
             #endregion
         }
