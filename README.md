@@ -24,8 +24,14 @@ _Remark_: Static linking is not an option; /clr is incompatible with /MT.
 * <http://stackoverflow.com/questions/6623780/visual-c-2010-changes-to-msvc-runtime-deployment-no-more-sxs-with-manifest>
 * <http://forums.codeguru.com/showthread.php?408061-Visual-C-Application-How-to-use-manifests-and-re-distributable-assemblies>
 
+Manifests:
 
+* <http://stackoverflow.com/questions/2100973/dll-redirection-using-manifests>
+* <http://stackoverflow.com/questions/1969360/a-way-to-load-dll-from-central-repository>
+* <http://msdn.microsoft.com/en-us/library/windows/desktop/aa375632.aspx>
 
+**Todo**:
+Create a XP Virtual box with no VS installation, (add .NET 3.5 & .NET 4); then try to run Hawkeye
 
 Foreword
 --------
