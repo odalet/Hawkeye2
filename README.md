@@ -1,5 +1,31 @@
 This is the README for Hawkeye 2
 ================================
+.
+
+Branch-specific
+---------------
+
+**This is 'vcredist' branch**
+
+Its purpose is to find the best way to redistribute VC++ runtime**s** with Hawkeye:
+
+* WiX installer with a bootstrap (see SnoopWpf)?
+* DLL in Hawkeye folder (what about x64/x86 + VC9/VC10 DLL having the same name)?
+* download vcredist*.exe as a prerequisite?
+* use merge modules?
+
+_Remark_: Static linking is not an option; /clr is incompatible with /MT.
+
+**Links**:
+
+* <http://msdn.microsoft.com/en-us/library/ms235317(v=vs.90).aspx>
+* <http://msdn.microsoft.com/en-us/library/8d1a994b-9986-4171-9c0b-56d24808fd1f(v=vs.90)>
+* <http://qualapps.blogspot.fr/2008/07/visual-studio-2008-c-redistributable.html> and <http://qualapps.blogspot.fr/2008/08/visual-studio-2008-feature-pack.html>
+* <http://stackoverflow.com/questions/6623780/visual-c-2010-changes-to-msvc-runtime-deployment-no-more-sxs-with-manifest>
+* <http://forums.codeguru.com/showthread.php?408061-Visual-C-Application-How-to-use-manifests-and-re-distributable-assemblies>
+
+
+
 
 Foreword
 --------
