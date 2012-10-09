@@ -6,7 +6,7 @@ namespace Hawkeye.Configuration
     /// When implemented by a <see cref="System.Windows.Forms.Form"/>, allows a <see cref="ILayoutService"/>
     /// to register additional layout-related data from the Form.
     /// </summary>
-    internal interface layoutInterfaces
+    internal interface IAdditionalLayoutDataProvider
     {
         /// <summary>
         /// This method is called by a <see cref="ILayoutService"/> when the form is created. Its 

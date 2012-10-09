@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Text;
-using System.Drawing;
-using System.Windows.Forms;
-using System.IO;
-using Hawkeye.Logging;
 using System.Xml;
-using System.ComponentModel;
-using System.Globalization;
+using System.Linq;
+using System.Drawing;
 using System.Threading;
+using System.Windows.Forms;
+using System.Globalization;
+using System.ComponentModel;
+using System.Collections.Generic;
+
+using Hawkeye.Logging;
 
 namespace Hawkeye.Configuration
 {
@@ -20,14 +19,28 @@ namespace Hawkeye.Configuration
             /// <summary>
             /// Initializes a new instance of the <see cref="FormLayoutData" /> class.
             /// </summary>
-            public FormLayoutData()
+            public FormLayoutData() : this(null) { }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="FormLayoutData" /> class from the data in the specified form.
+            /// </summary>
+            public FormLayoutData(Form form)
             {
-                AdditionalData = string.Empty;
+                if (form == null)
+                    AdditionalData = string.Empty;
+                else
+                {
+                    if (form is IAdditionalLayoutDataProvider)
+                        AdditionalData = ((IAdditionalLayoutDataProvider)form).GetAdditionalLayoutData();
+                    Bounds = form.Bounds;
+                    WindowState = form.WindowState;
+                    ScreenName = Screen.PrimaryScreen.DeviceName;
+                }
             }
 
             public Rectangle? Bounds { get; set; }
             public FormWindowState? WindowState { get; set; }
-            public string Screen { get; set; }
+            public string ScreenName { get; set; }
             public string AdditionalData { get; set; }
         }
 
@@ -203,7 +216,7 @@ namespace Hawkeye.Configuration
                         }
                         break;
                     case "screen":
-                        layoutData.Screen = GetNodeValue(xn);
+                        layoutData.ScreenName = GetNodeValue(xn);
                         break;
                     case "additionalData":
                         layoutData.AdditionalData = xn.InnerText;
@@ -257,7 +270,6 @@ namespace Hawkeye.Configuration
 
             foreach (string key in layouts.Keys)
             {
-
                 var xn = findLayoutNode(key);
                 if (xn == null)
                 {
@@ -301,9 +313,9 @@ namespace Hawkeye.Configuration
                     }
                 }
 
-                if (!string.IsNullOrEmpty(layout.Screen))
+                if (!string.IsNullOrEmpty(layout.ScreenName))
                 {
-                    var screenValue = layout.Screen;
+                    var screenValue = layout.ScreenName;
                     var xnScreen = xn.ChildNodes.Cast<XmlNode>().SingleOrDefault(n => n.Name == "screen");
                     if (xnScreen != null)
                         xnScreen.Attributes["value"].Value = screenValue;
@@ -327,7 +339,8 @@ namespace Hawkeye.Configuration
                 rootLayoutsNode.AppendChild(xn);
             }
 
-            SettingsManager.Save(); // Save once again 
+            // Regular settings have already been saved, but we happen after that. So, save once again
+            SettingsManager.Save();  
         }
 
         #endregion
@@ -359,7 +372,7 @@ namespace Hawkeye.Configuration
                     var layout = layouts[key];
 
                     // Determine screen
-                    var screenName = layout.Screen;
+                    var screenName = layout.ScreenName;
                     var screen = defaultScreen;
                     if (!string.IsNullOrEmpty(screenName)) screen =
                         Screen.AllScreens.SingleOrDefault(s => s.DeviceName == screenName) ?? defaultScreen;
@@ -369,8 +382,8 @@ namespace Hawkeye.Configuration
                         form.StartPosition = FormStartPosition.Manual;
                         var bounds = layout.Bounds.Value;
                         if (!screen.WorkingArea.Contains(bounds))
-                            bounds = GetDefaultBounds(form);
-                        form.Bounds = bounds;
+                            SetDefaultLayout(form);
+                        else form.Bounds = bounds;
                     }
                     else log.Verbose(string.Format("Could not find a 'bounds' value for layout key {0}", key));
 
@@ -390,19 +403,12 @@ namespace Hawkeye.Configuration
 
                     // If state is Normal and we have no bounds, use DefaultBounds and center on screen
                     if ((!layout.Bounds.HasValue) && (form.WindowState == FormWindowState.Normal))
-                    {
-                        form.Bounds = GetDefaultBounds(form);
-                        //if (form.ParentForm == null)
-                        //    form.StartPosition = FormStartPosition.CenterScreen;
-                        //else form.StartPosition = FormStartPosition.CenterParent;
-                    }
+                        SetDefaultLayout(form);
                 }
-                else // Creation and initialization
+                else
                 {
-                    var newLayout = new FormLayoutData();
-                    if (form.WindowState != FormWindowState.Normal)
-                        newLayout.Bounds = GetDefaultBounds(form);
-                    layouts.Add(key, newLayout);
+                    SetDefaultLayout(form);
+                    layouts.Add(key, new FormLayoutData(form));
                 }
 
                 form.SizeChanged += (s, e) => UpdateForm(key);
@@ -414,8 +420,8 @@ namespace Hawkeye.Configuration
                 UpdateForm(key);
 
                 // Even if no additional data was saved, call SetData.
-                if (form is layoutInterfaces)
-                    ((layoutInterfaces)form).SetAdditionalLayoutData(layouts[key].AdditionalData);
+                if (form is IAdditionalLayoutDataProvider)
+                    ((IAdditionalLayoutDataProvider)form).SetAdditionalLayoutData(layouts[key].AdditionalData);
             }
         }
 
@@ -436,7 +442,7 @@ namespace Hawkeye.Configuration
 
                 layout.WindowState = form.WindowState;
                 layout.Bounds = form.Bounds;
-                layout.Screen = Screen.FromControl(form).DeviceName;
+                layout.ScreenName = Screen.FromControl(form).DeviceName;
             }
         }
 
@@ -452,8 +458,8 @@ namespace Hawkeye.Configuration
             {
                 var layout = layouts[key];
                 var form = forms[key];
-                if (form is layoutInterfaces)
-                    layout.AdditionalData = ((layoutInterfaces)form).GetAdditionalLayoutData();
+                if (form is IAdditionalLayoutDataProvider)
+                    layout.AdditionalData = ((IAdditionalLayoutDataProvider)form).GetAdditionalLayoutData();
             }
 
             SaveLayouts();
@@ -465,29 +471,49 @@ namespace Hawkeye.Configuration
 
         #region Utilities
 
-        /// <summary>
-        /// Gets the default bounds for a form.
-        /// </summary>
-        /// <value>The default bounds.</value>
-        private Rectangle GetDefaultBounds(Form form)
+        private void SetDefaultLayout(Form form)
         {
+            form.WindowState = FormWindowState.Normal;
             if (form is IDefaultLayoutProvider)
-                return ((IDefaultLayoutProvider)form).GetDefaultBounds();
-
-            if (defaultBounds.IsEmpty)
-            {
-                var screen = Screen.PrimaryScreen.WorkingArea;
-                var wmargin = screen.Width / 10;
-                var hmargin = screen.Height / 10;
-
-                defaultBounds = new Rectangle(
-                    screen.Left + wmargin,
-                    screen.Top + hmargin,
-                    screen.Width - 2 * wmargin,
-                    screen.Height - 2 * hmargin);
-            }
-            return defaultBounds;
+                form.Bounds = ((IDefaultLayoutProvider)form).GetDefaultBounds();
+            //else form.S = FormStartPosition.WindowsDefaultBounds
         }
+
+        ///// <summary>
+        ///// Gets the default bounds for a form.
+        ///// </summary>
+        ///// <value>The default bounds.</value>
+        //private Rectangle GetDefaultBounds(Form form)
+        //{
+        //    if (form is IDefaultLayoutProvider)
+        //        return ((IDefaultLayoutProvider)form).GetDefaultBounds();
+        //    else
+        //    {
+        //        var screen = Screen.PrimaryScreen.WorkingArea;
+        //        if (form.WindowState == FormWindowState.Normal)
+        //        {
+        //            var originalBounds = form.Bounds;
+        //            if (screen.Contains(originalBounds))
+        //                return originalBounds;
+        //            else return FormStartPosition.WindowsDefaultBounds;
+        //        }
+        //    }
+        //    //    return form.Bounds;
+
+        //    //if (defaultBounds.IsEmpty)
+        //    //{
+        //    //    var screen = Screen.PrimaryScreen.WorkingArea;
+        //    //    var wmargin = screen.Width / 10;
+        //    //    var hmargin = screen.Height / 10;
+
+        //    //    defaultBounds = new Rectangle(
+        //    //        screen.Left + wmargin,
+        //    //        screen.Top + hmargin,
+        //    //        screen.Width - 2 * wmargin,
+        //    //        screen.Height - 2 * hmargin);
+        //    //}
+        //    //return defaultBounds;
+        //}
 
         private static T ConvertTo<T>(string value)
         {
