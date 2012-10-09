@@ -46,6 +46,14 @@ namespace Hawkeye
                 return SettingsManager.GetStore(key);
             }
 
+            /// <summary>
+            /// Gets a value containing information relative to the Hawkeye application.
+            /// </summary>
+            public IHawkeyeApplicationInfo ApplicationInfo
+            {
+                get { return HawkeyeApplication.ApplicationInfo; }
+            }
+
             #endregion
         }
     }

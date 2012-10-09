@@ -80,7 +80,7 @@ namespace HawkeyeInjector
 
 #pragma endregion
 
-#pragma region SimpleLogService
+#pragma region SimpleLogManager
 
 	void SimpleLogManager::Initialize(String^ filename)
 	{
@@ -93,12 +93,16 @@ namespace HawkeyeInjector
 			theFileName = filename;
 		else
 		{
-			String^ logFileDirectory = Path::Combine(
+			String^ hawkeyeDirectory = Path::Combine(
 				Environment::GetFolderPath(Environment::SpecialFolder::CommonApplicationData),
 				"Hawkeye");
+			if (!Directory::Exists(hawkeyeDirectory))
+				Directory::CreateDirectory(hawkeyeDirectory);
+			
+			String^ logFileDirectory = Path::Combine(hawkeyeDirectory, "logs");
+            if (!Directory::Exists(logFileDirectory))
+                Directory::CreateDirectory(logFileDirectory);
 
-			if (!Directory::Exists(logFileDirectory))
-				Directory::CreateDirectory(logFileDirectory);
 			theFileName = Path::Combine(logFileDirectory, filename);
 		}
 

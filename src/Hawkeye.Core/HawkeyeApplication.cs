@@ -77,7 +77,7 @@ namespace Hawkeye
             ILogServiceFactory GetLogServiceFactory();
         }
 
-        private static readonly string hawkeyeDataDirectory;
+        private static readonly HawkeyeApplicationInfo applicationInfo;
         private static readonly Bitness currentBitness;
         private static readonly Clr currentClr;
         private static readonly IHawkeyeApplicationImplementation implementation =
@@ -88,8 +88,7 @@ namespace Hawkeye
         /// </summary>
         static HawkeyeApplication()
         {
-            hawkeyeDataDirectory = Path.Combine(Environment.GetFolderPath(
-                Environment.SpecialFolder.CommonApplicationData), "Hawkeye");
+            applicationInfo = new HawkeyeApplicationInfo();
 
             currentBitness = IntPtr.Size == 8 ?
                 Bitness.x64 : Bitness.x86;
@@ -106,14 +105,11 @@ namespace Hawkeye
         }
 
         /// <summary>
-        /// Gets the hawkeye Common Data directory.
+        /// Gets a value containing information relative to the Hawkeye application.
         /// </summary>
-        /// <value>
-        /// The hawkeye Common Data directory.
-        /// </value>
-        public static string HawkeyeDataDirectory
+        public static IHawkeyeApplicationInfo ApplicationInfo
         {
-            get { return hawkeyeDataDirectory; }
+            get { return applicationInfo; }
         }
 
         /// <summary>

@@ -43,7 +43,8 @@ namespace Hawkeye.Configuration
                     resolved = defaultSettingsFileName;
 
                 if (!Path.IsPathRooted(resolved)) // combine with default directory
-                    resolved = Path.Combine(HawkeyeApplication.HawkeyeDataDirectory, resolved);
+                    resolved = Path.Combine(
+                        HawkeyeApplication.ApplicationInfo.ApplicationDataDirectory, resolved);
 
                 settingsFileName = resolved; // This is the settings file
 

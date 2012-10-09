@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
@@ -9,20 +8,22 @@ namespace HawkeyeBootstrap
 {
     internal static class Program
     {
-        private static readonly string logFileName;
+        //private static readonly string logFileName;
 
-        static Program()
-        {
-            //SimpleLogManager.Initialize(
+        //static Program()
+        //{
+        //    // Determine where to log; should be C:\ProgramData\Hawkeye\logs\HawkeyeInjector.log on Win7
+        //    var hawkeyeDirectory = Path.Combine(Environment.GetFolderPath(
+        //        Environment.SpecialFolder.CommonApplicationData), "Hawkeye");
+        //    if (!Directory.Exists(hawkeyeDirectory))
+        //        Directory.CreateDirectory(hawkeyeDirectory);
 
-            // Determine where to log; should be C:\ProgramData\Hawkeye\HawkeyeInjector.log on Win7
-            var logFileDirectory = Path.Combine(Environment.GetFolderPath(
-                Environment.SpecialFolder.CommonApplicationData), "Hawkeye");
-            if (!Directory.Exists(logFileDirectory))
-                Directory.CreateDirectory(logFileDirectory);
+        //    var logFileDirectory = Path.Combine(hawkeyeDirectory, "logs");
+        //    if (!Directory.Exists(logFileDirectory))
+        //        Directory.CreateDirectory(logFileDirectory);
 
-            logFileName = Path.Combine(logFileDirectory, "HawkeyeInjector.log");
-        }
+        //    logFileName = Path.Combine(logFileDirectory, "HawkeyeInjector.log");
+        //}
 
         /// <summary>
         /// The main entry point for the application.
@@ -69,7 +70,7 @@ namespace HawkeyeBootstrap
                 return;
             }
 
-            log.Info(new string('-', 120));
+            log.Debug(new string('-', 120));
         }
 
         private static Process GetProcessFromWindowHandle(IntPtr windowHandle)

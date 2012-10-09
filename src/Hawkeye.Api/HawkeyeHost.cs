@@ -39,6 +39,11 @@ namespace Hawkeye
             /// <param name="key">The settings store key.</param>
             /// <returns>An <see cref="ISettingsStore"/> containing the requested settings data.</returns>
             ISettingsStore GetSettings(string key = "");
+
+            /// <summary>
+            /// Gets a value containing information relative to the Hawkeye application.
+            /// </summary>
+            IHawkeyeApplicationInfo ApplicationInfo { get; }
         }
 
         private static IHost implementation = null;
@@ -139,6 +144,22 @@ namespace Hawkeye
         public static ISettingsStore GetHawkeyeSettings()
         {
             return GetSettings();
+        }
+
+        #endregion
+
+        #region ApplicationInfo
+
+        /// <summary>
+        /// Gets a value containing information relative to the Hawkeye application.
+        /// </summary>
+        public static IHawkeyeApplicationInfo ApplicationInfo
+        {
+            get
+            {
+                EnsureInitialized(); 
+                return implementation.ApplicationInfo;
+            }
         }
 
         #endregion

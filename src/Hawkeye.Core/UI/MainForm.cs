@@ -101,9 +101,15 @@ namespace Hawkeye.UI
             SetTarget(settings.SpiedWindow);
         }
 
+        /// <summary>
+        /// Handles the Click event of the aboutToolStripMenuItem control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InformationBox.Show(this, "About Hawkeye!");
+            using (var about = new AboutForm())
+                about.ShowDialog(this);
         }
 
         /// <summary>

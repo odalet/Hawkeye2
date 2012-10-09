@@ -58,6 +58,7 @@
     <Compile Include="HawkeyeApplication.cs" />
     <Compile Include="HawkeyeApplication.host.cs" />
     <Compile Include="HawkeyeApplication.impl.cs" />
+    <Compile Include="HawkeyeApplication.info.cs" />
     <Compile Include="HawkeyeAttacher.cs" />
     <Compile Include="Logging\BaseLogService.cs" />
     <Compile Include="Logging\interfaces.cs" />
@@ -89,6 +90,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SR.resx</DependentUpon>
+    </Compile>
+    <Compile Include="UI\AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Controls\CustomTabControl.cs">
       <SubType>Component</SubType>
@@ -158,6 +165,9 @@
     <EmbeddedResource Include="SR.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SR.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\MainControl.resx">
       <DependentUpon>MainControl.cs</DependentUpon>
