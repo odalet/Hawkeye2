@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
+using Hawkeye.Configuration;
 
 namespace Hawkeye.UI
 {
@@ -12,6 +13,7 @@ namespace Hawkeye.UI
         public AboutForm()
         {
             InitializeComponent();
+            LayoutManager.RegisterForm("HawkeyeAboutForm", this);
         }
 
         /// <summary>

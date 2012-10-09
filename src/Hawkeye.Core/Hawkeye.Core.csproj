@@ -50,6 +50,8 @@
     <Compile Include="ComponentModel\DotNetInfoConverter.cs" />
     <Compile Include="ComponentModel\IProxy.cs" />
     <Compile Include="ComponentModel\ModuleInfoConverter.cs" />
+    <Compile Include="Configuration\layoutInterfaces.cs" />
+    <Compile Include="Configuration\LayoutManager.cs" />
     <Compile Include="Configuration\SettingsManager.impl.cs" />
     <Compile Include="Configuration\SettingsManager.cs" />
     <Compile Include="Configuration\SettingsManager.store.cs" />
@@ -109,6 +111,7 @@
     <Compile Include="UI\HawkeyeTabControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Configuration\LayoutService.cs" />
     <Compile Include="UI\MainControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -182,6 +185,7 @@
   <ItemGroup>
     <None Include="Resources\TargetIcon.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

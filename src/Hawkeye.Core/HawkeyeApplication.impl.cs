@@ -8,6 +8,7 @@ using Hawkeye.UI;
 using Hawkeye.WinApi;
 using Hawkeye.Logging;
 using Hawkeye.Logging.log4net;
+using Hawkeye.Configuration;
 
 namespace Hawkeye
 {
@@ -67,6 +68,9 @@ namespace Hawkeye
             public void Close()
             {
                 LogDebug(new string('-', 80));
+
+                // Save settings & layout
+                SettingsManager.Save();
 
                 // Release resources (the log file for example) held by log4net.                
                 LogManager.Shutdown();
@@ -192,6 +196,9 @@ namespace Hawkeye
                 // Initialize the hawheye API host
                 HawkeyeHost.Initialize(new HawkeyeApplication.HawkeyeHostImplementation(this));
                 LogDebug("The Hawkeye host has been initialized; The Hawkeye API is now available to plugins.");
+
+                // Load Hawkeye settings
+                SettingsManager.Initialize();
 
                 // Now discover then load plugins
                 

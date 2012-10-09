@@ -49,8 +49,9 @@ namespace Hawkeye.Configuration
                 settingsFileName = resolved; // This is the settings file
 
                 implementation = new SettingsManagerImplementation();
-                if (File.Exists(settingsFileName)) // Check file exists
-                    implementation.Load(settingsFileName);
+                if (!File.Exists(settingsFileName)) // Check file exists
+                    implementation.CreateDefaultSettingsFile(settingsFileName);
+                implementation.Load(settingsFileName);
             }
             catch (Exception ex)
             {

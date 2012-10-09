@@ -20,8 +20,8 @@ namespace Hawkeye.Configuration
             /// </value>
             public string Content // TODO: get/set settings store raw content
             {
-                get { return null; }
-                set { /* TODO */ } 
+                get;
+                set;
             }
 
             /// <summary>

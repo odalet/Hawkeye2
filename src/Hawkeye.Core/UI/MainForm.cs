@@ -2,13 +2,15 @@
 using System.Windows.Forms;
 
 using Hawkeye.WinApi;
+using Hawkeye.Configuration;
+using System.Drawing;
 
 namespace Hawkeye.UI
 {
     /// <summary>
     /// The application form.
     /// </summary>
-    internal partial class MainForm : Form
+    internal partial class MainForm : Form, IDefaultLayoutProvider
     {
         private IntPtr currentSpiedWindow = IntPtr.Zero;
 
@@ -19,7 +21,7 @@ namespace Hawkeye.UI
         {
             InitializeComponent();
             UpdateTitle();
-
+            LayoutManager.RegisterForm("HawkeyeMainForm", this);
             base.Parent = null;
         }
 
@@ -52,32 +54,30 @@ namespace Hawkeye.UI
             mainControl.Target = hwnd;
         }
 
-        private void UpdateTitle()
-        {
-            base.Text = string.Format("Hawkeye {0} - {1}",
-                HawkeyeApplication.CurrentClr,
-                HawkeyeApplication.CurrentBitness.ToString().ToLowerInvariant());
-        }        
-        
-        private void SetWindowSettings(MainFormSettings settings)
-        {
-            //TODO: handle multiple-screens (and config changes!)
-            Location = settings.Location;
-            Size = settings.Size;
-            WindowState = settings.WindowState;
+        #region IDefaultLayoutProvider Members
 
-            SetTarget(settings.SpiedWindow);
+        public Rectangle GetDefaultBounds()
+        {
+            var screenWorkingAreaSize = Screen.PrimaryScreen.WorkingArea.Size;
+            var size = new Size(384, 476);
+            if (size.Width > screenWorkingAreaSize.Width)
+                size.Width = screenWorkingAreaSize.Width - 40;
+            if (size.Height > screenWorkingAreaSize.Height)
+                size.Height = screenWorkingAreaSize.Height - 40;
+
+            var location = new Point(
+                20,
+                screenWorkingAreaSize.Height - size.Height - 20);
+
+            return new Rectangle(location, size);
         }
 
-        /// <summary>
-        /// Handles the Click event of the aboutToolStripMenuItem control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        #endregion
+
+        protected override void OnClosed(EventArgs e)
         {
-            using (var about = new AboutForm())
-                about.ShowDialog(this);
+            base.OnClosed(e);
+            HawkeyeApplication.Close();
         }
 
         /// <summary>
@@ -106,8 +106,36 @@ namespace Hawkeye.UI
                     }
                     break;
             }
-            
+
             if (!eat) base.WndProc(ref m);
+        }
+
+        private void UpdateTitle()
+        {
+            base.Text = string.Format("Hawkeye {0} - {1}",
+                HawkeyeApplication.CurrentClr,
+                HawkeyeApplication.CurrentBitness.ToString().ToLowerInvariant());
+        }        
+        
+        private void SetWindowSettings(MainFormSettings settings)
+        {
+            //TODO: handle multiple-screens (and config changes!)
+            Location = settings.Location;
+            Size = settings.Size;
+            WindowState = settings.WindowState;
+
+            SetTarget(settings.SpiedWindow);
+        }
+
+        /// <summary>
+        /// Handles the Click event of the aboutToolStripMenuItem control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var about = new AboutForm())
+                about.ShowDialog(this);
         }
     }
 }
