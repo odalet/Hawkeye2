@@ -97,7 +97,9 @@ namespace Hawkeye.ComponentModel
 
         public string ToShortString()
         {
-            return string.Format("{0} - {1}", Handle, ClassName);
+            if (ControlInfo != null && ControlInfo.Control != null)
+                return string.Format("{0} - {1}", Handle, ControlInfo.Control.GetType());
+            else return string.Format("{0} - {1}", Handle, ClassName);
         }
 
         #endregion

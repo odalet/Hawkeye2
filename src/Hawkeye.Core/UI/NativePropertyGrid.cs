@@ -32,6 +32,10 @@ namespace Hawkeye.UI
             private set;
         }
 
+        /// <summary>
+        /// Creates the tool strip items.
+        /// </summary>
+        /// <returns></returns>
         protected override ToolStripItem[] CreateToolStripItems()
         {
             DetectButton = new ToolStripButton("Detect")

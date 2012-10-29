@@ -111,6 +111,9 @@ namespace Hawkeye.UI
                     tabs.TabPages.Remove(dotNetTabPage);
                 tabs.SelectedTab = nativeTabPage;
             }
+
+            // Update the hwnd box in case we detected .NET properties.
+            hwndBox.Text = CurrentInfo.ToShortString();
         }
 
         private void FillControlInfo(IControlInfo controlInfo)
@@ -151,6 +154,9 @@ namespace Hawkeye.UI
             }
         }
 
+        /// <summary>
+        /// Dumps the currently selected window information.
+        /// </summary>
         private void Dump()
         {
             if (CurrentInfo == null)
@@ -179,6 +185,10 @@ namespace Hawkeye.UI
             }
         }
 
+        /// <summary>
+        /// Gets the name of the file to save log to.
+        /// </summary>
+        /// <returns>A file name.</returns>
         private string GetFileName()
         {
             using (var dialog = new SaveFileDialog()
@@ -194,6 +204,11 @@ namespace Hawkeye.UI
             }
         }
 
+        /// <summary>
+        /// Handles the Click event of the dumpButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         private void dumpButton_Click(object sender, EventArgs e) { Dump(); }
     }
 }

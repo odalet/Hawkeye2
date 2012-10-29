@@ -73,11 +73,13 @@ namespace Hawkeye.ComponentModel
         /// <exception cref="System.NotImplementedException"></exception>
         public override object GetValue(object component)
         {
+            component = component.GetInnerObject(); // Make sure we are working on a real object.
             return pinfo.Get(component, ref criticalGetError);
         }
 
         public override void SetValue(object component, object value)
         {
+            component = component.GetInnerObject(); // Make sure we are working on a real object0
             value = value.GetInnerObject(); // Make sure we are affecting a real object.
             var result = pinfo.Set(component, value, ref criticalSetError);
 

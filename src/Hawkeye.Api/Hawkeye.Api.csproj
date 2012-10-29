@@ -44,10 +44,12 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ComponentModel\ServiceNotFoundException.cs" />
     <Compile Include="Configuration\ISettingsStore.cs" />
     <Compile Include="enums.cs" />
     <Compile Include="extensions\DateTimeExtensions.cs" />
     <Compile Include="extensions\ExceptionExtensions.cs" />
+    <Compile Include="extensions\ServiceExtensions.cs" />
     <Compile Include="IHawkeyeApplicationInfo.cs" />
     <Compile Include="Logging\BaseLogService.cs" />
     <Compile Include="Logging\interfaces.cs" />

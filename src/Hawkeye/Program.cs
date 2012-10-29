@@ -2,6 +2,8 @@
 using System.Windows.Forms;
 
 using Hawkeye;
+using System.Threading;
+using System.Globalization;
 
 namespace HawkeyeApplication
 {
@@ -15,6 +17,9 @@ namespace HawkeyeApplication
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            // Force American English
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture("en-US");
 
             if (args.Length == 0)
                 global::Hawkeye.HawkeyeApplication.Run();

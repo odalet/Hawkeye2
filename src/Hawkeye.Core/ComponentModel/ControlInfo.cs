@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.ComponentModel;
 
 using Hawkeye.Logging;
+using Hawkeye.UI;
 
 namespace Hawkeye.ComponentModel
 {
@@ -18,6 +19,7 @@ namespace Hawkeye.ComponentModel
         public ControlInfo(IntPtr hwnd)
         {
             Control = GetControlFromHandle(hwnd);
+            InitializeTypeDescriptor(Control);
         }
 
         #region IControlInfo Members
@@ -42,6 +44,13 @@ namespace Hawkeye.ComponentModel
         }
 
         #endregion
+
+        private void InitializeTypeDescriptor(object instance)
+        {
+            if (instance == null) return;
+            var type = instance.GetType();
+            CustomTypeDescriptors.AddGenericProviderToType(type);
+        }
 
         private Control GetControlFromHandle(IntPtr hwnd)
         {

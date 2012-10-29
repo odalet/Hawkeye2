@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Drawing;
 using System.ComponentModel;
-using Hawkeye.ComponentModel;
 
 namespace Hawkeye.UI.PropertyTabs
 {
-    internal class AllPropertiesTab : BasePropertyTab
+    internal class AllEventsTab : BasePropertyTab
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AllPropertiesTab" /> class.
+        /// Initializes a new instance of the <see cref="AllEventsTab" /> class.
         /// </summary>
-        public AllPropertiesTab() : base() { }
-        
+        public AllEventsTab() : base() { }
+
         /// <summary>
         /// Gets the bitmap that is displayed for the <see cref="T:System.Windows.Forms.Design.PropertyTab" />.
         /// </summary>
@@ -23,9 +22,8 @@ namespace Hawkeye.UI.PropertyTabs
         ///   </PermissionSet>
         public override Bitmap Bitmap
         {
-            get { return Properties.Resources.Properties; }
+            get { return Properties.Resources.Events; }
         }
-
         /// <summary>
         /// Gets the name for the property tab.
         /// </summary>
@@ -34,7 +32,7 @@ namespace Hawkeye.UI.PropertyTabs
         ///   </returns>
         public override string TabName
         {
-            get { return "All Properties"; }
+            get { return "All Events"; }
         }
 
         /// <summary>
@@ -53,28 +51,7 @@ namespace Hawkeye.UI.PropertyTabs
         protected override PropertyDescriptorCollection GetAllProperties(
             ITypeDescriptorContext context, object component, Attribute[] attributes)
         {
-            return context.GetAllProperties(component, attributes);
+            return new PropertyDescriptorCollection(new PropertyDescriptor[] { });
         }
-
-        /// <summary>
-        /// Adds pseudo-properties for the specified component.
-        /// </summary>
-        /// <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext" />
-        /// that indicates the context to retrieve properties from.</param>
-        /// <param name="component">The component to retrieve properties from.</param>
-        /// <param name="attributes">An array of type <see cref="T:System.Attribute" /> that indicates the
-        /// attributes of the properties to retrieve.</param>
-        /// <param name="originalCollection">The original property descriptor collection.</param>
-        /// <returns>
-        /// A <see cref="T:System.ComponentModel.PropertyDescriptorCollection" />
-        /// that contains the properties matching the specified context and attributes.
-        /// </returns>
-        protected override PropertyDescriptorCollection AddPseudoProperties(
-            ITypeDescriptorContext context, object component, Attribute[] attributes, 
-            PropertyDescriptorCollection originalCollection)
-        {
-            originalCollection.Add(new TypePropertyDescriptor(component));
-            return originalCollection;
-        }
-    }   
+    }
 }

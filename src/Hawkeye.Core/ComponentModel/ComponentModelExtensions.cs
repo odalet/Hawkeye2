@@ -6,9 +6,8 @@ using System.ComponentModel;
 using System.Collections.Generic;
 
 using Hawkeye.Logging;
-using Hawkeye.ComponentModel;
 
-namespace Hawkeye
+namespace Hawkeye.ComponentModel
 {
     internal static class ComponentModelExtensions
     {
@@ -44,7 +43,10 @@ namespace Hawkeye
         {
             if (component == null || component.GetType().IsPrimitive || component is string)
                 return new PropertyDescriptorCollection(new PropertyDescriptor[] { });
-
+            
+            // Make sure we are inspecting the real component
+            component = component.GetInnerObject();
+            
             var type = component.GetType();
 
             var allprops = new Dictionary<string, PropertyDescriptor>();
@@ -83,7 +85,7 @@ namespace Hawkeye
                 depth++;
             }
             while (true);
-
+            
             return new PropertyDescriptorCollection(allprops.Values.ToArray());
 
             //PropertyDescriptorCollection properties;
@@ -166,7 +168,7 @@ namespace Hawkeye
 
             try
             {
-                var set = pinfo.GetGetMethod(true);
+                var set = pinfo.GetSetMethod(true);
                 if (set != null)
                     return set.Invoke(target, new object[] { value });
                 else criticalError = "No Set Method.";

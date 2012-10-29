@@ -44,7 +44,9 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ComponentModel\descriptors\CustomTypeDescriptors.cs" />
     <Compile Include="ComponentModel\descriptors\BasePropertyDescriptor.cs" />
+    <Compile Include="ComponentModel\descriptors\GenericTypeDescriptor.cs" />
     <Compile Include="ComponentModel\descriptors\RealPropertyDescriptor.cs" />
     <Compile Include="ComponentModel\descriptors\StaticPropertyDescriptor.cs" />
     <Compile Include="ComponentModel\DotNetInfoConverter.cs" />
@@ -55,8 +57,9 @@
     <Compile Include="Configuration\SettingsManager.impl.cs" />
     <Compile Include="Configuration\SettingsManager.cs" />
     <Compile Include="Configuration\SettingsManager.store.cs" />
-    <Compile Include="extensions\ComponentModelExtensions.cs" />
+    <Compile Include="ComponentModel\ComponentModelExtensions.cs" />
     <Compile Include="extensions\ObjectExtensions.cs" />
+    <Compile Include="extensions\StringExtensions.cs" />
     <Compile Include="HawkeyeApplication.cs" />
     <Compile Include="HawkeyeApplication.host.cs" />
     <Compile Include="HawkeyeApplication.impl.cs" />
@@ -69,9 +72,9 @@
     <Compile Include="Logging\LogManager.Debug.cs" />
     <Compile Include="Reflection\AssemblyResolver.cs" />
     <Compile Include="extensions\ListExtensions.cs" />
-    <Compile Include="extensions\ModuleInfoExtensions.cs" />
+    <Compile Include="ComponentModel\ModuleInfoExtensions.cs" />
     <Compile Include="extensions\ReflectionExtensions.cs" />
-    <Compile Include="extensions\StringBuilderExtensions.cs" />
+    <Compile Include="ComponentModel\StringBuilderExtensions.cs" />
     <Compile Include="Logging\log4net\Log4NetHelper.cs" />
     <Compile Include="Logging\log4net\Log4NetLayoutFormatter.cs" />
     <Compile Include="Logging\log4net\Log4NetService.cs" />
@@ -102,7 +105,15 @@
     <Compile Include="UI\Controls\CustomTabControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\Controls\PropertyGridEx.ComponentModel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComponentModel\descriptors\TypePropertyDescriptor.cs" />
     <Compile Include="UI\DotNetPropertyGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\GenericComponentEditor.cs" />
+    <Compile Include="UI\GenericComponentEditorPage.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\HawkeyePanel.cs">
@@ -135,7 +146,9 @@
     <Compile Include="UI\Controls\TabControlEx.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\PropertyTabs\AllEventsTab.cs" />
     <Compile Include="UI\PropertyTabs\AllPropertiesTab.cs" />
+    <Compile Include="UI\PropertyTabs\BasePropertyTab.cs" />
     <Compile Include="UI\WindowFinderControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -153,6 +166,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Properties.png" />
+    <Compile Include="UI\Controls\PropertyGridEx.ObjectWrapper.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\PropertyGridEx.InnerPropertyDescriptor.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hawkeye.Api\Hawkeye.Api.csproj">
@@ -185,7 +204,9 @@
   <ItemGroup>
     <None Include="Resources\TargetIcon.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Events.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

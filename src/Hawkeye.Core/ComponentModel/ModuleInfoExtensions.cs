@@ -2,9 +2,7 @@
 using System.Text;
 using System.ComponentModel;
 
-using Hawkeye.ComponentModel;
-
-namespace Hawkeye
+namespace Hawkeye.ComponentModel
 {
     internal static class ModuleInfoExtensions
     {
