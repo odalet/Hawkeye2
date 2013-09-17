@@ -239,6 +239,10 @@ namespace Hawkeye.ComponentModel
             {
                 criticalError = ex.Message;
             }
+            catch (TargetException ex)
+            {
+                criticalError = ex.Message;
+            }
             catch (TargetParameterCountException ex)
             {
                 criticalError = ex.Message;

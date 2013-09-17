@@ -8,7 +8,6 @@ namespace Hawkeye
     /// </summary>
     public static class ExceptionExtensions
     {
-
         #region Exception
 
         /// <summary>
