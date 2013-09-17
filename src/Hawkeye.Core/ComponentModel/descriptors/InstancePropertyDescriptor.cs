@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace Hawkeye.ComponentModel
 {
-    internal class RealPropertyDescriptor : BasePropertyDescriptor
+    internal class InstancePropertyDescriptor : BasePropertyDescriptor
     {
         private readonly PropertyInfo pinfo;
         private readonly Type type;
@@ -13,17 +13,17 @@ namespace Hawkeye.ComponentModel
         private string criticalSetError = null;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RealPropertyDescriptor" /> class.
+        /// Initializes a new instance of the <see cref="InstancePropertyDescriptor" /> class.
         /// </summary>
-        /// <param name="theObject">The component.</param>
-        /// <param name="pinfo">The property info.</param>
-        /// <param name="owner">The owner.</param>
-        public RealPropertyDescriptor(object theObject, Type ownerType, PropertyInfo propertyInfo)
+        /// <param name="instance">The component instance.</param>
+        /// <param name="ownerType">Type of the owner.</param>
+        /// <param name="propertyInfo">The property information.</param>
+        public InstancePropertyDescriptor(object instance, Type ownerType, PropertyInfo propertyInfo)
             : base(propertyInfo.Name)
         {
             pinfo = propertyInfo;
             type = ownerType;
-            component = theObject;
+            component = instance;
         }
 
         /// <summary>
@@ -74,6 +74,8 @@ namespace Hawkeye.ComponentModel
         public override object GetValue(object component)
         {
             component = component.GetInnerObject(); // Make sure we are working on a real object.
+            if (!pinfo.CanRead) return null;
+
             return pinfo.Get(component, ref criticalGetError);
         }
 

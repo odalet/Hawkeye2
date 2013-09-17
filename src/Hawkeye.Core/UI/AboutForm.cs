@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Reflection;
 using System.Windows.Forms;
+
+using Hawkeye.Logging;
 
 namespace Hawkeye.UI
 {
     public partial class AboutForm : Form
     {
+        private static readonly ILogService log = LogManager.GetLogger<AboutForm>();
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AboutForm" /> class.
         /// </summary>
@@ -23,8 +28,25 @@ namespace Hawkeye.UI
             base.OnLoad(e);
             if (DesignMode) return;
 
+            versionBox.Text = GetVersion();
+
             applicationDataDirectoryBox.Text = 
                 HawkeyeApplication.ApplicationInfo.ApplicationDataDirectory;
+        }
+
+        private static string GetVersion()
+        {
+            try
+            {
+                return Assembly.GetEntryAssembly().GetName().Version.ToString();
+            }
+            catch (Exception ex)
+            {
+                log.Error(string.Format(
+                    "Could not retrieve assembly version: {0}", ex.Message), ex);
+            }
+
+            return string.Empty;
         }
     }
 }

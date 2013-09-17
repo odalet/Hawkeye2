@@ -14,44 +14,46 @@ namespace Hawkeye.UI
         /// </summary>
         public NativePropertyGrid() : base() { }
 
-        /// <summary>
-        /// Gets the detect button.
-        /// </summary>
-        public ToolStripButton DetectButton
-        {
-            get;
-            private set;
-        }
+        // Test code below...
 
-        /// <summary>
-        /// Gets the dump button.
-        /// </summary>
-        public ToolStripButton DumpButton
-        {
-            get;
-            private set;
-        }
+        /////// <summary>
+        /////// Gets the detect button.
+        /////// </summary>
+        ////public ToolStripButton DetectButton
+        ////{
+        ////    get;
+        ////    private set;
+        ////}
 
-        /// <summary>
-        /// Creates the tool strip items.
-        /// </summary>
-        /// <returns></returns>
-        protected override ToolStripItem[] CreateToolStripItems()
-        {
-            DetectButton = new ToolStripButton("Detect")
-            {
-                DisplayStyle = ToolStripItemDisplayStyle.Text
-            };
+        /////// <summary>
+        /////// Gets the dump button.
+        /////// </summary>
+        ////public ToolStripButton DumpButton
+        ////{
+        ////    get;
+        ////    private set;
+        ////}
+
+        /////// <summary>
+        /////// Creates the tool strip items.
+        /////// </summary>
+        /////// <returns></returns>
+        ////protected override ToolStripItem[] CreateToolStripItems()
+        ////{
+        ////    DetectButton = new ToolStripButton("Detect")
+        ////    {
+        ////        DisplayStyle = ToolStripItemDisplayStyle.Text
+        ////    };
             
-            DumpButton = new ToolStripButton("Dump")
-            {
-                DisplayStyle = ToolStripItemDisplayStyle.Text
-            };
+        ////    DumpButton = new ToolStripButton("Dump")
+        ////    {
+        ////        DisplayStyle = ToolStripItemDisplayStyle.Text
+        ////    };
 
-            return new ToolStripItem[]
-            {
-                DetectButton, DumpButton
-            };
-        }
+        ////    return new ToolStripItem[]
+        ////    {
+        ////        DetectButton, DumpButton
+        ////    };
+        ////}
     }
 }

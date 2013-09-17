@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.ComponentModel;
 
+using Hawkeye.ComponentModel;
+
 namespace Hawkeye.UI.PropertyTabs
 {
     internal class AllEventsTab : BasePropertyTab
@@ -24,6 +26,7 @@ namespace Hawkeye.UI.PropertyTabs
         {
             get { return Properties.Resources.Events; }
         }
+
         /// <summary>
         /// Gets the name for the property tab.
         /// </summary>
@@ -51,7 +54,7 @@ namespace Hawkeye.UI.PropertyTabs
         protected override PropertyDescriptorCollection GetAllProperties(
             ITypeDescriptorContext context, object component, Attribute[] attributes)
         {
-            return new PropertyDescriptorCollection(new PropertyDescriptor[] { });
+            return context.GetAllEvents(component, attributes);
         }
     }
 }

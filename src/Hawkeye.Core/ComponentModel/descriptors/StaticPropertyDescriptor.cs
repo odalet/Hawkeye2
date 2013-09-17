@@ -33,6 +33,7 @@ namespace Hawkeye.ComponentModel
 
         public override object GetValue(object component)
         {
+            if (!pinfo.CanRead) return null;
             return pinfo.Get(null, ref criticalGetError);
         }
 
@@ -65,12 +66,16 @@ namespace Hawkeye.ComponentModel
             return false;
         }
 
+        /// <summary>
+        /// Adds the attributes of the <see cref="T:System.ComponentModel.PropertyDescriptor" /> to the specified list of attributes in the parent class.
+        /// </summary>
+        /// <param name="attributeList">An <see cref="T:System.Collections.IList" /> that lists the attributes in the parent class. Initially, this is empty.</param>
         protected override void FillAttributes(IList attributeList)
         {
             base.FillAttributes(attributeList);
 
             attributeList.Add(new CategoryAttribute("(static: " + type.Name + ")"));
-            attributeList.Add(new RefreshPropertiesAttribute(RefreshProperties.Repaint)); ;
+            attributeList.Add(new RefreshPropertiesAttribute(RefreshProperties.Repaint));
         }
     }
 }

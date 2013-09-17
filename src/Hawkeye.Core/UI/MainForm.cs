@@ -137,5 +137,10 @@ namespace Hawkeye.UI
             using (var about = new AboutForm())
                 about.ShowDialog(this);
         }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }

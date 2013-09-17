@@ -25,6 +25,8 @@ namespace Hawkeye.ComponentModel
             "System.Windows.Forms.Form.ShowParams",
         };
 
+        private static readonly string[] excludedEvents = new string[0];
+
         private static readonly BindingFlags instanceFlags =
             BindingFlags.Instance | BindingFlags.InvokeMethod |
             BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
@@ -61,7 +63,7 @@ namespace Hawkeye.ComponentModel
                     if (excludedProperties.Contains(fullName)) return;
 
                     if (isStatic) allprops.Add(pi.Name, new StaticPropertyDescriptor(type, pi));
-                    else allprops.Add(pi.Name, new RealPropertyDescriptor(component, type, pi));
+                    else allprops.Add(pi.Name, new InstancePropertyDescriptor(component, type, pi));
                 }
                 catch (Exception ex)
                 {
@@ -130,6 +132,62 @@ namespace Hawkeye.ComponentModel
             //return properties;
         }
 
+        public static PropertyDescriptorCollection GetAllEvents(
+            this ITypeDescriptorContext context,
+            object component,
+            Attribute[] attributes,
+            bool inspectBaseClasses = true)
+        {
+            if (component == null || component.GetType().IsPrimitive || component is string)
+                return new PropertyDescriptorCollection(new PropertyDescriptor[] { });
+
+            // Make sure we are inspecting the real component
+            component = component.GetInnerObject();
+
+            var type = component.GetType();
+
+            var allevs = new Dictionary<string, PropertyDescriptor>();
+
+            Action<EventInfo, bool> addPropertyDescriptor = (ei, isStatic) =>
+            {
+                try
+                {
+                    if (allevs.ContainsKey(ei.Name)) return;
+
+                    var fullName = ei.DeclaringType.FullName + "." + ei.Name;
+                    if (excludedEvents.Contains(fullName)) return;
+
+                    if (isStatic) allevs.Add(ei.Name, new StaticEventPropertyDescriptor(type, ei));
+                    else allevs.Add(ei.Name, new InstanceEventPropertyDescriptor(component, type, ei));
+
+                }
+                catch (Exception ex)
+                {
+                    log.Error(string.Format(
+                        "Could not convert an event info into a property descriptor: {0}", ex.Message), ex);
+                }
+            };
+
+            int depth = 1;
+            do
+            {
+                foreach (var ei in type.GetEvents(instanceFlags))
+                    addPropertyDescriptor(ei, false);
+
+                foreach (var ei in type.GetEvents(staticFlags))
+                    addPropertyDescriptor(ei, true);
+
+                if (type == typeof(object) || !inspectBaseClasses)
+                    break;
+
+                type = type.BaseType;
+                depth++;
+            }
+            while (true);
+
+            return new PropertyDescriptorCollection(allevs.Values.ToArray());
+        }
+
         #endregion
 
         #region PropertyInfo extensions
@@ -147,6 +205,10 @@ namespace Hawkeye.ComponentModel
                 else criticalError = "No Get Method.";
             }
             catch (SecurityException ex)
+            {
+                criticalError = ex.Message;
+            }
+            catch (TargetException ex)
             {
                 criticalError = ex.Message;
             }

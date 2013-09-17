@@ -1,11 +1,10 @@
 ﻿using System.Linq;
+using System.Reflection;
+using System.Windows.Forms;
 using System.Windows.Forms.Design;
 
 using Hawkeye.UI.Controls;
 using Hawkeye.UI.PropertyTabs;
-using System.Windows.Forms;
-using System.Reflection;
-
 
 namespace Hawkeye.UI
 {
@@ -19,7 +18,6 @@ namespace Hawkeye.UI
         /// </summary>
         public DotNetPropertyGrid() : base()
         {
-            base.SelectedObjectsChanged += (s, e) => EnablePropertyPageButton();
         }
 
         /// <summary>
@@ -40,6 +38,9 @@ namespace Hawkeye.UI
             //base.RemoveDefaultPropertyPage();
             //base.ToolStrip.Items[3].Select();
             //base.SelectedTab = base.PropertyTabs[0];
+            
+            // Don't activate property page now because there's nothing in GenericComponentEditor
+            EnablePropertyPageButton();
         }
         
         private void EnablePropertyPageButton()

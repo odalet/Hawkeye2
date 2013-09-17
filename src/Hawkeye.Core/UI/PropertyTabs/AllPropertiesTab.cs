@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.ComponentModel;
+
 using Hawkeye.ComponentModel;
 
 namespace Hawkeye.UI.PropertyTabs

@@ -44,10 +44,13 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ComponentModel\descriptors\BaseEventPropertyDescriptor.cs" />
     <Compile Include="ComponentModel\descriptors\CustomTypeDescriptors.cs" />
     <Compile Include="ComponentModel\descriptors\BasePropertyDescriptor.cs" />
     <Compile Include="ComponentModel\descriptors\GenericTypeDescriptor.cs" />
-    <Compile Include="ComponentModel\descriptors\RealPropertyDescriptor.cs" />
+    <Compile Include="ComponentModel\descriptors\InstanceEventPropertyDescriptor.cs" />
+    <Compile Include="ComponentModel\descriptors\InstancePropertyDescriptor.cs" />
+    <Compile Include="ComponentModel\descriptors\StaticEventPropertyDescriptor.cs" />
     <Compile Include="ComponentModel\descriptors\StaticPropertyDescriptor.cs" />
     <Compile Include="ComponentModel\DotNetInfoConverter.cs" />
     <Compile Include="ComponentModel\IProxy.cs" />

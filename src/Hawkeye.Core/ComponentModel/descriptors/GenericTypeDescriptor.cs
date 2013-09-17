@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel;
+
 using Hawkeye.UI;
-using System.Drawing.Design;
 
 namespace Hawkeye.ComponentModel
 {
@@ -54,6 +52,9 @@ namespace Hawkeye.ComponentModel
 
         public object GetEditor(Type editorBaseType)
         {
+            // Return nothing while we have nothing to show in UI.GenericComponentEditor
+            return null; 
+
             var editor = parentDescriptor.GetEditor(editorBaseType);
             if (editor == null && editorBaseType == typeof(ComponentEditor)) 
                 editor = new GenericComponentEditor();

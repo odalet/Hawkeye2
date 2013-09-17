@@ -1,4 +1,9 @@
-Version 0.1.0 - 2012/08/07
+Version 2 - 0.2.0 - 2013/09/17
+==========================
+* First **working** support of events (just displaying their name for now).
+* Some refactoring and clean-up
+
+Version 2 - 0.1.0 - 2012/08/07
 ==========================
 * Not quite yet fnished! but tagged so that issues created in github can reference it.
 

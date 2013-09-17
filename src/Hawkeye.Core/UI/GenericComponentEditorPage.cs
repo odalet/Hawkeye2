@@ -20,6 +20,9 @@ namespace Hawkeye.UI
 
         protected override void LoadComponent()
         {
+            var component = base.Component;
+
+            base.Text = component.ToString();
         }
 
         protected override void SaveComponent()
