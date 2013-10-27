@@ -1,3 +1,13 @@
+Version 2 - 0.3.0 - 2013/10/27
+==========================
+* Fixed issue #7: now we have 4 tabs: 
+  _Properties_ and _2. Events_ show public and private instance properties and events organized by their
+  original category (CategoryAttribute), _3. All Properties_ and _4. All Events_ show everything (including 
+  static members) organized by their owning type.
+  **Notes:** The _Properties_ tab is the standard tab coming with the .NET property grid; other tabs are custom
+  and prefixed with a number so that they appear in the correct order (the .NET property grid reorders tabs based 
+  on their name).
+
 Version 2 - 0.2.0 - 2013/09/17
 ==========================
 * First **working** support of events (just displaying their name for now).

@@ -6,13 +6,8 @@ using Hawkeye.ComponentModel;
 
 namespace Hawkeye.UI.PropertyTabs
 {
-    internal class AllEventsTab : BasePropertyTab
+    internal class InstanceEventsTab : BasePropertyTab
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AllEventsTab" /> class.
-        /// </summary>
-        public AllEventsTab() : base() { }
-
         /// <summary>
         /// Gets the bitmap that is displayed for the <see cref="T:System.Windows.Forms.Design.PropertyTab" />.
         /// </summary>
@@ -24,7 +19,7 @@ namespace Hawkeye.UI.PropertyTabs
         ///   </PermissionSet>
         public override Bitmap Bitmap
         {
-            get { return Properties.Resources.AllEvents; }
+            get { return Properties.Resources.Events; }
         }
 
         /// <summary>
@@ -35,7 +30,7 @@ namespace Hawkeye.UI.PropertyTabs
         ///   </returns>
         public override string TabName
         {
-            get { return "4. All Events"; }
+            get { return "2. Events"; }
         }
 
         /// <summary>
@@ -55,10 +50,10 @@ namespace Hawkeye.UI.PropertyTabs
             ITypeDescriptorContext context, object component, Attribute[] attributes)
         {
             return context.GetAllEvents(
-                component, 
+                component,
                 inspectBaseClasses: true,
-                retrieveStaticMembers: true,
-                keepOriginalCategoryAttribute: false);
+                retrieveStaticMembers: false,
+                keepOriginalCategoryAttribute: true);
         }
     }
 }

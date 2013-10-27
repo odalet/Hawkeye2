@@ -4,19 +4,22 @@ using System.ComponentModel;
 
 namespace Hawkeye.ComponentModel
 {
-    internal abstract class BaseEventPropertyDescriptor : PropertyDescriptor
+    internal abstract class BaseEventPropertyDescriptor : BaseMemberPropertyDescriptor
     {
         private readonly Type type;
         private readonly EventInfo einfo;
 
         public BaseEventPropertyDescriptor(Type objectType, EventInfo eventInfo)
-            : base(eventInfo.Name, null)
+            : base(eventInfo, eventInfo.Name)
         {
             type = objectType;
             einfo = eventInfo;
         }
 
-        public override bool CanResetValue(object component) { return false; }
+        protected EventInfo EventInfo
+        {
+            get { return einfo; }
+        }
 
         public override Type ComponentType
         {
@@ -36,17 +39,6 @@ namespace Hawkeye.ComponentModel
         public override Type PropertyType
         {
             get { return einfo.EventHandlerType; }
-        }
-
-        public override void ResetValue(object component) { }
-
-        public override void SetValue(object component, object value)
-        {
-        }
-
-        public override bool ShouldSerializeValue(object component)
-        {
-            return false;
         }
     }
 }

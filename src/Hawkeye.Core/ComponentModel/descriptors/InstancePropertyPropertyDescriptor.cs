@@ -1,29 +1,31 @@
 ﻿using System;
 using System.Reflection;
+using System.Collections;
 using System.ComponentModel;
 
 namespace Hawkeye.ComponentModel
 {
-    internal class InstancePropertyDescriptor : BasePropertyDescriptor
+    internal class InstancePropertyPropertyDescriptor : BasePropertyPropertyDescriptor
     {
-        private readonly PropertyInfo pinfo;
         private readonly Type type;
         private readonly object component;
         private string criticalGetError = null;
         private string criticalSetError = null;
+        private bool keepOriginalCategory = true;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InstancePropertyDescriptor" /> class.
+        /// Initializes a new instance of the <see cref="InstancePropertyPropertyDescriptor" /> class.
         /// </summary>
         /// <param name="instance">The component instance.</param>
         /// <param name="ownerType">Type of the owner.</param>
         /// <param name="propertyInfo">The property information.</param>
-        public InstancePropertyDescriptor(object instance, Type ownerType, PropertyInfo propertyInfo)
-            : base(propertyInfo.Name)
+        /// <param name="keepOriginalCategoryAttribute">if set to <c>true</c> [keep original category attribute].</param>
+        public InstancePropertyPropertyDescriptor(object instance, Type ownerType, PropertyInfo propertyInfo, bool keepOriginalCategoryAttribute = true)
+            : base(propertyInfo)
         {
-            pinfo = propertyInfo;
             type = ownerType;
             component = instance;
+            keepOriginalCategory = keepOriginalCategoryAttribute;
         }
 
         /// <summary>
@@ -33,7 +35,7 @@ namespace Hawkeye.ComponentModel
         ///   </returns>
         public override bool IsReadOnly
         {
-            get { return !pinfo.CanWrite; }
+            get { return !base.PropertyInfo.CanWrite; }
         }
 
         /// <summary>
@@ -45,7 +47,7 @@ namespace Hawkeye.ComponentModel
         /// <exception cref="System.NotImplementedException"></exception>
         public override Type ComponentType
         {
-            get { return pinfo.PropertyType; }
+            get { return base.PropertyInfo.PropertyType; }
         }
 
         /// <summary>
@@ -58,8 +60,8 @@ namespace Hawkeye.ComponentModel
         {
             get
             {
-                return pinfo.PropertyType == typeof(object) ?
-                    typeof(string) : pinfo.PropertyType;
+                return base.PropertyInfo.PropertyType == typeof(object) ?
+                    typeof(string) : base.PropertyInfo.PropertyType;
             }
         }
 
@@ -74,16 +76,16 @@ namespace Hawkeye.ComponentModel
         public override object GetValue(object component)
         {
             component = component.GetInnerObject(); // Make sure we are working on a real object.
-            if (!pinfo.CanRead) return null;
+            if (!base.PropertyInfo.CanRead) return null;
 
-            return pinfo.Get(component, ref criticalGetError);
+            return base.PropertyInfo.Get(component, ref criticalGetError);
         }
 
         public override void SetValue(object component, object value)
         {
             component = component.GetInnerObject(); // Make sure we are working on a real object0
             value = value.GetInnerObject(); // Make sure we are affecting a real object.
-            var result = pinfo.Set(component, value, ref criticalSetError);
+            var result = base.PropertyInfo.Set(component, value, ref criticalSetError);
 
             //if (WarningsHelper.Instance.SetPropertyWarning(propInfo.DeclaringType.Name, value))
             //{
@@ -93,18 +95,16 @@ namespace Hawkeye.ComponentModel
             //}
         }
 
-        /// <summary>
-        /// Adds the attributes of the <see cref="T:System.ComponentModel.PropertyDescriptor" /> 
-        /// to the specified list of attributes in the parent class.
-        /// </summary>
-        /// <param name="attributeList">An <see cref="T:System.Collections.IList" /> 
-        /// that lists the attributes in the parent class. Initially, this is empty.</param>
-        protected override void FillAttributes(System.Collections.IList attributeList)
+        protected override void FillAttributes(IList attributeList)
         {
             base.FillAttributes(attributeList);
-            attributeList.Add(new CategoryAttribute("(instance: " + type.Name + ")"));
-            //AttributeUtils.AddAllAttributes(attributeList, propertyInfo, true);
-            //AttributeUtils.DeleteNonRelevatAttributes(attributeList);
+            if (!keepOriginalCategory)
+                attributeList.Add(new CategoryAttribute("(instance: " + type.Name + ")"));
+        }
+
+        protected override bool IsFiltered(Attribute attribute)
+        {
+            return !keepOriginalCategory && attribute is CategoryAttribute;
         }
     }
 }

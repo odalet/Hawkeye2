@@ -5,23 +5,24 @@ using System.ComponentModel;
 
 namespace Hawkeye.ComponentModel
 {
-    internal class StaticPropertyDescriptor : PropertyDescriptor
+    internal class StaticPropertyPropertyDescriptor : BasePropertyPropertyDescriptor
     {
         private readonly Type type;
-        private readonly PropertyInfo pinfo;
         private string criticalGetError = null;
         private string criticalSetError = null;
+        private bool keepOriginalCategory = true;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StaticPropertyDescriptor" /> class.
+        /// Initializes a new instance of the <see cref="StaticPropertyPropertyDescriptor" /> class.
         /// </summary>
         /// <param name="objectType">Type of the object.</param>
         /// <param name="propertyInfo">The property info.</param>
-        public StaticPropertyDescriptor(Type objectType, PropertyInfo propertyInfo)
-            : base(propertyInfo.Name, null)
+        /// <param name="keepOriginalCategoryAttribute">if set to <c>true</c> [keep original category attribute].</param>
+        public StaticPropertyPropertyDescriptor(Type objectType, PropertyInfo propertyInfo, bool keepOriginalCategoryAttribute = true)
+            : base(propertyInfo)
         {
             type = objectType;
-            pinfo = propertyInfo;
+            keepOriginalCategory = keepOriginalCategoryAttribute;
         }
 
         public override bool CanResetValue(object component) { return false; } //TODO: why should this be false?
@@ -33,18 +34,18 @@ namespace Hawkeye.ComponentModel
 
         public override object GetValue(object component)
         {
-            if (!pinfo.CanRead) return null;
-            return pinfo.Get(null, ref criticalGetError);
+            if (!base.PropertyInfo.CanRead) return null;
+            return base.PropertyInfo.Get(null, ref criticalGetError);
         }
 
         public override bool IsReadOnly
         {
-            get { return !pinfo.CanWrite; }
+            get { return !base.PropertyInfo.CanWrite; }
         }
 
         public override Type PropertyType
         {
-			get { return pinfo.PropertyType; }
+            get { return base.PropertyInfo.PropertyType; }
         }
 
         public override void ResetValue(object component) { }
@@ -52,7 +53,7 @@ namespace Hawkeye.ComponentModel
         public override void SetValue(object component, object value)
         {
             value = value.GetInnerObject(); // Make sure we are affecting a real object.
-            var result = pinfo.Set(component, value, ref criticalSetError);
+            var result = base.PropertyInfo.Set(component, value, ref criticalSetError);
 
             //if ( WarningsHelper.Instance.SetPropertyWarning(propInfo.DeclaringType.Name, value) )
             //{
@@ -66,16 +67,16 @@ namespace Hawkeye.ComponentModel
             return false;
         }
 
-        /// <summary>
-        /// Adds the attributes of the <see cref="T:System.ComponentModel.PropertyDescriptor" /> to the specified list of attributes in the parent class.
-        /// </summary>
-        /// <param name="attributeList">An <see cref="T:System.Collections.IList" /> that lists the attributes in the parent class. Initially, this is empty.</param>
         protected override void FillAttributes(IList attributeList)
         {
             base.FillAttributes(attributeList);
+            if (!keepOriginalCategory)
+                attributeList.Add(new CategoryAttribute("(static: " + type.Name + ")"));
+        }
 
-            attributeList.Add(new CategoryAttribute("(static: " + type.Name + ")"));
-            attributeList.Add(new RefreshPropertiesAttribute(RefreshProperties.Repaint));
+        protected override bool IsFiltered(Attribute attribute)
+        {
+            return !keepOriginalCategory && attribute is CategoryAttribute;
         }
     }
 }

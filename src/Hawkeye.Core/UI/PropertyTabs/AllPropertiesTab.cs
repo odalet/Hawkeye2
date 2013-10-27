@@ -24,7 +24,7 @@ namespace Hawkeye.UI.PropertyTabs
         ///   </PermissionSet>
         public override Bitmap Bitmap
         {
-            get { return Properties.Resources.Properties; }
+            get { return Properties.Resources.AllProperties; }
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Hawkeye.UI.PropertyTabs
         ///   </returns>
         public override string TabName
         {
-            get { return "All Properties"; }
+            get { return "3. All Properties"; }
         }
 
         /// <summary>
@@ -54,7 +54,11 @@ namespace Hawkeye.UI.PropertyTabs
         protected override PropertyDescriptorCollection GetAllProperties(
             ITypeDescriptorContext context, object component, Attribute[] attributes)
         {
-            return context.GetAllProperties(component, attributes);
+            return context.GetAllProperties(
+                component,
+                inspectBaseClasses: true,
+                retrieveStaticMembers: true,
+                keepOriginalCategoryAttribute: false);
         }
 
         /// <summary>

@@ -45,13 +45,14 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ComponentModel\descriptors\BaseEventPropertyDescriptor.cs" />
+    <Compile Include="ComponentModel\descriptors\BasePropertyPropertyDescriptor.cs" />
     <Compile Include="ComponentModel\descriptors\CustomTypeDescriptors.cs" />
-    <Compile Include="ComponentModel\descriptors\BasePropertyDescriptor.cs" />
+    <Compile Include="ComponentModel\descriptors\BaseMemberPropertyDescriptor.cs" />
     <Compile Include="ComponentModel\descriptors\GenericTypeDescriptor.cs" />
     <Compile Include="ComponentModel\descriptors\InstanceEventPropertyDescriptor.cs" />
-    <Compile Include="ComponentModel\descriptors\InstancePropertyDescriptor.cs" />
+    <Compile Include="ComponentModel\descriptors\InstancePropertyPropertyDescriptor.cs" />
     <Compile Include="ComponentModel\descriptors\StaticEventPropertyDescriptor.cs" />
-    <Compile Include="ComponentModel\descriptors\StaticPropertyDescriptor.cs" />
+    <Compile Include="ComponentModel\descriptors\StaticPropertyPropertyDescriptor.cs" />
     <Compile Include="ComponentModel\DotNetInfoConverter.cs" />
     <Compile Include="ComponentModel\IProxy.cs" />
     <Compile Include="ComponentModel\ModuleInfoConverter.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="UI\PropertyTabs\AllEventsTab.cs" />
     <Compile Include="UI\PropertyTabs\AllPropertiesTab.cs" />
     <Compile Include="UI\PropertyTabs\BasePropertyTab.cs" />
+    <Compile Include="UI\PropertyTabs\InstanceEventsTab.cs" />
     <Compile Include="UI\WindowFinderControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -168,7 +170,6 @@
     <Compile Include="ComponentModel\WindowInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Properties.png" />
     <Compile Include="UI\Controls\PropertyGridEx.ObjectWrapper.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -209,6 +210,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Events.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AllEvents.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AllProperties.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Properties.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

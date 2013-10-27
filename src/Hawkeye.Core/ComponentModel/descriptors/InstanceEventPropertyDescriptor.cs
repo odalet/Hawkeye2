@@ -8,6 +8,7 @@ namespace Hawkeye.ComponentModel
     internal class InstanceEventPropertyDescriptor : BaseEventPropertyDescriptor
     {
         private readonly object component;
+        private bool keepOriginalCategory = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InstanceEventPropertyDescriptor" /> class.
@@ -15,20 +16,24 @@ namespace Hawkeye.ComponentModel
         /// <param name="instance">The component instance.</param>
         /// <param name="ownerType">Type of the owner.</param>
         /// <param name="eventInfo">The event information.</param>
-        public InstanceEventPropertyDescriptor(object instance, Type ownerType, EventInfo eventInfo)
+        /// <param name="keepOriginalCategoryAttribute">if set to <c>true</c> [keep original category attribute].</param>
+        public InstanceEventPropertyDescriptor(object instance, Type ownerType, EventInfo eventInfo, bool keepOriginalCategoryAttribute = true)
             : base(ownerType, eventInfo)
         {
             component = instance;
+            keepOriginalCategory = keepOriginalCategoryAttribute;
         }
 
-        /// <summary>
-        /// Adds the attributes of the <see cref="T:System.ComponentModel.PropertyDescriptor" /> to the specified list of attributes in the parent class.
-        /// </summary>
-        /// <param name="attributeList">An <see cref="T:System.Collections.IList" /> that lists the attributes in the parent class. Initially, this is empty.</param>
         protected override void FillAttributes(IList attributeList)
         {
             base.FillAttributes(attributeList);
-            attributeList.Add(new CategoryAttribute("(instance: " + base.ComponentType.Name + ")"));
+            if (!keepOriginalCategory)
+                attributeList.Add(new CategoryAttribute("(instance: " + base.ComponentType.Name + ")"));
+        }
+
+        protected override bool IsFiltered(Attribute attribute)
+        {
+            return !keepOriginalCategory && attribute is CategoryAttribute;
         }
     }
 }

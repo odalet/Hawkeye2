@@ -1,15 +1,28 @@
-﻿using System.ComponentModel;
+﻿using System.Reflection;
+using System.Collections;
+using System.ComponentModel;
+using System;
 
 namespace Hawkeye.ComponentModel
 {
-    internal abstract class BasePropertyDescriptor : PropertyDescriptor
+    internal abstract class BaseMemberPropertyDescriptor : PropertyDescriptor
     {
+        private readonly MemberInfo minfo;
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="BasePropertyDescriptor" /> class.
+        /// Initializes a new instance of the <see cref="BaseMemberPropertyDescriptor" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
-        protected BasePropertyDescriptor(string name) :
-			base(name, null) { }
+        protected BaseMemberPropertyDescriptor(MemberInfo info, string name) :
+			base(name, null) 
+        {
+            minfo = info;
+        }
+
+        protected MemberInfo MemberInfo
+        {
+            get { return minfo; }
+        }
 
         /// <summary>
         /// When overridden in a derived class, gets a value indicating whether this property is read-only.
@@ -54,6 +67,24 @@ namespace Hawkeye.ComponentModel
         /// true if the property should be persisted; otherwise, false.
         /// </returns>
         public override bool ShouldSerializeValue(object component)
+        {
+            return false;
+        }
+
+        protected override void FillAttributes(IList attributeList)
+        {
+            base.FillAttributes(attributeList);
+
+            var customAttributes = MemberInfo.GetCustomAttributes(true);
+            foreach (var attribute in customAttributes)
+            {
+                if (!(attribute is Attribute)) continue;
+                if (!IsFiltered((Attribute)attribute))
+                    attributeList.Add(attribute);
+            }
+        }
+        
+        protected virtual bool IsFiltered(Attribute attribute)
         {
             return false;
         }

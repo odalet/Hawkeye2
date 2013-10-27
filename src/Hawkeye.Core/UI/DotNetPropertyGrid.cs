@@ -5,6 +5,8 @@ using System.Windows.Forms.Design;
 
 using Hawkeye.UI.Controls;
 using Hawkeye.UI.PropertyTabs;
+using System;
+using System.ComponentModel;
 
 namespace Hawkeye.UI
 {
@@ -27,17 +29,9 @@ namespace Hawkeye.UI
         {
             base.OnCreateControl();
 
-            // Clear the standard tabs
-            var existingTabTypes = base.PropertyTabs.Cast<PropertyTab>().Select(t => t.GetType()).Distinct().ToArray();
-            foreach (var tabType in existingTabTypes)
-                base.PropertyTabs.RemoveTabType(tabType);
-
+            base.PropertyTabs.AddTabType(typeof(InstanceEventsTab));
             base.PropertyTabs.AddTabType(typeof(AllPropertiesTab));
             base.PropertyTabs.AddTabType(typeof(AllEventsTab));
-
-            //base.RemoveDefaultPropertyPage();
-            //base.ToolStrip.Items[3].Select();
-            //base.SelectedTab = base.PropertyTabs[0];
             
             // Don't activate property page now because there's nothing in GenericComponentEditor
             EnablePropertyPageButton();
