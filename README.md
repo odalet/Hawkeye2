@@ -49,3 +49,5 @@ Credits
   [msrl]: src/License.md "MS-RL License"
   [history]: src/History.md "History"
   [credits]: src/Credits.md "Credits"
+  
+[![githalytics.com alpha](https://cruel-carlota.gopagoda.com/77cb179f76b1e303722ade7ead633dc6 "githalytics.com")](http://githalytics.com/odalet/Hawkeye2)  
