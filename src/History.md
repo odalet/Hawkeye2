@@ -1,3 +1,10 @@
+Version 2 - 0.4.0 - 2014/08/01
+==========================
+* Fixed issue #9: reintroducing the following buttons:
+  * Go to Parent
+  * Previous/Next
+  * Highliht selection
+
 Version 2 - 0.3.0 - 2013/10/27
 ==========================
 * Fixed issue #7: now we have 4 tabs: 

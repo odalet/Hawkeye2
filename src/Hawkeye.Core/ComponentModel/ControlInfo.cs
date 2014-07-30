@@ -22,6 +22,19 @@ namespace Hawkeye.ComponentModel
             InitializeTypeDescriptor(Control);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ControlInfo"/> class.
+        /// </summary>
+        /// <param name="control">The control.</param>
+        public ControlInfo(Control control)
+        {
+            if (control == null)
+                log.Warning("Specified control is null.");
+
+            Control = control;
+            InitializeTypeDescriptor(Control);
+        }
+
         #region IControlInfo Members
 
         public Control Control

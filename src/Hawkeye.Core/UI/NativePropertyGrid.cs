@@ -44,7 +44,7 @@ namespace Hawkeye.UI
         ////    {
         ////        DisplayStyle = ToolStripItemDisplayStyle.Text
         ////    };
-            
+
         ////    DumpButton = new ToolStripButton("Dump")
         ////    {
         ////        DisplayStyle = ToolStripItemDisplayStyle.Text

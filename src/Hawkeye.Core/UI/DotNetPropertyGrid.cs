@@ -1,12 +1,9 @@
-﻿using System.Linq;
-using System.Reflection;
+﻿using System;
 using System.Windows.Forms;
-using System.Windows.Forms.Design;
+using System.Collections.Generic;
 
 using Hawkeye.UI.Controls;
 using Hawkeye.UI.PropertyTabs;
-using System;
-using System.ComponentModel;
 
 namespace Hawkeye.UI
 {
@@ -14,12 +11,21 @@ namespace Hawkeye.UI
     /// The property grid used to display .NET related information about a window.
     /// </summary>
     internal class DotNetPropertyGrid : PropertyGridEx
-    {
+    {   
+        private Dictionary<DotNetPropertyGridAction, ToolStripItem> actionButtons = new Dictionary<DotNetPropertyGridAction, ToolStripItem>();
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="DotNetPropertyGrid"/> class.
         /// </summary>
-        public DotNetPropertyGrid() : base()
+        public DotNetPropertyGrid() : base() { }
+
+        public event EventHandler ControlCreated;
+        public event DotNetPropertyGridActionEventHandler ActionClicked;
+
+        internal void EnableAction(DotNetPropertyGridAction action, bool enabled = true)
         {
+            if (actionButtons.ContainsKey(action))
+                actionButtons[action].Enabled = enabled;
         }
 
         /// <summary>
@@ -33,24 +39,10 @@ namespace Hawkeye.UI
             base.PropertyTabs.AddTabType(typeof(AllPropertiesTab));
             base.PropertyTabs.AddTabType(typeof(AllEventsTab));
             
-            // Don't activate property page now because there's nothing in GenericComponentEditor
-            EnablePropertyPageButton();
-        }
-        
-        private void EnablePropertyPageButton()
-        {
-            //Yet another reflection hack...
-            var method = typeof(PropertyGrid).GetMethod(
-                "EnablePropPageButton", BindingFlags.Instance | BindingFlags.NonPublic);
+            AddButtons();
 
-            var result = (bool)method.Invoke(this, new[] { base.SelectedObject });
-            if (result)
-            {
-                // The pg may fail to refresh its toolstrip. Let's force it.
-                ToolStrip.Items[ToolStrip.Items.Count - 1].Enabled = true;
-            }
-
-            ToolStrip.Invalidate();
+            if (ControlCreated != null) 
+                ControlCreated(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -58,7 +50,49 @@ namespace Hawkeye.UI
         /// </summary>
         protected override void InitializeToolStrip()
         {
-            // do nothing
+            // Nothing to do here.
+        }
+
+        private void AddButtons()
+        {
+            var parentButton = new ToolStripButton("P&arent", Properties.Resources.UpArrow)
+            {
+                DisplayStyle = ToolStripItemDisplayStyle.Image,
+                Enabled = false
+            };
+
+            var previousButton = new ToolStripButton("&Previous", Properties.Resources.LeftArrow)
+            {
+                DisplayStyle = ToolStripItemDisplayStyle.Image,
+                Enabled = false
+            };
+
+            var nextButton = new ToolStripButton("&Next", Properties.Resources.RightArrow)
+            {
+                DisplayStyle = ToolStripItemDisplayStyle.Image,
+                Enabled = false
+            };
+            
+            var lastItemIndex = ToolStrip.Items.Count - 1; // This is the "Properties" button
+            // Insert the additional buttons before this one
+            ToolStrip.Items.Insert(lastItemIndex, new ToolStripSeparator());
+            ToolStrip.Items.Insert(lastItemIndex, nextButton);
+            ToolStrip.Items.Insert(lastItemIndex, previousButton);
+            ToolStrip.Items.Insert(lastItemIndex, parentButton);
+
+            parentButton.Click += (s, _) => RaiseActionClicked(DotNetPropertyGridAction.Parent);
+            previousButton.Click += (s, _) => RaiseActionClicked(DotNetPropertyGridAction.Previous);
+            nextButton.Click += (s, _) => RaiseActionClicked(DotNetPropertyGridAction.Next);
+
+            actionButtons.Add(DotNetPropertyGridAction.Previous, previousButton);
+            actionButtons.Add(DotNetPropertyGridAction.Next, nextButton);
+            actionButtons.Add(DotNetPropertyGridAction.Parent, parentButton);
+        }
+
+        private void RaiseActionClicked(DotNetPropertyGridAction action)
+        {
+            if (ActionClicked != null) 
+                ActionClicked(this, new DotNetPropertyGridActionEventArgs(action));
         }
     }
 }

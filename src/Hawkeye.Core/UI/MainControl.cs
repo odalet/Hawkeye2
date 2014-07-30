@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using System.ComponentModel;
 
@@ -15,7 +16,8 @@ namespace Hawkeye.UI
     {
         private static readonly ILogService log = LogManager.GetLogger<MainControl>();
 
-        private WindowInfo currentInfo = null;
+        ////private WindowInfo currentInfo = null;
+        private History<WindowInfo> history = new History<WindowInfo>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainControl"/> class.
@@ -23,11 +25,14 @@ namespace Hawkeye.UI
         public MainControl()
         {
             InitializeComponent();
-
+            
             // Remove the .NET Tab (to hide it)
             tabs.SuspendLayout();
             tabs.TabPages.Remove(dotNetTabPage);
             tabs.ResumeLayout(false);
+
+            dotNetPropertyGrid.ActionClicked += (s, e) => HandleDotNetPropertyGridAction(e.Action);
+            dotNetPropertyGrid.ControlCreated += (s, e) => RefreshDotNetPropertyGridActions();
         }
 
         /// <summary>
@@ -41,9 +46,13 @@ namespace Hawkeye.UI
         {
             get
             {
-                return currentInfo == null ? IntPtr.Zero : currentInfo.Handle;
+                return CurrentInfo == null ? IntPtr.Zero : CurrentInfo.Handle;
             }
-            set { BuildCurrentWindowInfo(value); }
+            set
+            {
+                if (value != IntPtr.Zero)
+                    BuildCurrentWindowInfo(value);
+            }
         }
 
         /// <summary>
@@ -69,11 +78,12 @@ namespace Hawkeye.UI
 
         private WindowInfo CurrentInfo
         {
-            get { return currentInfo; }
+            get { return history.Current; }
             set
             {
-                if (currentInfo == value) return;
-                currentInfo = value;
+                //if (currentInfo == value) return;
+                //currentInfo = value;
+                history.Push(value);
                 OnCurrentInfoChanged();
             }
         }
@@ -118,14 +128,55 @@ namespace Hawkeye.UI
 
         private void FillControlInfo(IControlInfo controlInfo)
         {
-#if DEBUG
-            //ODT: TESTS TESTS TESTS TESTS TESTS TESTS TESTS TESTS TESTS
-            //var testControl = new TestControl();
-            //controlInfo.Control = testControl;
-#endif
-
             dotNetPropertyGrid.SelectedObject = controlInfo;
+            RefreshDotNetPropertyGridActions();
         }
+
+        #region DotNetPropertyGridAction Handling
+
+        private void HandleDotNetPropertyGridAction(DotNetPropertyGridAction action)
+        {
+            switch (action)
+            {
+                case DotNetPropertyGridAction.Previous:
+                    if (history.HasPrevious) history.MoveToPrevious();
+                    OnCurrentInfoChanged();
+                    break;
+                case DotNetPropertyGridAction.Next:
+                    if (history.HasNext) history.MoveToNext();
+                    OnCurrentInfoChanged();
+                    break;
+                case DotNetPropertyGridAction.Parent:
+                    if (CanExecuteAction(DotNetPropertyGridAction.Parent))
+                        Target = CurrentInfo.ControlInfo.Control.Parent.Handle;
+                    break;
+            }
+        }
+
+        private bool CanExecuteAction(DotNetPropertyGridAction action)
+        {
+            switch (action)
+            {
+                case DotNetPropertyGridAction.Previous: return history.HasPrevious;                    
+                case DotNetPropertyGridAction.Next: return history.HasNext;
+                case DotNetPropertyGridAction.Parent:
+                    return 
+                        CurrentInfo != null &&
+                        CurrentInfo.ControlInfo != null &&
+                        CurrentInfo.ControlInfo.Control != null &&
+                        CurrentInfo.ControlInfo.Control.Parent != null;
+            }
+
+            return false;
+        }
+
+        private void RefreshDotNetPropertyGridActions()
+        {
+            foreach (var action in Enum.GetValues(typeof(DotNetPropertyGridAction)).Cast<DotNetPropertyGridAction>())
+                dotNetPropertyGrid.EnableAction(action, CanExecuteAction(action));
+        }
+        
+        #endregion
 
         private void BuildCurrentWindowInfo(IntPtr hwnd)
         {

@@ -54,6 +54,7 @@
     <Compile Include="ComponentModel\descriptors\StaticEventPropertyDescriptor.cs" />
     <Compile Include="ComponentModel\descriptors\StaticPropertyPropertyDescriptor.cs" />
     <Compile Include="ComponentModel\DotNetInfoConverter.cs" />
+    <Compile Include="ComponentModel\History.cs" />
     <Compile Include="ComponentModel\IProxy.cs" />
     <Compile Include="ComponentModel\ModuleInfoConverter.cs" />
     <Compile Include="Configuration\layoutInterfaces.cs" />
@@ -116,6 +117,8 @@
     <Compile Include="UI\DotNetPropertyGrid.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\events.cs" />
+    <Compile Include="UI\enumerations.cs" />
     <Compile Include="UI\GenericComponentEditor.cs" />
     <Compile Include="UI\GenericComponentEditorPage.cs">
       <SubType>Component</SubType>
@@ -219,6 +222,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Properties.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LeftArrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RightArrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UpArrow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
