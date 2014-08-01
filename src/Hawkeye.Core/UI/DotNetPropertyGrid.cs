@@ -72,6 +72,12 @@ namespace Hawkeye.UI
                 DisplayStyle = ToolStripItemDisplayStyle.Image,
                 Enabled = false
             };
+
+            var highlightButton = new ToolStripButton("&Highlight", Properties.Resources.Highlight)
+            {
+                DisplayStyle = ToolStripItemDisplayStyle.Image,          
+                Enabled = false
+            };
             
             var lastItemIndex = ToolStrip.Items.Count - 1; // This is the "Properties" button
             // Insert the additional buttons before this one
@@ -79,14 +85,17 @@ namespace Hawkeye.UI
             ToolStrip.Items.Insert(lastItemIndex, nextButton);
             ToolStrip.Items.Insert(lastItemIndex, previousButton);
             ToolStrip.Items.Insert(lastItemIndex, parentButton);
+            ToolStrip.Items.Insert(lastItemIndex, highlightButton);
 
             parentButton.Click += (s, _) => RaiseActionClicked(DotNetPropertyGridAction.Parent);
             previousButton.Click += (s, _) => RaiseActionClicked(DotNetPropertyGridAction.Previous);
             nextButton.Click += (s, _) => RaiseActionClicked(DotNetPropertyGridAction.Next);
+            highlightButton.Click += (s, _) => RaiseActionClicked(DotNetPropertyGridAction.Highlight);
 
             actionButtons.Add(DotNetPropertyGridAction.Previous, previousButton);
             actionButtons.Add(DotNetPropertyGridAction.Next, nextButton);
             actionButtons.Add(DotNetPropertyGridAction.Parent, parentButton);
+            actionButtons.Add(DotNetPropertyGridAction.Highlight, highlightButton);
         }
 
         private void RaiseActionClicked(DotNetPropertyGridAction action)

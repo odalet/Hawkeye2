@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.ComponentModel;
 
+using Hawkeye.WinApi;
 using Hawkeye.Logging;
 using Hawkeye.ComponentModel;
 
@@ -81,8 +82,6 @@ namespace Hawkeye.UI
             get { return history.Current; }
             set
             {
-                //if (currentInfo == value) return;
-                //currentInfo = value;
                 history.Push(value);
                 OnCurrentInfoChanged();
             }
@@ -91,7 +90,7 @@ namespace Hawkeye.UI
         private void OnCurrentInfoChanged()
         {
             nativePropertyGrid.SelectedObject = CurrentInfo;
-            //pgrid.ExpandAllGridItems(); // this takes too much time!
+
             dumpButton.Enabled = CurrentInfo != null;
             if (CurrentInfo == null) return; // nope
 
@@ -150,6 +149,10 @@ namespace Hawkeye.UI
                     if (CanExecuteAction(DotNetPropertyGridAction.Parent))
                         Target = CurrentInfo.ControlInfo.Control.Parent.Handle;
                     break;
+                case DotNetPropertyGridAction.Highlight:
+                    if (CanExecuteAction(DotNetPropertyGridAction.Highlight))
+                        WindowHelper.DrawAdorner(Target);
+                    break;
             }
         }
 
@@ -165,6 +168,8 @@ namespace Hawkeye.UI
                         CurrentInfo.ControlInfo != null &&
                         CurrentInfo.ControlInfo.Control != null &&
                         CurrentInfo.ControlInfo.Control.Parent != null;
+                case DotNetPropertyGridAction.Highlight:
+                    return Target != IntPtr.Zero;
             }
 
             return false;

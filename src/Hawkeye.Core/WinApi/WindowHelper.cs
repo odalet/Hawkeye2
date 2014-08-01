@@ -46,12 +46,9 @@ namespace Hawkeye.WinApi
             IntPtr windowDC;
             windowDC = NativeMethods.GetWindowDC(hwnd);
             if (windowDC == IntPtr.Zero) return;
-
-            if (drawMethod == null) drawMethod = (g, s) =>
-            {
-                using (var pen = new Pen(Color.Red, 2))
-                    g.DrawRectangle(pen, 1, 1, s.Width - 2, s.Height - 2);
-            };
+            
+            if (drawMethod == null)
+                drawMethod = DrawDefaultAdorner;
 
             try
             {
@@ -59,6 +56,15 @@ namespace Hawkeye.WinApi
                     drawMethod(g, windowRect.Size);
             }
             finally { NativeMethods.ReleaseDC(hwnd, windowDC); }
+        }
+
+        private static void DrawDefaultAdorner(Graphics graphics, Size size)
+        {
+            var baseColor = Color.Blue;
+            using (var brush = new SolidBrush(Color.FromArgb(64, baseColor)))
+                graphics.FillRectangle(brush, new Rectangle(new Point(0, 0), size));
+            using (var pen = new Pen(baseColor, 2f))
+                graphics.DrawRectangle(pen, 1, 1, size.Width - 2, size.Height - 2);
         }
     }
 }

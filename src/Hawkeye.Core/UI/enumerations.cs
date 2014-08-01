@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Hawkeye.UI
+﻿namespace Hawkeye.UI
 {
-    public enum DotNetPropertyGridAction : int
+    public enum DotNetPropertyGridAction
     {
         Previous,
         Next,
-        Parent
+        Parent,
+        Highlight
     }
 }

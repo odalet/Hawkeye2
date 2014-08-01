@@ -86,7 +86,7 @@ namespace Hawkeye.UI
                         WindowHelper.RemoveAdorner(windowHandle); // Remove highlight
 
                     windowHandle = foundWindowHandle;
-                    WindowHelper.DrawAdorner(windowHandle, DrawAdorner); // highlight the window                    
+                    WindowHelper.DrawAdorner(windowHandle); // highlight the window                    
                     OnActiveWindowChanged();
                 }
             }
@@ -111,15 +111,6 @@ namespace Hawkeye.UI
         private void OnActiveWindowChanged()
         {
             if (ActiveWindowChanged != null) ActiveWindowChanged(this, EventArgs.Empty);
-        }
-
-        private void DrawAdorner(Graphics g, Size s)
-        {
-            var baseColor = Color.Blue;
-            using (var brush = new SolidBrush(Color.FromArgb(64, baseColor)))
-                g.FillRectangle(brush, new Rectangle(new Point(0, 0), s));
-            using (var pen = new Pen(baseColor, 2f))
-                g.DrawRectangle(pen, 1, 1, s.Width - 2, s.Height - 2);
-        }
+        }        
     }
 }
