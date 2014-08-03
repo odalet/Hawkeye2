@@ -37,6 +37,11 @@ namespace Hawkeye.UI
         }
 
         /// <summary>
+        /// Occurs when the <see cref="CurrentInfo"/> member changes.
+        /// </summary>
+        public event EventHandler CurrentInfoChanged;
+
+        /// <summary>
         /// Gets or sets the target Window handle.
         /// </summary>
         /// <value>
@@ -77,7 +82,7 @@ namespace Hawkeye.UI
             };
         }
 
-        private WindowInfo CurrentInfo
+        public WindowInfo CurrentInfo
         {
             get { return history.Current; }
             set
@@ -87,7 +92,7 @@ namespace Hawkeye.UI
             }
         }
 
-        private void OnCurrentInfoChanged()
+        protected void OnCurrentInfoChanged()
         {
             nativePropertyGrid.SelectedObject = CurrentInfo;
 
@@ -123,6 +128,9 @@ namespace Hawkeye.UI
 
             // Update the hwnd box in case we detected .NET properties.
             hwndBox.Text = CurrentInfo.ToShortString();
+
+            if (CurrentInfoChanged != null)
+                CurrentInfoChanged(this, EventArgs.Empty);
         }
 
         private void FillControlInfo(IControlInfo controlInfo)

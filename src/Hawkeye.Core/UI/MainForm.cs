@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 using Hawkeye.WinApi;
 using Hawkeye.Configuration;
-using System.Drawing;
 
 namespace Hawkeye.UI
 {
@@ -23,6 +23,15 @@ namespace Hawkeye.UI
             UpdateTitle();
             LayoutManager.RegisterForm("HawkeyeMainForm", this);
             base.Parent = null;
+
+            mainControl.CurrentInfoChanged += (s, e) =>
+            {
+                var info = mainControl.CurrentInfo;
+                var name = string.Empty;
+                if (info != null && info.ControlInfo != null)
+                    name = info.ControlInfo.Name;
+                UpdateTitle(name);
+            };
         }
 
         /// <summary>
@@ -110,13 +119,18 @@ namespace Hawkeye.UI
             if (!eat) base.WndProc(ref m);
         }
 
-        private void UpdateTitle()
+        private void UpdateTitle(string controlName = "")
         {
-            base.Text = string.Format("Hawkeye {0} - {1}",
-                HawkeyeApplication.CurrentClr,
-                HawkeyeApplication.CurrentBitness.ToString().ToLowerInvariant());
-        }        
-        
+            var clr = HawkeyeApplication.CurrentClr.GetLabel();
+            var bitness = HawkeyeApplication.CurrentBitness.ToString().ToLowerInvariant();
+            var clrAndBitness = string.IsNullOrEmpty(clr) ? bitness : clr + " " + bitness;
+
+            var title = string.Format("Hawkeye {0}", clrAndBitness);
+            if (string.IsNullOrEmpty(controlName))
+                base.Text = title;
+            else base.Text = string.Format("{0} - {1}", controlName, title);
+        }
+
         private void SetWindowSettings(MainFormSettings settings)
         {
             //TODO: handle multiple-screens (and config changes!)
@@ -138,6 +152,11 @@ namespace Hawkeye.UI
                 about.ShowDialog(this);
         }
 
+        /// <summary>
+        /// Handles the Click event of the exitToolStripMenuItem control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();

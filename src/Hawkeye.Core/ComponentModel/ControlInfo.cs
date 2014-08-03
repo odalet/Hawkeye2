@@ -47,6 +47,18 @@ namespace Hawkeye.ComponentModel
 #endif
         }
 
+        public string Name
+        {
+            get
+            {
+                if (Control == null) return string.Empty;
+                var name = Control.Name;
+                if (!string.IsNullOrEmpty(name))
+                    return name;
+                return Control.GetType().Name;
+            }
+        }
+
         #endregion     
         
         #region IProxy Members

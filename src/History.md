@@ -1,9 +1,13 @@
+Version 2 - 0.4.1 - 2014/08/03
+==========================
+* Partially fixed issue #8: Added control's name (or type if no name) to the window title.
+
 Version 2 - 0.4.0 - 2014/08/01
 ==========================
 * Fixed issue #9: reintroducing the following buttons:
   * Go to Parent
   * Previous/Next
-  * Highliht selection
+  * Highlight selection
 
 Version 2 - 0.3.0 - 2013/10/27
 ==========================

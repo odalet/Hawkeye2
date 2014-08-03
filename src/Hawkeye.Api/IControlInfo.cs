@@ -16,5 +16,10 @@ namespace Hawkeye
 #else
         Control Control { get; }
 #endif
+
+        /// <summary>
+        /// Gets the name of the control (or its type if the name is empty).
+        /// </summary>
+        string Name { get; }
     }
 }
