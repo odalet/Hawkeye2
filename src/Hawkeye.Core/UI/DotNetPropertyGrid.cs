@@ -45,13 +45,13 @@ namespace Hawkeye.UI
                 ControlCreated(this, EventArgs.Empty);
         }
 
-        /// <summary>
-        /// Initializes the tool strip.
-        /// </summary>
-        protected override void InitializeToolStrip()
-        {
-            // Nothing to do here.
-        }
+        /////// <summary>
+        /////// Initializes the tool strip.
+        /////// </summary>
+        ////protected override void InitializeToolStrip()
+        ////{
+        ////    // Nothing to do here.
+        ////}
 
         private void AddButtons()
         {

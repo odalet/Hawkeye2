@@ -1,7 +1,4 @@
-﻿using System;
-using System.Xml;
-
-namespace Hawkeye.Configuration
+﻿namespace Hawkeye.Configuration
 {
     /// <summary>
     /// Represents a section of the hawkeye.settings file
@@ -11,14 +8,7 @@ namespace Hawkeye.Configuration
         /// <summary>
         /// Gets or sets the store content.
         /// </summary>
-        /// <value>
-        /// The content.
-        /// </value>
-        string Content
-        {
-            get;
-            set;
-        }
+        string Content { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether this store is read only.

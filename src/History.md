@@ -1,6 +1,8 @@
-Version 2 - 0.4.1 - 2014/08/03
+Version 2 - 0.4.1 - 2014/08/04
 ==========================
-* Partially fixed issue #8: Added control's name (or type if no name) to the window title.
+* Fixed issue #8: 
+  * Added control's name (or type if no name) to the window title.
+  * Reintroduced the search box
 
 Version 2 - 0.4.0 - 2014/08/01
 ==========================

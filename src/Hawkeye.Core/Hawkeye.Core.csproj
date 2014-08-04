@@ -114,6 +114,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ComponentModel\descriptors\TypePropertyDescriptor.cs" />
+    <Compile Include="UI\Controls\PropertyGridEx.searchBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\DotNetPropertyGrid.cs">
       <SubType>Component</SubType>
     </Compile>
