@@ -3,7 +3,7 @@ using System;
 namespace Hawkeye.Logging
 {
     /// <summary>
-    /// Abstract base class allowing for a quick implementatio of a logging service.
+    /// Abstract base class allowing for a quick implementation of a logging service.
     /// </summary>
     /// <seealso cref="Hawkeye.Logging.ILogService"/>
     internal abstract class BaseLogService : ILogService

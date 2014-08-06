@@ -1,10 +1,11 @@
 ﻿using System.IO;
 using System.Xml;
 using System.Linq;
+using System.Text;
 using System.Collections.Generic;
 
 using Hawkeye.Logging;
-using System.Text;
+using System;
 
 namespace Hawkeye.Configuration
 {
@@ -13,7 +14,9 @@ namespace Hawkeye.Configuration
         private class SettingsManagerImplementation
         {
             private const string implementationVersion = "1.0.0";
+
             private static readonly ILogService log = LogManager.GetLogger<SettingsManagerImplementation>();
+            
             private Dictionary<string, SettingsStore> stores = new Dictionary<string, SettingsStore>();
             private XmlDocument settingsDocument = null;
 
@@ -36,7 +39,7 @@ namespace Hawkeye.Configuration
   </plugins>
 </settings>";
 
-                CreatBackup(filename);
+                CreateBackup(filename);
                 File.WriteAllText(filename, defaultContent, Encoding.UTF8);
             }
 
@@ -100,18 +103,26 @@ namespace Hawkeye.Configuration
 
             public void Save(string filename)
             {
-                CreatBackup(filename);
+                CreateBackup(filename);
                 // TODO: save settings
                 settingsDocument.Save(filename);
             }
 
-            private void CreatBackup(string filename)
+            private void CreateBackup(string filename)
             {
                 if (File.Exists(filename))
                 {
                     // Create a backup copy
                     var backup = filename + ".bak";
-                    File.Copy(filename, backup, true);
+                    try
+                    {
+                        File.Copy(filename, backup, true);
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(string.Format(
+                            "Could not createb backup copy of settings file: {0}", ex.Message), ex);
+                    }
                 }
             }
         }

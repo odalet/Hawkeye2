@@ -5,6 +5,9 @@ using Hawkeye.WinApi;
 
 namespace Hawkeye.ComponentModel
 {
+    /// <summary>
+    /// This class represents a Win32 module.
+    /// </summary>
     [TypeConverter(typeof(ModuleInfoConverter))]
     internal class ModuleInfo : IModuleInfo
     {
@@ -28,18 +31,35 @@ namespace Hawkeye.ComponentModel
         }
 
         #region IModuleInfo Members
-
-
+        
+        /// <summary>
+        /// Gets the identifier of the process who owns this module.
+        /// </summary>
         public uint ProcessId { get; private set; }
 
+        /// <summary>
+        /// Gets the base address of the module in the context of the owning process.
+        /// </summary>
         public IntPtr BaseAddress { get; private set; }
 
+        /// <summary>
+        /// Gets the size of the module, in bytes.
+        /// </summary>
         public uint BaseSize { get; private set; }
 
+        /// <summary>
+        /// Gets a handle to the module in the context of the owning process.
+        /// </summary>
         public IntPtr Handle { get; private set; }
 
+        /// <summary>
+        /// Gets the module name.
+        /// </summary>
         public string Name { get; private set; }
 
+        /// <summary>
+        /// Gets the module path.
+        /// </summary>
         public string Path { get; private set; }
 
         #endregion

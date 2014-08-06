@@ -66,9 +66,8 @@
     <Compile Include="extensions\ObjectExtensions.cs" />
     <Compile Include="extensions\StringExtensions.cs" />
     <Compile Include="HawkeyeApplication.cs" />
-    <Compile Include="HawkeyeApplication.host.cs" />
-    <Compile Include="HawkeyeApplication.impl.cs" />
-    <Compile Include="HawkeyeApplication.info.cs" />
+    <Compile Include="HawkeyeApplicationInfo.cs" />
+    <Compile Include="Shell.cs" />
     <Compile Include="HawkeyeAttacher.cs" />
     <Compile Include="Logging\BaseLogService.cs" />
     <Compile Include="Logging\interfaces.cs" />
@@ -92,10 +91,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Reflection\old\BaseMemberAccessor.cs" />
-    <Compile Include="Reflection\old\FieldAccessor.cs" />
-    <Compile Include="Reflection\old\MethodAccessor.cs" />
-    <Compile Include="Reflection\old\PropertyAccessor.cs" />
     <Compile Include="SR.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

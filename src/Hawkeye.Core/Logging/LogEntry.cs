@@ -4,7 +4,7 @@ using System.Text;
 namespace Hawkeye.Logging
 {
     /// <summary>
-    /// This class stores the properties, a logging message is made of.
+    /// This class stores the properties a logging message is made of.
     /// </summary>
     internal class LogEntry : ILogEntry
     {

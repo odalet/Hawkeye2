@@ -58,11 +58,16 @@ namespace Hawkeye.UI
             }
         }
 
+        internal MainControl MainControl
+        {
+            get { return mainControl; }
+        }
+
         public void SetTarget(IntPtr hwnd)
         {
             mainControl.Target = hwnd;
         }
-
+        
         #region IDefaultLayoutProvider Members
 
         public Rectangle GetDefaultBounds()

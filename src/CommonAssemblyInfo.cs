@@ -6,10 +6,10 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyDescription("Hawkeye 2")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("http://hawkeye.codeplex.com")]
+[assembly: AssemblyCompany("https://github.com/odalet/Hawkeye2")]
 [assembly: AssemblyProduct("Hawkeye 2")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("Hawkeye")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("0.4.1.0")]
-[assembly: AssemblyFileVersion("0.4.1.0")]
+[assembly: AssemblyVersion("0.5.0.0")]
+[assembly: AssemblyFileVersion("0.5.0.0")]

@@ -30,8 +30,8 @@ namespace Hawkeye.UI
 
             versionBox.Text = GetVersion();
 
-            applicationDataDirectoryBox.Text = 
-                HawkeyeApplication.ApplicationInfo.ApplicationDataDirectory;
+            applicationDataDirectoryBox.Text =
+                HawkeyeApplication.Shell.ApplicationInfo.ApplicationDataDirectory;
         }
 
         private static string GetVersion()

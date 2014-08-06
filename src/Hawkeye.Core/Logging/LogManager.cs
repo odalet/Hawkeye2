@@ -16,7 +16,7 @@ namespace Hawkeye.Logging
         static LogManager()
         {
             // Try to get a factory from HawkeyeApplication
-            factory = HawkeyeApplication.LogFactory;
+            factory = HawkeyeApplication.Shell.GetLogServiceFactory();
             if (factory == null)
                 factory = new DebugLogger(null); // fallback
         }

@@ -476,44 +476,7 @@ namespace Hawkeye.Configuration
             form.WindowState = FormWindowState.Normal;
             if (form is IDefaultLayoutProvider)
                 form.Bounds = ((IDefaultLayoutProvider)form).GetDefaultBounds();
-            //else form.S = FormStartPosition.WindowsDefaultBounds
         }
-
-        ///// <summary>
-        ///// Gets the default bounds for a form.
-        ///// </summary>
-        ///// <value>The default bounds.</value>
-        //private Rectangle GetDefaultBounds(Form form)
-        //{
-        //    if (form is IDefaultLayoutProvider)
-        //        return ((IDefaultLayoutProvider)form).GetDefaultBounds();
-        //    else
-        //    {
-        //        var screen = Screen.PrimaryScreen.WorkingArea;
-        //        if (form.WindowState == FormWindowState.Normal)
-        //        {
-        //            var originalBounds = form.Bounds;
-        //            if (screen.Contains(originalBounds))
-        //                return originalBounds;
-        //            else return FormStartPosition.WindowsDefaultBounds;
-        //        }
-        //    }
-        //    //    return form.Bounds;
-
-        //    //if (defaultBounds.IsEmpty)
-        //    //{
-        //    //    var screen = Screen.PrimaryScreen.WorkingArea;
-        //    //    var wmargin = screen.Width / 10;
-        //    //    var hmargin = screen.Height / 10;
-
-        //    //    defaultBounds = new Rectangle(
-        //    //        screen.Left + wmargin,
-        //    //        screen.Top + hmargin,
-        //    //        screen.Width - 2 * wmargin,
-        //    //        screen.Height - 2 * hmargin);
-        //    //}
-        //    //return defaultBounds;
-        //}
 
         private static T ConvertTo<T>(string value)
         {

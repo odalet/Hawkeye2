@@ -49,8 +49,12 @@
     <Compile Include="enums.cs" />
     <Compile Include="extensions\DateTimeExtensions.cs" />
     <Compile Include="extensions\ExceptionExtensions.cs" />
+    <Compile Include="extensions\HostExtensions.cs" />
     <Compile Include="extensions\ServiceExtensions.cs" />
     <Compile Include="IHawkeyeApplicationInfo.cs" />
+    <Compile Include="IHawkeyeHost.cs" />
+    <Compile Include="IPlugin.cs" />
+    <Compile Include="IPluginDescriptor.cs" />
     <Compile Include="Logging\BaseLogService.cs" />
     <Compile Include="Logging\interfaces.cs" />
     <Compile Include="Logging\LoggingExtensions.cs" />
@@ -62,6 +66,7 @@
     <Compile Include="HawkeyeHost.cs" />
     <Compile Include="IControlInfo.cs" />
     <Compile Include="IModuleInfo.cs" />
+    <Compile Include="PluginKind.cs" />
     <Compile Include="Reflection\MethodAccessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="oldHawkeyeApi_TODO\Reflection\accessors.cs" />

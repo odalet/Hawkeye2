@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using Hawkeye.Logging;
 
 namespace Hawkeye
@@ -9,79 +8,9 @@ namespace Hawkeye
     /// </summary>
     internal static partial class HawkeyeApplication
     {
-        /// <summary>
-        /// Interface one must implement to provide real logic behind the <see cref="HawkeyeApplication"/>
-        /// static facade.
-        /// </summary>
-        public interface IHawkeyeApplicationImplementation
-        {
-            /// <summary>
-            /// Gets a value indicating whether the Hawkeye application is running injected in a 
-            /// host process or in its original process.
-            /// </summary>
-            /// <value>
-            /// 	<c>true</c> if the application is injected; otherwise, <c>false</c>.
-            /// </value>
-            bool IsInjected { get; }
-
-            /// <summary>
-            /// Runs the Hawkeye application.
-            /// </summary>
-            /// <remarks>
-            /// Use this method to run Hawkeye in its own process.
-            /// </remarks>
-            void Run();
-
-            /// <summary>
-            /// Runs the Hawkeye application.
-            /// </summary>
-            /// <param name="windowToSpy">The window to spy.</param>
-            /// <param name="windowToKill">The window to kill.</param>
-            /// <remarks>
-            /// Use this method to run Hawkeye in its own process.
-            /// </remarks>
-            void Run(IntPtr windowToSpy, IntPtr windowToKill);
-            
-            /// <summary>
-            /// Operations that should be realized before we close Hawkeye.
-            /// </summary>
-            void Close();
-
-            /// <summary>
-            /// Determines whether Hawkeye can be injected given the specified window info.
-            /// </summary>
-            /// <param name="info">The window info.</param>
-            /// <returns>
-            ///   <c>true</c> if Hawkeye can be injected; otherwise, <c>false</c>.
-            /// </returns>
-            bool CanInject(IWindowInfo info);
-
-            /// <summary>
-            /// Injects the Hawkeye application into the process owning the specified window.
-            /// </summary>
-            /// <param name="info">The target window information.</param>
-            void Inject(IWindowInfo info);
-
-            /// <summary>
-            /// Attaches the (injected) Hawkeye application to the specified target window 
-            /// (and destroys the original Hawkeye window).
-            /// </summary>
-            /// <param name="targetWindow">The target window.</param>
-            /// <param name="originalHawkeyeWindow">The original Hawkeye window.</param>
-            void Attach(IntPtr targetWindow, IntPtr originalHawkeyeWindow);
-
-            /// <summary>
-            /// Gets the default log service factory.
-            /// </summary>
-            /// <returns>An instance of <see cref="ILogServiceFactory"/>.</returns>
-            ILogServiceFactory GetLogServiceFactory();
-        }
-
         private static readonly HawkeyeApplicationInfo applicationInfo;
         private static readonly Bitness currentBitness;
         private static readonly Clr currentClr;
-        private static readonly IHawkeyeApplicationImplementation implementation =
-            new Implementation();
 
         /// <summary>
         /// Initializes the <see cref="HawkeyeApplication"/> class.
@@ -89,40 +18,18 @@ namespace Hawkeye
         static HawkeyeApplication()
         {
             applicationInfo = new HawkeyeApplicationInfo();
+                        
+            var clrVersion = typeof(int).Assembly.GetName().Version;
+            currentClr = clrVersion.Major == 4 ? Clr.Net4 : Clr.Net2;
+            currentBitness = IntPtr.Size == 8 ? Bitness.x64 : Bitness.x86;
 
-            currentBitness = IntPtr.Size == 8 ?
-                Bitness.x64 : Bitness.x86;
-            currentClr = typeof(int).Assembly.GetName().Version.Major == 4 ?
-                Clr.Net4 : Clr.Net2;
+            Shell = new Shell();
         }
 
         /// <summary>
-        /// Gets the default log service factory.
+        /// Gets the Hawkeye application shell.
         /// </summary>
-        public static ILogServiceFactory LogFactory
-        {
-            get { return implementation.GetLogServiceFactory(); }
-        }
-
-        /// <summary>
-        /// Gets a value containing information relative to the Hawkeye application.
-        /// </summary>
-        public static IHawkeyeApplicationInfo ApplicationInfo
-        {
-            get { return applicationInfo; }
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether the Hawkeye application is running injected in a 
-        /// host process or in its original process.
-        /// </summary>
-        /// <value>
-        /// 	<c>true</c> if the application is injected; otherwise, <c>false</c>.
-        /// </value>
-        public static bool IsInjected
-        {
-            get { return implementation.IsInjected; }
-        }
+        public static Shell Shell { get; private set; }
 
         /// <summary>
         /// Gets Hawkeye current CLR.
@@ -148,7 +55,7 @@ namespace Hawkeye
         /// </remarks>
         public static void Run()
         {
-            implementation.Run();
+            Shell.Run();
         }
 
         /// <summary>
@@ -161,7 +68,7 @@ namespace Hawkeye
         /// </remarks>
         public static void Run(IntPtr windowToSpy, IntPtr windowToKill)
         {
-            implementation.Run(windowToSpy, windowToKill);
+            Shell.Run(windowToSpy, windowToKill);
         }
 
         /// <summary>
@@ -169,7 +76,7 @@ namespace Hawkeye
         /// </summary>
         public static void Close()
         {
-            implementation.Close();
+            Shell.Close();
         }
 
         /// <summary>
@@ -181,7 +88,7 @@ namespace Hawkeye
         /// </returns>
         public static bool CanInject(IWindowInfo info)
         {
-            return implementation.CanInject(info);
+            return Shell.CanInject(info);
         }
 
         /// <summary>
@@ -190,7 +97,7 @@ namespace Hawkeye
         /// <param name="info">The target window information.</param>
         public static void Inject(IWindowInfo info)
         {
-            implementation.Inject(info);
+            Shell.Inject(info);
         }
 
         /// <summary>
@@ -201,7 +108,7 @@ namespace Hawkeye
         /// <param name="hawkeyeWindowHandle">The original Hawkeye window.</param>
         public static void Attach(IntPtr targetWindowHandle, IntPtr hawkeyeWindowHandle)
         {
-            implementation.Attach(targetWindowHandle, hawkeyeWindowHandle);
+            Shell.Attach(targetWindowHandle, hawkeyeWindowHandle);
         }
     }
 }
