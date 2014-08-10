@@ -55,12 +55,12 @@ namespace Hawkeye.ComponentModel
             // Return nothing while we have nothing to show in UI.GenericComponentEditor
             return null; 
 
-            var editor = parentDescriptor.GetEditor(editorBaseType);
-            if (editor == null && editorBaseType == typeof(ComponentEditor)) 
-                editor = new GenericComponentEditor();
-            //else if (editor == null && editorBaseType == typeof(UITypeEditor)) 
-            //    editor = new GenericUITypeEditor();
-            return editor;
+            ////var editor = parentDescriptor.GetEditor(editorBaseType);
+            ////if (editor == null && editorBaseType == typeof(ComponentEditor)) 
+            ////    editor = new GenericComponentEditor();
+            //////else if (editor == null && editorBaseType == typeof(UITypeEditor)) 
+            //////    editor = new GenericUITypeEditor();
+            ////return editor;
         }
 
         public EventDescriptorCollection GetEvents(Attribute[] attributes)

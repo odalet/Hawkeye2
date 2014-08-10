@@ -4,6 +4,9 @@ using Hawkeye.Configuration;
 
 namespace Hawkeye
 {
+    /// <summary>
+    /// Interface representing the Hawkeye application's host: used by plugins.
+    /// </summary>
     public interface IHawkeyeHost
     {
         /// <summary>

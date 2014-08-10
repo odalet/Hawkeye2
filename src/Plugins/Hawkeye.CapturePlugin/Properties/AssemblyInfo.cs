@@ -8,5 +8,10 @@
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("Hawkeye")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion(AssemblyVersionInfo.Version)]
+[assembly: AssemblyFileVersion(AssemblyVersionInfo.Version)]
+
+internal static class AssemblyVersionInfo
+{
+    public const string Version = "1.0.0.0";
+}

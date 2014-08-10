@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 using System.Collections.Generic;
 
+using Hawkeye.Logging;
+using Hawkeye.Extensibility;
 using Hawkeye.UI.Controls;
 using Hawkeye.UI.PropertyTabs;
 
@@ -11,9 +14,11 @@ namespace Hawkeye.UI
     /// The property grid used to display .NET related information about a window.
     /// </summary>
     internal class DotNetPropertyGrid : PropertyGridEx
-    {   
-        private Dictionary<DotNetPropertyGridAction, ToolStripItem> actionButtons = new Dictionary<DotNetPropertyGridAction, ToolStripItem>();
-        
+    {
+        private static readonly ILogService log = LogManager.GetLogger<DotNetPropertyGrid>();
+
+        private readonly Dictionary<DotNetPropertyGridAction, ToolStripItem> actionButtons = new Dictionary<DotNetPropertyGridAction, ToolStripItem>();
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DotNetPropertyGrid"/> class.
         /// </summary>
@@ -38,10 +43,12 @@ namespace Hawkeye.UI
             base.PropertyTabs.AddTabType(typeof(InstanceEventsTab));
             base.PropertyTabs.AddTabType(typeof(AllPropertiesTab));
             base.PropertyTabs.AddTabType(typeof(AllEventsTab));
-            
+
             AddButtons();
 
-            if (ControlCreated != null) 
+            AddPlugins();
+
+            if (ControlCreated != null)
                 ControlCreated(this, EventArgs.Empty);
         }
 
@@ -75,10 +82,10 @@ namespace Hawkeye.UI
 
             var highlightButton = new ToolStripButton("&Highlight", Properties.Resources.Highlight)
             {
-                DisplayStyle = ToolStripItemDisplayStyle.Image,          
+                DisplayStyle = ToolStripItemDisplayStyle.Image,
                 Enabled = false
             };
-            
+
             var lastItemIndex = ToolStrip.Items.Count - 1; // This is the "Properties" button
             // Insert the additional buttons before this one
             ToolStrip.Items.Insert(lastItemIndex, new ToolStripSeparator());
@@ -98,9 +105,25 @@ namespace Hawkeye.UI
             actionButtons.Add(DotNetPropertyGridAction.Highlight, highlightButton);
         }
 
+        private void AddPlugins()
+        {
+            log.Debug("--------- Adding plugin buttons");
+            var q = HawkeyeApplication.Shell.PluginManager.Plugins.Where(p => p is ICommandPlugin).Cast<ICommandPlugin>().ToArray();
+            if (q.Length == 0) return;
+
+            var lastItemIndex = ToolStrip.Items.Count - 1; // This is the "Properties" button
+            ToolStrip.Items.Insert(lastItemIndex, new ToolStripSeparator());
+
+            foreach (var plugin in q)
+            {
+                var adapter = new CommandPluginAdapter(plugin);
+                adapter.InsertToolStripButton(ToolStrip, lastItemIndex);
+            }
+        }
+
         private void RaiseActionClicked(DotNetPropertyGridAction action)
         {
-            if (ActionClicked != null) 
+            if (ActionClicked != null)
                 ActionClicked(this, new DotNetPropertyGridActionEventArgs(action));
         }
     }

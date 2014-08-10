@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
   </ItemGroup>
@@ -47,14 +48,17 @@
     <Compile Include="ComponentModel\ServiceNotFoundException.cs" />
     <Compile Include="Configuration\ISettingsStore.cs" />
     <Compile Include="enums.cs" />
+    <Compile Include="Extensibility\BaseCommandPlugin.cs" />
+    <Compile Include="Extensibility\BasePlugin.cs" />
+    <Compile Include="Extensibility\ICommandPlugin.cs" />
     <Compile Include="extensions\DateTimeExtensions.cs" />
     <Compile Include="extensions\ExceptionExtensions.cs" />
     <Compile Include="extensions\HostExtensions.cs" />
     <Compile Include="extensions\ServiceExtensions.cs" />
     <Compile Include="IHawkeyeApplicationInfo.cs" />
     <Compile Include="IHawkeyeHost.cs" />
-    <Compile Include="IPlugin.cs" />
-    <Compile Include="IPluginDescriptor.cs" />
+    <Compile Include="Extensibility\IPlugin.cs" />
+    <Compile Include="Extensibility\IPluginDescriptor.cs" />
     <Compile Include="Logging\BaseLogService.cs" />
     <Compile Include="Logging\interfaces.cs" />
     <Compile Include="Logging\LoggingExtensions.cs" />
@@ -63,7 +67,6 @@
     <Compile Include="oldHawkeyeApi_TODO\IHawkeyeApi.cs" />
     <Compile Include="oldHawkeyeApi_TODO\IHawkeyeEditor.cs" />
     <Compile Include="oldHawkeyeApi_TODO\IPlugin.cs" />
-    <Compile Include="HawkeyeHost.cs" />
     <Compile Include="IControlInfo.cs" />
     <Compile Include="IModuleInfo.cs" />
     <Compile Include="PluginKind.cs" />

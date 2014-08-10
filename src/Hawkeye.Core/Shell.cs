@@ -9,13 +9,13 @@ using Hawkeye.WinApi;
 using Hawkeye.Logging;
 using Hawkeye.Logging.log4net;
 using Hawkeye.Configuration;
+using Hawkeye.Extensibility;
 
 namespace Hawkeye
 {
     internal class Shell : IHawkeyeHost
     {
         private readonly Guid hawkeyeId;
-        private readonly IHawkeyeApplicationInfo applicationInfo;
 
         private MainForm mainForm = null;
         private MainControl mainControl = null;
@@ -27,7 +27,9 @@ namespace Hawkeye
         public Shell()
         {
             hawkeyeId = Guid.NewGuid();
-            applicationInfo = new HawkeyeApplicationInfo();
+            ApplicationInfo = new HawkeyeApplicationInfo();
+            
+            // Do nothing else here, otherwise, HawkeyeApplication static constructor may fail.
         }
 
         #region IHawkeyeHost Members
@@ -51,17 +53,20 @@ namespace Hawkeye
             return SettingsManager.GetStore(key);
         }
 
-        public IHawkeyeApplicationInfo ApplicationInfo
-        {
-            get { return applicationInfo; }
-        }
+        public IHawkeyeApplicationInfo ApplicationInfo { get; private set; }
 
         public IWindowInfo CurrentWindowInfo
         {
-            get { return mainControl.CurrentInfo; }
+            get 
+            {
+                return mainControl == null ? 
+                    null : mainControl.CurrentInfo; 
+            }
         }
 
         #endregion
+
+        public PluginManager PluginManager { get; private set;  }
 
         public bool IsInjected { get; private set; }
 
@@ -90,18 +95,9 @@ namespace Hawkeye
             LogDebug(string.Format("Parameters: {0}, {1}.", windowToSpy, windowToKill), appId);
             Initialize();
             LogDebug("Hawkeye initialization is complete", appId);
-
-            if (mainForm != null) mainForm.Close();
-            mainForm = new MainForm();
-            if (windowToSpy != IntPtr.Zero)
-                mainForm.SetTarget(windowToSpy);
-
-            mainControl = mainForm.MainControl;
-            mainControl.CurrentInfoChanged += (s, e) =>
-            {
-                if (CurrentWindowInfoChanged != null)
-                    CurrentWindowInfoChanged(this, e);
-            };
+            
+            InitializeMainForm(windowToSpy);
+            LogDebug("Hawkeye Main Form initialization is complete", appId);
 
             Application.Run(mainForm);
         }
@@ -183,9 +179,9 @@ namespace Hawkeye
         /// <summary>
         /// Injects the specified target window.
         /// </summary>
-        /// <param name="targetWindow">The target window.</param>
+        /// <param name="windowToSpy">The target window.</param>
         /// <param name="originalHawkeyeWindow">The original hawkeye window.</param>
-        public void Attach(IntPtr targetWindow, IntPtr originalHawkeyeWindow)
+        public void Attach(IntPtr windowToSpy, IntPtr originalHawkeyeWindow)
         {
             // Because native c++ code called Attach, we now know we are injected.
             IsInjected = true;
@@ -196,7 +192,7 @@ namespace Hawkeye
 
             // Let's get the target window associated pid.
             int pid;
-            NativeMethods.GetWindowThreadProcessId(targetWindow, out pid);
+            NativeMethods.GetWindowThreadProcessId(windowToSpy, out pid);
 
             var appId = hawkeyeId.GetHashCode();
             LogInfo(string.Format("Running Hawkeye attached to application {0} (pid={1})",
@@ -204,10 +200,8 @@ namespace Hawkeye
             Initialize();
             LogDebug("Hawkeye initialization is complete", appId);
 
-
-            if (mainForm != null) mainForm.Close();
-            mainForm = new MainForm();
-            mainForm.SetTarget(targetWindow);
+            InitializeMainForm(windowToSpy);
+            LogDebug("Hawkeye Main Form initialization is complete", appId);
 
             // Show new window
             mainForm.Show();
@@ -239,16 +233,37 @@ namespace Hawkeye
             SettingsManager.Initialize();
 
             // Now discover then load plugins
+            PluginManager = new PluginManager();
 
             LogDebug("Discovering Hawkeye plugins.");
-            DiscoverPlugins();
-            int discoveredCount = 0;
+            PluginManager.DiscoverAll();
+            var discoveredCount = PluginManager.PluginDescriptors.Length;
 
             LogDebug("Loading Hawkeye plugins.");
-            //LoadPlugins
-            int loadedCount = 0;
+            PluginManager.LoadAll(this);
+            int loadedCount = PluginManager.Plugins.Length;
 
             LogDebug(string.Format("{0}/{1} Hawkeye plugins were successfully loaded.", loadedCount, discoveredCount));
+        }
+
+        private void InitializeMainForm(IntPtr windowToSpy)
+        {
+            if (mainForm != null) mainForm.Close();
+            mainForm = new MainForm();
+            if (windowToSpy != IntPtr.Zero)
+                mainForm.SetTarget(windowToSpy);
+
+            mainControl = mainForm.MainControl;
+            mainControl.CurrentInfoChanged += (s, _) =>
+                RaiseCurrentWindowInfoChanged();
+
+            RaiseCurrentWindowInfoChanged();
+        }
+
+        private void RaiseCurrentWindowInfoChanged()
+        {
+            if (CurrentWindowInfoChanged != null)
+                CurrentWindowInfoChanged(this, EventArgs.Empty);
         }
 
         private static string GetBootstrap(Clr clr, Bitness bitness)
@@ -285,36 +300,6 @@ namespace Hawkeye
             var exe = string.Format("HawkeyeBootstrap{0}{1}.exe", clrVersion, bitnessVersion);
             return Path.Combine(directory, exe);
         }
-
-        #region Plugins
-
-        private void DiscoverPlugins()
-        {
-            var directory = Path.Combine(
-                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "plugins");
-
-            if (!Directory.Exists(directory))
-            {
-                LogDebug("No Plugins directory.");
-                return;
-            }
-
-            foreach (var file in Directory.GetFiles(directory, "*.dll"))
-            {
-                LogDebug(string.Format("Examining File {0} for plugins:", file));
-                try
-                {
-                    var assy = Assembly.LoadFile(file);
-                    var types = assy.GetTypes();
-                }
-                catch (Exception ex)
-                {
-                    LogDebug(string.Format("--> Not an assembly: {0}", ex.Message));
-                }
-            }
-        }
-
-        #endregion
 
         #region Logging
 

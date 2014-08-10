@@ -3,6 +3,9 @@ using Hawkeye.Configuration;
 
 namespace Hawkeye
 {
+    /// <summary>
+    /// Extennsions methods on <see cref="IHawkeyeHost"/>.
+    /// </summary>
     public static class HostExtensions
     {
         /// <summary>

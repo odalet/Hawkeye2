@@ -63,8 +63,10 @@
     <Compile Include="Configuration\SettingsManager.cs" />
     <Compile Include="Configuration\SettingsManager.store.cs" />
     <Compile Include="ComponentModel\ComponentModelExtensions.cs" />
+    <Compile Include="Extensibility\PluginManager.cs" />
     <Compile Include="extensions\ObjectExtensions.cs" />
     <Compile Include="extensions\StringExtensions.cs" />
+    <Compile Include="extensions\TypeExtensions.cs" />
     <Compile Include="HawkeyeApplication.cs" />
     <Compile Include="HawkeyeApplicationInfo.cs" />
     <Compile Include="Shell.cs" />
@@ -102,6 +104,7 @@
     <Compile Include="UI\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\CommandPluginAdapter.cs" />
     <Compile Include="UI\Controls\CustomTabControl.cs">
       <SubType>Component</SubType>
     </Compile>
