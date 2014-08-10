@@ -1,5 +1,11 @@
+Version 2 - 0.5.0 - 2014/08/10
+==============================
+* Plugin API available
+* Capture Plugin: captures an image of the selected control and places it in the clipboard.
+* Decompile Plugin (works with ILSpy and Reflector).
+
 Version 2 - 0.4.1 - 2014/08/04
-==========================
+==============================
 * Fixed issue #8: 
   * Added control's name (or type if no name) to the window title.
   * Reintroduced the search box
