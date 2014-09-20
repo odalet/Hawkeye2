@@ -1,0 +1,39 @@
+﻿<Window x:Class="HawkeyeLogo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Hawkeye2 Artwork (by Laure Dalet)" Height="350" Width="525"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:loc="clr-namespace:HawkeyeLogo">
+    <Window.Resources>
+        <loc:InvertedBoolConverter x:Key="invBoolConverter" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+            <StackPanel Orientation="Horizontal">
+                <Button Width="80" Margin="4,4,2,4" x:Name="saveButton" Click="saveButton_Click">Save</Button>
+                <Label Margin="2,4,2,4">Size:</Label>
+                <xctk:IntegerUpDown Width="80" Margin="2,4,2,4" Value="{Binding ExportedSize, Mode=TwoWay}"
+                                    IsEnabled="{Binding SaveAllSizes, Mode=OneWay, Converter={StaticResource invBoolConverter}}" />
+                <CheckBox VerticalAlignment="Center" Margin="2,4"
+                          IsChecked="{Binding SaveAllSizes, Mode=TwoWay}"
+                          >All Sizes</CheckBox>
+                <Label Margin="2,4,2,4">Root Dir:</Label>
+            </StackPanel>
+            <TextBox Margin="2,4,4,4" Text="{Binding OutputDirectory}"/>
+        </DockPanel>
+        <loc:HawkeyeWithText Background="Black" x:Name="h1" Grid.Row="1" Grid.Column="0" Margin="2" />
+        <loc:HawkeyeIcon Background="Black" x:Name="h2" Grid.Row="1" Grid.Column="1" Margin="2" />
+        <loc:HawkeyeWithTextPastel Background="Black" x:Name="h3" Grid.Row="2" Grid.Column="0" Margin="2" />
+        <!--<loc:HawkeyeSquareIcon Background="Black" x:Name="h4" Grid.Row="2" Grid.Column="1" Margin="2" />-->
+        <loc:HawkeyeInverted Background="Black" x:Name="h4" Grid.Row="2" Grid.Column="1" Margin="2" />
+    </Grid>
+</Window>
