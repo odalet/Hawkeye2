@@ -1,3 +1,7 @@
+> ## Important notice
+>
+> **From 2023/02/11, this repository is archived. If you want to contribute or have issues, you are welcome to head over to Hawkeye's new home: <https://github.com/zrfisaac/Hawkeye3>**
+
 # Hawkeye 2
 
 ## Foreword
